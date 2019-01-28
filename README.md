@@ -6,7 +6,15 @@ A tool that autoplays SOA to farm events.
 
 Please, do not farm content you would not normally auto with this tool. You'll be making Eve cry if you do. This means that latest event M2/M3 is off-limits (in general). Most legacy content is easy enough if you are autoing as a defender or healer, but keep in mind you will never rush first - this tool only attempts to rush when someone else rushes first.
 
-## Current Args
+## Current Args / Usage
+
+Right now, there is no executable. So, you would run:
+
+```sh
+node index.js --farm-everything 0 --auto-tap-attack 1
+```
+
+Or you pass in whatever you want. The arguments are listed below.
 
 ### Useful Args
 
