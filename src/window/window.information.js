@@ -47,6 +47,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_START_QUEUE_RETRY]:  { hex: '6C3094', pos: { x: 155, y: 505 } },
   [WINDOW_STATES.MISSION_START_PARTY]:        { hex: '066CB0', pos: { x: 25, y: 565 } },
   [WINDOW_STATES.MISSION_START_DISBAND]:      { hex: '7287A1', pos: { x: 325, y: 425 } },
+  [WINDOW_STATES.MISSION_START_CHAR_DETAILS]: { hex: 'D9DEE6', pos: { x: 90, y: 360 } },  
   // [WINDOW_STATES.MISSION_STARTING]:           { hex: '', pos: { x: 285, y: 510 } },
 
   [WINDOW_STATES.COMBAT_START_RUSH_1]:        { hex: '31C9AE', pos: { x: 190, y: 655 } },
