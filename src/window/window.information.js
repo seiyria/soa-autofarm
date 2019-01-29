@@ -32,7 +32,7 @@ const WINDOW_INFORMATION = {
 
   [WINDOW_STATES.GIFT_BOX]:                   { hex: '0C4277', pos: { x: 410, y: 840 } },
   [WINDOW_STATES.GIFT_BOX_EMPTY]:             { hex: '060D10', pos: { x: 410, y: 840 } },
-  [WINDOW_STATES.GIFT_BOX_MODAL]:             { hex: '112A48', pos: { x: 255, y: 310 } },
+  [WINDOW_STATES.GIFT_BOX_MODAL]:             { hex: 'A7B4C4', pos: { x: 255, y: 310 } },
   
   [WINDOW_STATES.EVENT_SCREEN]:               { hex: 'D7D7D7', pos: { x: 155, y: 280 } },
   [WINDOW_STATES.EVENT_SCREEN_MAP]:           { hex: '00427B', pos: { x: 150, y: 195 } },

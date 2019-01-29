@@ -200,7 +200,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * i;
+        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -218,7 +218,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * i;
+        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -236,7 +236,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * i;
+        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -254,7 +254,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * 0.5 * i;
+        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }

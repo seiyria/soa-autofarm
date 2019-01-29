@@ -4,10 +4,11 @@ const isUndefined = (val) => typeof val === 'undefined';
 
 module.exports = {
   OPTIONS: {
-    POLL_RATE: isUndefined(argv['poll-rate'])                 ? 500           : argv['poll-rate'],            
+    POLL_RATE: isUndefined(argv['poll-rate'])                 ? 750           : argv['poll-rate'],            
     AUTO_TAP_ATTACK: isUndefined(argv['auto-tap-attack'])     ? false         : argv['auto-tap-attack'],
     FARM_EVERYTHING: isUndefined(argv['farm-everything'])     ? true          : argv['farm-everything'],
     RUSH_RETRIES: isUndefined(argv['rush-tries'])             ? 1             : argv['rush-tries'],
+    RUSH_DELAY: isUndefined(argv['rush-delay'])               ? 1000          : argv['rush-delay'],
     SWIPE_DURATION: isUndefined(argv['swipe-duration'])       ? 100           : argv['swipe-duration'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
