@@ -138,6 +138,13 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.EVENT_SCREEN_STORY]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 180, 530);
+    }
+  },
+
+  // MISSION
   [WINDOW_STATES.MISSION_START_MP]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP, WINDOW_STATES.MISSION_START_MP_MATCH);

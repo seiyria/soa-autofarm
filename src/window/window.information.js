@@ -38,6 +38,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.EVENT_SCREEN_MAP]:           { hex: '00427B', pos: { x: 150, y: 195 } },
   [WINDOW_STATES.EVENT_SCREEN_MISSION]:       { hex: '1B6AB7', pos: { x: 340, y: 270 } },
   [WINDOW_STATES.EVENT_JOIN_ALL]:             { hex: 'EBEEF2', pos: { x: 315, y: 425 } },
+  [WINDOW_STATES.EVENT_SCREEN_STORY]:         { hex: '053B81', pos: { x: 500, y: 420 } },
 
   [WINDOW_STATES.MISSION_START]:              { hex: '6E3097', pos: { x: 475, y: 665 } },
   [WINDOW_STATES.MISSION_START_MP]:           { hex: '081E4D', pos: { x: 375, y: 555 } },
