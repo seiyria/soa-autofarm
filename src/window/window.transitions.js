@@ -285,6 +285,13 @@ const WINDOW_TRANSITIONS = {
       clickScreen(noxVmInfo, 280, 800);
     }
   },
+
+  // STORY MISSIONS
+  [WINDOW_STATES.STORY_SCREEN]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.BRIDGE);
+    }
+  },
 };
 
 module.exports = { WINDOW_TRANSITIONS };

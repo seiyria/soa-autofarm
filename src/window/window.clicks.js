@@ -62,7 +62,12 @@ const WINDOW_CLICKS = {
   },
   [WINDOW_STATES.HAS_ACHIEVEMENT_MAP]: {
     [WINDOW_STATES.ACHIEVEMENTS]: { x: 500, y: 270 }
-  }
+  },
+
+  // STORY SCREEN -> *
+  [WINDOW_STATES.STORY_SCREEN]: {
+    [WINDOW_STATES.BRIDGE]: { x: 50, y: 930 }
+  },
 };
 
 module.exports = {

@@ -59,7 +59,9 @@ const WINDOW_INFORMATION = {
 
   [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 420 } },
   [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 505 } },
-  [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 235 } }
+  [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 235 } },
+
+  [WINDOW_STATES.STORY_SCREEN]:               { hex: '006AA6', pos: { x: 265, y: 755 } }
 };
 
 module.exports = {
