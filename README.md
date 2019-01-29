@@ -21,7 +21,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--auto-tap-attack` - whether or not to auto tap attack to force melee attacks. Default: `false`.
 * `--farm-everything` - farm every MP event (using the Join All feature) or just the specific one you enter into. Default: `true`.
 * `--poll-rate` - the speed at which the screen should be checked / updated. Default: `500`ms.
-* `--rush-retries` - the number of tries for auto-rush. Default: `3`.
+* `--rush-tries` - the number of tries for auto-rush. Default: `1`.
 * `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
 
 ### Debug Args

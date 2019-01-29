@@ -181,6 +181,13 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.COMBAT_DISCONNECT_2]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 325, 545);
+    }
+  },
+
+
   [WINDOW_STATES.COMBAT_START_RUSH_1]: {
     onEnter: (noxVmInfo) => {
       const checks = [

@@ -36,7 +36,7 @@ const WINDOW_INFORMATION = {
   
   [WINDOW_STATES.EVENT_SCREEN]:               { hex: 'D7D7D7', pos: { x: 155, y: 280 } },
   [WINDOW_STATES.EVENT_SCREEN_MAP]:           { hex: '00427B', pos: { x: 150, y: 195 } },
-  [WINDOW_STATES.EVENT_SCREEN_MISSION]:       { hex: '004B90', pos: { x: 150, y: 135 } },
+  [WINDOW_STATES.EVENT_SCREEN_MISSION]:       { hex: '1B6AB7', pos: { x: 340, y: 270 } },
   [WINDOW_STATES.EVENT_JOIN_ALL]:             { hex: 'EBEEF2', pos: { x: 315, y: 425 } },
 
   [WINDOW_STATES.MISSION_START]:              { hex: '6E3097', pos: { x: 475, y: 665 } },
@@ -52,7 +52,8 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.COMBAT_START_RUSH_2]:        { hex: '2E76C8', pos: { x: 215, y: 740 } },
   [WINDOW_STATES.COMBAT_START_RUSH_3]:        { hex: '3AACE2', pos: { x: 215, y: 820 } },
   [WINDOW_STATES.COMBAT_START_RUSH_4]:        { hex: '4FEEF9', pos: { x: 215, y: 900 } },
-  [WINDOW_STATES.COMBAT_DISCONNECT]:          { hex: '0F325F', pos: { x: 470, y: 415 } },
+  [WINDOW_STATES.COMBAT_DISCONNECT]:          { hex: '0F325F', pos: { x: 310, y: 415 } },
+  [WINDOW_STATES.COMBAT_DISCONNECT_2]:        { hex: '637997', pos: { x: 310, y: 515 } },
   [WINDOW_STATES.COMBAT]:                     { hex: '61D5FF', pos: { x: 500, y: 495 } },
 
   [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 420 } },
