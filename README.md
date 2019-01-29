@@ -26,6 +26,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
+* `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
 
 ### Debug Args
 

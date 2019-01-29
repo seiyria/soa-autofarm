@@ -72,11 +72,21 @@ const getState = (x, y) => {
 // poll the nox instance
 const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
   const noxVmInfo = noxInstances[noxIdx];
-  const { left, top } = noxVmInfo;
+  const { left, top, width, height } = noxVmInfo;
 
   const state = getState(left, top);
   const oldTransitions = WINDOW_TRANSITIONS[lastState];
   const curTransitions = WINDOW_TRANSITIONS[state];
+
+  if(OPTIONS.MOUSE_BLOCK) {
+    const { x, y } = robot.getMousePos();
+    
+    if(x > left && x < left + width && y > top && y < top + height) {
+      Logger.debug('---> MOUSE ---> BLOCK');
+      setTimeout(() => poll(noxIdx, state), OPTIONS.POLL_RATE);
+      return;
+    }
+  }
 
   Logger.debug('-----------> FOUND STATE', windowName(state));
 
