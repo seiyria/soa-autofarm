@@ -24,6 +24,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.
 * `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
 * `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
+* `--skip-gifts` - skip opening the gift box. Default: `false`.
+* `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 
 ### Debug Args
 

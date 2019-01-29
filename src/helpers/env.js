@@ -10,6 +10,8 @@ module.exports = {
     RUSH_RETRIES: isUndefined(argv['rush-tries'])             ? 1             : argv['rush-tries'],
     RUSH_DELAY: isUndefined(argv['rush-delay'])               ? 1000          : argv['rush-delay'],
     SWIPE_DURATION: isUndefined(argv['swipe-duration'])       ? 100           : argv['swipe-duration'],
+    SKIP_ACHIEVEMENTS: isUndefined(argv['skip-achievements']) ? false         : argv['skip-achievements'],
+    SKIP_GIFTS: isUndefined(argv['skip-gifts'])               ? false         : argv['skip-gifts'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],

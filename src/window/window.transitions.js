@@ -10,24 +10,28 @@ const WINDOW_TRANSITIONS = {
 
   // priority states
   [WINDOW_STATES.HAS_GIFT]: {
+    canEnter: () => !OPTIONS.SKIP_GIFTS,
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.GIFT_BOX);
     }
   },
 
   [WINDOW_STATES.HAS_ACHIEVEMENT_BRIDGE]: {
+    canEnter: () => !OPTIONS.SKIP_ACHIEVEMENTS,
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.ACHIEVEMENTS);
     }
   },
 
   [WINDOW_STATES.HAS_ACHIEVEMENT_LIST]: {
+    canEnter: () => !OPTIONS.SKIP_ACHIEVEMENTS,
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.ACHIEVEMENTS);
     }
   },
 
   [WINDOW_STATES.HAS_ACHIEVEMENT_MAP]: {
+    canEnter: () => !OPTIONS.SKIP_ACHIEVEMENTS,
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.ACHIEVEMENTS);
     }

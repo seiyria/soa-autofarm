@@ -33,6 +33,9 @@ const getState = (x, y) => {
     // if we can't find information on this screen id, it doesn't exist.
     const screen = WINDOW_INFORMATION[screenId];
     if(!screen) return;
+    
+    const transition = WINDOW_TRANSITIONS[screenId];
+    if(transition && transition.canEnter && !transition.canEnter()) return;
 
     // if they have a pos of 0/0 they're probably not set up correctly, so we skip them.
     if(screen.pos.x === 0 || screen.pos.y === 0) {
