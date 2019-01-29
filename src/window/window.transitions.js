@@ -33,6 +33,13 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  // android shit
+  [WINDOW_STATES.ANDROID_HOMESCREEN]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, OPTIONS.HOMESCREEN_APP_X, OPTIONS.HOMESCREEN_APP_Y);
+    }
+  },
+
   // other states
   [WINDOW_STATES.BRIDGE]: {
     onRepeat: (noxVmInfo) => {
@@ -186,7 +193,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * 0.5 * i;
+        const checkTime = OPTIONS.POLL_RATE * i;
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -204,7 +211,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * 0.5 * i;
+        const checkTime = OPTIONS.POLL_RATE * i;
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -222,7 +229,7 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.POLL_RATE * 0.5 * i;
+        const checkTime = OPTIONS.POLL_RATE * i;
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }

@@ -34,6 +34,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-window-name` - the name of the Nox window. Default: `'NoxPlayer'`.
 * `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
 * `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
+* `--app-homescreen-x` - the x-position of the app on the homescreen. Default: `525`.
+* `--app-homescreen-y` - the y-position of the app on the homescreen. Default: `330`.
 
 ## Gotchas
 
@@ -65,3 +67,4 @@ Or you pass in whatever you want. The arguments are listed below.
 * Support multiple Nox instances
 * Support moving Nox at runtime (via 1 arg)
 * Support a distributed network of players to create/join lobbies effectively
+* Track statistics like number of particular events emitted, such as MISSION_START_PARTY and emit them when program halts (to show session statistics). Possibly track these variables over time and store current session, lifetime, etc.

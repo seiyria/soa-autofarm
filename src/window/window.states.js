@@ -9,6 +9,8 @@ const WINDOW_STATES = {
 
   HAS_GIFT: 10,
 
+  ANDROID_HOMESCREEN: 20,
+
   TITLE_SCREEN: 41,
   UPDATED_DATA_AVAILABLE: 42, // needs pic
   UPDATE_SCREEN: 43,  // needs pic
