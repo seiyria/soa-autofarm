@@ -47,6 +47,7 @@ const getState = (x, y) => {
     const screenY = y + screen.pos.y + NOX_HEADER_HEIGHT;
 
     // get the color of the pixel at that particular location
+    // robot.getColor doesn't work because it breaks if your coordinate is on a different monitor
     const hexColor = pixcolor([screenX, screenY + NOX_HEADER_HEIGHT], true);
 
     // move the mouse to the location in debug mode only
