@@ -29,6 +29,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.ACHIEVEMENTS_AVAIL]:         { hex: 'FBF8C1', pos: { x: 230, y: 260 } },
   [WINDOW_STATES.ACHIEVEMENTS]:               { hex: 'AEE3FF', pos: { x: 535, y: 300 } },
   [WINDOW_STATES.ACHIEVEMENTS_MODAL]:         { hex: '172434', pos: { x: 500, y: 390 } },
+  [WINDOW_STATES.ACHIEVEMENTS_CAT_CLEAR]:     { hex: '1F406A', pos: { x: 240, y: 400 } },
 
   [WINDOW_STATES.GIFT_BOX]:                   { hex: '0C4277', pos: { x: 410, y: 840 } },
   [WINDOW_STATES.GIFT_BOX_EMPTY]:             { hex: '060D10', pos: { x: 410, y: 840 } },

@@ -115,6 +115,13 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.ACHIEVEMENTS_CAT_CLEAR]: {
+    onRepeat: (noxVmInfo) => {
+      // click the close button
+      clickScreen(noxVmInfo, 280, 800);
+    }
+  },
+
   // EVENT LIST
   [WINDOW_STATES.EVENT_SCREEN]: {
     onRepeat: (noxVmInfo) => {
