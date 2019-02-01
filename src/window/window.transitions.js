@@ -233,6 +233,18 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.MISSION_START_UNKNOWN_ERR]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 300, 590);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_START_UNSTABLE_ERR]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 300, 590);
+    }
+  },
+
   // COMBAT
   [WINDOW_STATES.COMBAT]: {
     onRepeat: (noxVmInfo) => {

@@ -52,6 +52,8 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_START_DISCONNECT]:   { hex: '0F315D', pos: { x: 445, y: 415 } },
   [WINDOW_STATES.MISSION_START_PARTY_LEAVE]:  { hex: '798DA5', pos: { x: 355, y: 410 } },
   [WINDOW_STATES.MISSION_START_PARTY_LEFT]:   { hex: '0F325F', pos: { x: 385, y: 415 } },
+  [WINDOW_STATES.MISSION_START_UNKNOWN_ERR]:  { hex: '0F2235', pos: { x: 380, y: 410 } },
+  [WINDOW_STATES.MISSION_START_UNSTABLE_ERR]: { hex: '4F698A', pos: { x: 265, y: 410 } },
 
   [WINDOW_STATES.COMBAT_START_RUSH_1]:        { hex: '31C9AE', pos: { x: 190, y: 655 } },
   [WINDOW_STATES.COMBAT_START_RUSH_2]:        { hex: '2E76C8', pos: { x: 215, y: 740 } },
