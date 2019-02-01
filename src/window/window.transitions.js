@@ -57,6 +57,18 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.BRIDGE_DAILY_BOX]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 285, 830);
+    }
+  },
+
+  [WINDOW_STATES.BRIDGE_SUPPORT_MEDALS]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 285, 620);
+    }
+  },
+
   [WINDOW_STATES.TITLE_SCREEN]: {
     onRepeat: (noxVmInfo) => {
       clickScreen(noxVmInfo, 250, 285);
@@ -176,6 +188,29 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.MISSION_START_QUEUE_RETRY]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_QUEUE_RETRY, WINDOW_STATES.MISSION_START_QUEUE);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_START_PARTY]: {
+    onEnter: (noxVmInfo) => {
+
+      // back out if they try to sit in the same lobby for 3 hours
+      setTimeout(() => {
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY) return;
+        clickScreen(noxVmInfo, 330, 830);
+      }, OPTIONS.PARTY_QUIT_DELAY);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_START_PARTY_LEAVE]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 435, 610);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_START_PARTY_LEFT]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 300, 590);
     }
   },
 

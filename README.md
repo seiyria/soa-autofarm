@@ -27,6 +27,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
+* `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
 
 ### Debug Args
 
@@ -64,6 +65,7 @@ Or you pass in whatever you want. The arguments are listed below.
 
 # TODO (Future)
 
+* Support JP (swap transitions/clicks/information at runtime)
 * Support MoT
 * Support selling if inventory is full (auto-sell 1/2/3*)
 * Support Story (auto-farm current story mission on join)

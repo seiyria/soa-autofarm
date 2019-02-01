@@ -79,6 +79,8 @@ const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
   const oldTransitions = WINDOW_TRANSITIONS[lastState];
   const curTransitions = WINDOW_TRANSITIONS[state];
 
+  noxVmInfo.state = +state;
+
   if(OPTIONS.MOUSE_BLOCK) {
     const { x, y } = robot.getMousePos();
     
