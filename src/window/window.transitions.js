@@ -2,11 +2,29 @@ const { OPTIONS } = require('../helpers/env');
 
 const { WINDOW_STATES } = require('./window.states');
 
-const { tryTransitionState, clickScreen } = require('../helpers/window');
+const { tryTransitionState, clickScreen, killApp } = require('../helpers/window');
+
+let failedUnknownStateAttemptsSequence = 0;
 
 const WINDOW_TRANSITIONS = {
 
-  [WINDOW_STATES.UNKNOWN]: {},
+  [WINDOW_STATES.UNKNOWN]: {
+    onEnter: () => {
+      failedUnknownStateAttemptsSequence = 0;
+    },
+
+    onRepeat: () => {
+      failedUnknownStateAttemptsSequence++;
+
+      if(failedUnknownStateAttemptsSequence > OPTIONS.APP_KILL_COUNT) {
+        killApp();
+      } 
+    },
+
+    onLeave: () => {
+      failedUnknownStateAttemptsSequence = 0;
+    }
+  },
 
   // priority states
   [WINDOW_STATES.HAS_GIFT]: {
@@ -48,6 +66,12 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.BRIDGE]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.EVENT_SCREEN);
+    }
+  },
+
+  [WINDOW_STATES.SESSION_EXPIRED]: {
+    onRepeat: (noxVmInfo) => {
+      clickScreen(noxVmInfo, 285, 520);
     }
   },
 

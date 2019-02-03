@@ -2,12 +2,12 @@
 // ./nox_adb shell input touchscreen swipe 100 200 100 200 200 (x y destx desty duration)
 // to SCROLL THE SCROLL BAR JUST CLICK IT AT THE DESIRED LOC ./nox_adb shell input touchscreen swipe 630 680 630 680 100
 
-const NOX_ADB_PATH = 'D:\\Program Files\\Nox\\bin\\nox_adb.exe';
-
 const exec = require('child_process').exec;
 
 const Logger = require('./logger');
 const { OPTIONS } = require('./env');
+
+const NOX_ADB_PATH = OPTIONS.NOX_ADB_PATH;
 
 const { WINDOW_NAMES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
@@ -47,9 +47,14 @@ const tryTransitionState = (noxVmInfo, curState, nextState) => {
   clickScreen(noxVmInfo, x, y);
 }
 
+const killApp = () => {
+  exec(`"${NOX_ADB_PATH}" shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
+};
+
 module.exports = {
   windowName,
   transitionState,
   clickScreen,
-  tryTransitionState
+  tryTransitionState,
+  killApp
 };

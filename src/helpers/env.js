@@ -14,6 +14,8 @@ module.exports = {
     SKIP_GIFTS: isUndefined(argv['skip-gifts'])               ? false         : argv['skip-gifts'],
     MOUSE_BLOCK: isUndefined(argv['mouse-hover-block'])       ? false         : argv['mouse-hover-block'],
     PARTY_QUIT_DELAY: isUndefined(argv['party-quit-delay'])   ? 30000         : argv['party-quit-delay'],
+    IS_JP: isUndefined(argv['is-jp'])                         ? false         : argv['is-jp'],
+    APP_KILL_COUNT: isUndefined(argv['app-kill-threshold'])   ? 100           : argv['app-kill-threshold'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
@@ -26,6 +28,8 @@ module.exports = {
     NOX_SIDEBAR_WIDTH: isUndefined(argv['nox-sidebar-width']) ? 40            : argv['nox-sidebar-width'],
     NOX_WINDOW_NAME: isUndefined(argv['nox-window-name'])     ? 'NoxPlayer'   : argv['nox-window-name'],
     NOX_RES_WIDTH: isUndefined(argv['nox-res-width'])         ? 720           : argv['nox-res-width'],
-    NOX_RES_HEIGHT: isUndefined(argv['nox-res-height'])       ? 1280          : argv['nox-res-height']
+    NOX_RES_HEIGHT: isUndefined(argv['nox-res-height'])       ? 1280          : argv['nox-res-height'],
+
+    NOX_ADB_PATH: isUndefined(argv['nox-adb-path'])           ? 'D:\\Program Files\\Nox\\bin\\nox_adb.exe' : argv['nox-adb-path']
   }
 };

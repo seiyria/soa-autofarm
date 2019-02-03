@@ -28,6 +28,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
 * `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
+* `--is-jp` - whether or not you're playing JP. Default: `false`.
+* `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
 
 ### Debug Args
 
@@ -37,6 +39,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
 * `--nox-sidebar-width` - the width of the Nox sidebar. Default: `40`px.
 * `--nox-window-name` - the name of the Nox window. Default: `'NoxPlayer'`.
+* `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
 * `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
 * `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
 * `--app-homescreen-x` - the x-position of the app on the homescreen. Default: `525`.
