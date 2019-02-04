@@ -120,8 +120,23 @@ const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
   setTimeout(() => poll(noxIdx, state), OPTIONS.POLL_RATE);
 };
 
-const run = async() => {
+const repositionNoxWindow = (loc, i) => {
+  noxInstances[i] = {
+    state: WINDOW_STATES.UNKNOWN,
+    left: loc.Left,
+    top: loc.Top,
+    width: loc.Right - loc.Left,
+    height: loc.Bottom - loc.Top,
 
+    headerHeight: NOX_HEADER_HEIGHT,
+    sidebarWidth: NOX_SIDEBAR_WIDTH,
+
+    vmHeight: OPTIONS.NOX_RES_HEIGHT,
+    vmWidth: OPTIONS.NOX_RES_WIDTH
+  };
+};
+
+const getNoxPositions = () => {
   let noxPlayerPositions = [];
 
   try {
@@ -131,25 +146,35 @@ const run = async() => {
     process.exit(1);
   }
 
+  return noxPlayerPositions;
+};
+
+const run = () => {
+
+  const noxPlayerPositions = getNoxPositions();
+
   Logger.log(`Calibrated ${noxPlayerPositions.length} Nox Player location(s)... do not move them!`);
   Logger.debug('Positions:', noxPlayerPositions);
 
   noxPlayerPositions.forEach((loc, i) => {
-    noxInstances[i] = {
-      state: WINDOW_STATES.UNKNOWN,
-      left: loc.Left,
-      top: loc.Top,
-      width: loc.Right - loc.Left,
-      height: loc.Bottom - loc.Top,
-
-      headerHeight: NOX_HEADER_HEIGHT,
-      sidebarWidth: NOX_SIDEBAR_WIDTH,
-
-      vmHeight: OPTIONS.NOX_RES_HEIGHT,
-      vmWidth: OPTIONS.NOX_RES_WIDTH
-    };
+    repositionNoxWindow(loc, i);
     poll(i, WINDOW_STATES.UNKNOWN);
   });
 };
 
 run();
+
+if(OPTIONS.NOX_ALLOW_MOVE) {
+
+  const reposition = () => {
+    Logger.debug('Repositioning Nox windows...');
+    
+    const noxPlayerPositions = getNoxPositions();
+
+    noxPlayerPositions.forEach((loc, i) => {
+      repositionNoxWindow(loc, i);
+    });
+  };
+
+  setInterval(() => reposition(), OPTIONS.POLL_RATE);
+}

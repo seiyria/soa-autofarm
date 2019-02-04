@@ -30,6 +30,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
 * `--is-jp` - whether or not you're playing JP. Default: `false`.
 * `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
+* `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 
 ### Debug Args
 
@@ -63,17 +64,13 @@ Or you pass in whatever you want. The arguments are listed below.
 
 * Farm specific event by position in the list (0, 1, 2, 3, etc)
 * Farm specific mission by position in the list (0, 1, 2, 3, etc)
-* Farm map mission (7-30)
+* Farm map mission ("join people on this planet" when in mission mode)
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)
 
 * Support JP (swap transitions/clicks/information at runtime)
-* Support MoT
-* Support selling if inventory is full (auto-sell 1/2/3*)
-* Support Story (auto-farm current story mission on join)
 * Support Reroll
 * Support multiple Nox instances
-* Support moving Nox at runtime (via 1 arg)
 * Support a distributed network of players to create/join lobbies effectively
 * Track statistics like number of particular events emitted, such as MISSION_START_PARTY and emit them when program halts (to show session statistics). Possibly track these variables over time and store current session, lifetime, etc.
