@@ -156,15 +156,17 @@ const WINDOW_TRANSITIONS = {
       if(OPTIONS.FARM_MISSIONS) {
         clickScreen(noxVmInfo, 130, 840);
       } else {
-        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+        if(OPTIONS.SPECIFIC_EVENT) {
+          clickScreen(noxVmInfo, 285, 375 + (105 * (OPTIONS.SPECIFIC_EVENT - 1)));
+        } else {
+          tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+        }
       }
     }
   },
   
   [WINDOW_STATES.EVENT_SCREEN_MAP]: {
     onRepeat: (noxVmInfo) => {
-      // for now, just join all
-      // TODO allow for joining a custom slot
       if(OPTIONS.FARM_EVERYTHING) {
         clickScreen(noxVmInfo, 85, 855);
         return;
@@ -176,14 +178,16 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.EVENT_SCREEN_MISSION]: {
     onRepeat: (noxVmInfo) => {
-      // for now, just join all
-      // TODO allow for joining a custom slot
       if(OPTIONS.FARM_EVERYTHING) {
         clickScreen(noxVmInfo, 85, 855);
         return;
       }
 
-      tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_JOIN_ALL);
+      if(OPTIONS.SPECIFIC_MISSION) {
+        clickScreen(noxVmInfo, 285, 300 + (80 * (OPTIONS.SPECIFIC_MISSION - 1)));
+      } else {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_JOIN_ALL);
+      }
     }
   },
 

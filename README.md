@@ -32,6 +32,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
+* `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
+* `--specific-mission` - farm a specific event mission by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
 
 ### Debug Args
 
@@ -52,7 +54,8 @@ Or you pass in whatever you want. The arguments are listed below.
 Most of the params will assume you start from the Bridge. However, not all. Here is a list of tasks and where you should be:
 
 * Farm any event (`--farm-everything=1`) - start at the Bridge
-* Farm a particular event (`--farm-everything=0`) - start at the mission list for that particular event
+* Farm a particular event (`--farm-everything=0`) - start at the mission list for that particular event or use `--specific-event`
+* Farm a particular mission (`--farm-everything=1 --specific-event=X`) - start at the mission list for that particular event list and use `--specific-mission`
 * Farm missions (`--farm-missions=1`) - start at the Bridge
 
 ## Gotchas
@@ -71,14 +74,13 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 
 # TODO (Now)
 
-* Farm specific event by position in the list (0, 1, 2, 3, etc)
-* Farm specific mission by position in the list (0, 1, 2, 3, etc)
+* Support multiple Nox instances
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)
 
+* Support scrollbar use to get specific mission/event position
 * Support JP (swap transitions/clicks/information at runtime)
 * Support Reroll
-* Support multiple Nox instances
 * Support a distributed network of players to create/join lobbies effectively
 * Track statistics like number of particular events emitted, such as MISSION_START_PARTY and emit them when program halts (to show session statistics). Possibly track these variables over time and store current session, lifetime, etc.

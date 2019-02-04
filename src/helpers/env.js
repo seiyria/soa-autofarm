@@ -17,6 +17,8 @@ module.exports = {
     IS_JP: isUndefined(argv['is-jp'])                         ? false         : argv['is-jp'],
     APP_KILL_COUNT: isUndefined(argv['app-kill-threshold'])   ? 100           : argv['app-kill-threshold'],
     FARM_MISSIONS: isUndefined(argv['farm-missions'])         ? false         : argv['farm-missions'],
+    SPECIFIC_EVENT: isUndefined(argv['specific-event'])       ? false         : argv['specific-event'],
+    SPECIFIC_MISSION: isUndefined(argv['specific-mission'])   ? false         : argv['specific-mission'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
