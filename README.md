@@ -46,8 +46,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
 * `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
 * `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
-* `--app-homescreen-x` - the x-position of the app on the homescreen. Default: `525`.
-* `--app-homescreen-y` - the y-position of the app on the homescreen. Default: `330`.
+* `--app-homescreen-x` - the x-position of the app on the homescreen. Default: `495`.
+* `--app-homescreen-y` - the y-position of the app on the homescreen. Default: `160`.
 
 ### Where Should I Start The App?
 
@@ -57,6 +57,7 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 * Farm a particular event (`--farm-everything=0`) - start at the mission list for that particular event or use `--specific-event`
 * Farm a particular mission (`--farm-everything=1 --specific-event=X`) - start at the mission list for that particular event list and use `--specific-mission`
 * Farm missions (`--farm-missions=1`) - start at the Bridge
+* Farm a particular story mission - not yet possible
 
 ## Gotchas
 
@@ -64,6 +65,10 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 * You cannot move Nox while this is running.
 * You cannot block the Nox window while this is running.
 * Your SOA settings must be maxed out for everything (Quality, Resolution)
+
+### Multi-Nox Gotchas
+
+If you're using multiple Nox windows, they must be in order, left to right, that you opened them. You probably shouldn't close them. Hopefully this limitation will be able to go away in the future.
 
 ## About Source Code
 
@@ -75,6 +80,7 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 # TODO (Now)
 
 * Support multiple Nox instances
+* Auto-host when have stamina
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)

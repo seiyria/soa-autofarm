@@ -9,7 +9,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName } = require('./src/helpers/window');
+const { windowName, getADBDevices } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -71,7 +71,7 @@ const getState = (x, y) => {
 };
 
 // poll the nox instance
-const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
+const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => { 
   const noxVmInfo = noxInstances[noxIdx];
   const { left, top, width, height } = noxVmInfo;
 
@@ -85,32 +85,32 @@ const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     const { x, y } = robot.getMousePos();
     
     if(x > left && x < left + width && y > top && y < top + height) {
-      Logger.debug('---> MOUSE ---> BLOCK');
+      Logger.debug(`[Nox ${noxIdx}]`, '---> MOUSE ---> BLOCK');
       setTimeout(() => poll(noxIdx, state), OPTIONS.POLL_RATE);
       return;
     }
   }
 
-  Logger.debug('-----------> FOUND STATE', windowName(state));
+  Logger.debug(`[Nox ${noxIdx}]`, '-----------> FOUND STATE', windowName(state));
 
   // we only change state if it's a new state
   if(state !== lastState && state !== WINDOW_STATES.UNKNOWN) {
     Logger.log(`[Nox ${noxIdx}]`, 'New State', windowName(state));
 
     if(oldTransitions && oldTransitions.onLeave) {
-      Logger.debug('===========> TRANSITION:LEAVE', windowName(lastState));
+      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:LEAVE', windowName(lastState));
       oldTransitions.onLeave(noxVmInfo);
     }
 
     if(curTransitions && curTransitions.onEnter) {
-      Logger.debug('===========> TRANSITION:ENTER', windowName(state));
+      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:ENTER', windowName(state));
       curTransitions.onEnter(noxVmInfo);
     }
     
 
   } else if(state === lastState) {
     if(curTransitions && curTransitions.onRepeat) {
-      Logger.debug('===========> TRANSITION:REPEAT', windowName(state));
+      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:REPEAT', windowName(state));
       curTransitions.onRepeat(noxVmInfo);
     }
     
@@ -121,7 +121,7 @@ const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
 };
 
 const repositionNoxWindow = (loc, i) => {
-  noxInstances[i] = {
+  const obj = {
     state: WINDOW_STATES.UNKNOWN,
     left: loc.Left,
     top: loc.Top,
@@ -134,6 +134,8 @@ const repositionNoxWindow = (loc, i) => {
     vmHeight: OPTIONS.NOX_RES_HEIGHT,
     vmWidth: OPTIONS.NOX_RES_WIDTH
   };
+
+  noxInstances[i] = Object.assign({}, noxInstances[i] || {}, obj);
 };
 
 const getNoxPositions = () => {
@@ -153,11 +155,18 @@ const run = () => {
 
   const noxPlayerPositions = getNoxPositions();
 
-  Logger.log(`Calibrated ${noxPlayerPositions.length} Nox Player location(s)... do not move them!`);
+  Logger.log(`Calibrating ${noxPlayerPositions.length} Nox Player location(s)...`);
   Logger.debug('Positions:', noxPlayerPositions);
+
+  const adb = getADBDevices();
+
+  if(adb.length !== noxPlayerPositions.length) {
+    Logger.error(`Found ${adb.length} devices via ADB but could only find ${noxPlayerPositions.length} instances in Windows. Something is wrong.`);
+  }
 
   noxPlayerPositions.forEach((loc, i) => {
     repositionNoxWindow(loc, i);
+    noxInstances[i].adb = adb[i];
     poll(i, WINDOW_STATES.UNKNOWN);
   });
 };

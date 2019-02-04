@@ -3,6 +3,7 @@
 // to SCROLL THE SCROLL BAR JUST CLICK IT AT THE DESIRED LOC ./nox_adb shell input touchscreen swipe 630 680 630 680 100
 
 const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 
 const Logger = require('./logger');
 const { OPTIONS } = require('./env');
@@ -36,7 +37,7 @@ const clickScreen = (noxVmInfo, screenX, screenY) => {
   const y = headerHeight + Math.floor(screenY * (vmHeight / height));
 
   Logger.verbose(`Clicking screen at ${x} ${y}`);
-  exec(`"${NOX_ADB_PATH}" shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
+  exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
 };
 
 const tryTransitionState = (noxVmInfo, curState, nextState) => {
@@ -47,8 +48,13 @@ const tryTransitionState = (noxVmInfo, curState, nextState) => {
   clickScreen(noxVmInfo, x, y);
 }
 
-const killApp = () => {
-  exec(`"${NOX_ADB_PATH}" shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
+const killApp = (noxVmInfo) => {
+  exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
+};
+
+const getADBDevices = () => {
+  const res = execSync(`"${NOX_ADB_PATH}" devices`).toString();
+  return res.split('\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
 };
 
 module.exports = {
@@ -56,5 +62,6 @@ module.exports = {
   transitionState,
   clickScreen,
   tryTransitionState,
-  killApp
+  killApp,
+  getADBDevices
 };

@@ -13,11 +13,11 @@ const WINDOW_TRANSITIONS = {
       failedUnknownStateAttemptsSequence = 0;
     },
 
-    onRepeat: () => {
+    onRepeat: (noxVmInfo) => {
       failedUnknownStateAttemptsSequence++;
 
       if(failedUnknownStateAttemptsSequence > OPTIONS.APP_KILL_COUNT) {
-        killApp();
+        killApp(noxVmInfo);
       } 
     },
 

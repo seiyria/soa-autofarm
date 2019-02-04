@@ -14,7 +14,7 @@ const WINDOW_INFORMATION = {
   // rest of the states
   [WINDOW_STATES.UNKNOWN]:                    { hex: '000000', pos: { x: 100, y: 100 } },
 
-  [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '2B1C4E', pos: { x: 525, y: 330 } },
+  [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '979898', pos: { x: 460, y: -20 } },
 
   [WINDOW_STATES.TITLE_SCREEN]:               { hex: 'DBBA68', pos: { x: 280, y: 540 } },
   [WINDOW_STATES.UPDATED_DATA_AVAILABLE]:     { hex: '', pos: { x: 0, y: 0 } },

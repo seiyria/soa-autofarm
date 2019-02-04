@@ -24,8 +24,8 @@ module.exports = {
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
     VERBOSE: isUndefined(argv['verbose'])                     ? false         : argv['verbose'],
 
-    HOMESCREEN_APP_X: isUndefined(argv['homescreen-app-x'])   ? 525           : argv['homescreen-app-x'],
-    HOMESCREEN_APP_Y: isUndefined(argv['homescreen-app-y'])   ? 330           : argv['homescreen-app-y'],
+    HOMESCREEN_APP_X: isUndefined(argv['homescreen-app-x'])   ? 495           : argv['homescreen-app-x'],
+    HOMESCREEN_APP_Y: isUndefined(argv['homescreen-app-y'])   ? 160           : argv['homescreen-app-y'],
 
     NOX_HEADER_HEIGHT: isUndefined(argv['nox-header-height']) ? 30            : argv['nox-header-height'],
     NOX_SIDEBAR_WIDTH: isUndefined(argv['nox-sidebar-width']) ? 40            : argv['nox-sidebar-width'],
