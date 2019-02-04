@@ -6,6 +6,7 @@ const WINDOW_CLICKS = {
   // BRIDGE -> *
   [WINDOW_STATES.BRIDGE]: {
     [WINDOW_STATES.EVENT_SCREEN]: { x: 100, y: 830 },
+    [WINDOW_STATES.STORY_SCREEN]: { x: 230, y: 830 },
     [WINDOW_STATES.GIFT_BOX]: { x: 500, y: 225 },
     [WINDOW_STATES.ACHIEVEMENTS]: { x: 500, y: 315 }
   },
@@ -66,7 +67,8 @@ const WINDOW_CLICKS = {
 
   // STORY SCREEN -> *
   [WINDOW_STATES.STORY_SCREEN]: {
-    [WINDOW_STATES.BRIDGE]: { x: 50, y: 930 }
+    [WINDOW_STATES.BRIDGE]: { x: 50, y: 930 },
+    [WINDOW_STATES.EVENT_JOIN_ALL]: { x: 400, y: 850 }
   },
 };
 

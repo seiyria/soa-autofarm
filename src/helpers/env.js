@@ -16,6 +16,7 @@ module.exports = {
     PARTY_QUIT_DELAY: isUndefined(argv['party-quit-delay'])   ? 30000         : argv['party-quit-delay'],
     IS_JP: isUndefined(argv['is-jp'])                         ? false         : argv['is-jp'],
     APP_KILL_COUNT: isUndefined(argv['app-kill-threshold'])   ? 100           : argv['app-kill-threshold'],
+    FARM_MISSIONS: isUndefined(argv['farm-missions'])         ? false         : argv['farm-missions'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],

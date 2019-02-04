@@ -31,6 +31,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--is-jp` - whether or not you're playing JP. Default: `false`.
 * `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
+* `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
 
 ### Debug Args
 
@@ -45,6 +46,14 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
 * `--app-homescreen-x` - the x-position of the app on the homescreen. Default: `525`.
 * `--app-homescreen-y` - the y-position of the app on the homescreen. Default: `330`.
+
+### Where Should I Start The App?
+
+Most of the params will assume you start from the Bridge. However, not all. Here is a list of tasks and where you should be:
+
+* Farm any event (`--farm-everything=1`) - start at the Bridge
+* Farm a particular event (`--farm-everything=0`) - start at the mission list for that particular event
+* Farm missions (`--farm-missions=1`) - start at the Bridge
 
 ## Gotchas
 
@@ -64,7 +73,6 @@ Or you pass in whatever you want. The arguments are listed below.
 
 * Farm specific event by position in the list (0, 1, 2, 3, etc)
 * Farm specific mission by position in the list (0, 1, 2, 3, etc)
-* Farm map mission ("join people on this planet" when in mission mode)
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)

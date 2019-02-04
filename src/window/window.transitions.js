@@ -65,7 +65,11 @@ const WINDOW_TRANSITIONS = {
   // other states
   [WINDOW_STATES.BRIDGE]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.EVENT_SCREEN);
+      if(OPTIONS.FARM_MISSIONS) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.STORY_SCREEN);
+      } else {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.EVENT_SCREEN);
+      }
     }
   },
 
@@ -149,7 +153,11 @@ const WINDOW_TRANSITIONS = {
   // EVENT LIST
   [WINDOW_STATES.EVENT_SCREEN]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+      if(OPTIONS.FARM_MISSIONS) {
+        clickScreen(noxVmInfo, 130, 840);
+      } else {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+      }
     }
   },
   
@@ -383,7 +391,11 @@ const WINDOW_TRANSITIONS = {
   // STORY MISSIONS
   [WINDOW_STATES.STORY_SCREEN]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.BRIDGE);
+      if(OPTIONS.FARM_MISSIONS) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+      } else {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.BRIDGE);
+      }
     }
   },
 };
