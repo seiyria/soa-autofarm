@@ -10,10 +10,12 @@ const { OPTIONS } = require('./env');
 
 const NOX_ADB_PATH = OPTIONS.NOX_ADB_PATH;
 
-const { WINDOW_NAMES } = require('../window/window.states');
+const { WINDOW_NAMES, WINDOW_STATES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
 
 const windowName = (id) => WINDOW_NAMES[id] || `UNKNOWN (${id})`;
+
+const windowId = (name) => WINDOW_STATES[name] || `UNKNOWN (${name})`;
 
 const transitionState = (curState, nextState) => {
   if(!WINDOW_CLICKS[curState]) {
@@ -75,6 +77,7 @@ const getADBDevices = () => {
 
 module.exports = {
   windowName,
+  windowId,
   transitionState,
   clickScreen,
   tryTransitionState,

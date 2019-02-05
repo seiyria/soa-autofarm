@@ -9,7 +9,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices, getTCPAndWindowNames } = require('./src/helpers/window');
+const { windowName, windowId, getADBDevices } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -51,7 +51,7 @@ const getState = (x, y) => {
     const hexColor = pixcolor([screenX, screenY + NOX_HEADER_HEIGHT], true);
 
     // move the mouse to the location in debug mode only
-    if(OPTIONS.DEBUG_STATES[windowName(foundScreen)]) robot.moveMouse(screenX, screenY + NOX_HEADER_HEIGHT);
+    if(OPTIONS.DEBUG_STATES[windowId(foundScreen)] || screen.debug) robot.moveMouse(screenX, screenY + NOX_HEADER_HEIGHT);
 
     // if we have a color set for this screen
     if(screen.hex) {
