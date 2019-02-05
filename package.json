@@ -8,6 +8,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "lodash.invert": "^4.3.0",
+    "lodash.sortby": "^4.7.0",
     "minimist": "^1.2.0",
     "pixcolor": "^1.0.0",
     "winpos": "^1.0.0"

@@ -4,6 +4,8 @@ const winpos = require('winpos');
 const pixcolor = require('pixcolor');
 const robot = require('robotjs');
 
+const sortBy = require('lodash.sortby');
+
 const { OPTIONS } = require('./src/helpers/env');
 
 const { WINDOW_STATES } = require('./src/window/window.states');
@@ -148,7 +150,7 @@ const getNoxPositions = () => {
     process.exit(1);
   }
 
-  return noxPlayerPositions;
+  return sortBy(noxPlayerPositions, 'left').reverse();
 };
 
 const run = () => {
