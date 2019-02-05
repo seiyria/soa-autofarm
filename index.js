@@ -51,7 +51,7 @@ const getState = (x, y) => {
     const hexColor = pixcolor([screenX, screenY + NOX_HEADER_HEIGHT], true);
 
     // move the mouse to the location in debug mode only
-    if(OPTIONS.DEBUG_STATES[windowId(foundScreen)] || screen.debug) robot.moveMouse(screenX, screenY + NOX_HEADER_HEIGHT);
+    if(OPTIONS.DEBUG_STATES[windowName(screenId)] || screen.debug) robot.moveMouse(screenX, screenY + NOX_HEADER_HEIGHT);
 
     // if we have a color set for this screen
     if(screen.hex) {
