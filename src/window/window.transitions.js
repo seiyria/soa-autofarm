@@ -77,31 +77,31 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.SESSION_EXPIRED]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, WINDOW_STATES.SESSION_EXPIRED, WINDOW_STATES.BRIDGE);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.SESSION_EXPIRED, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.BRIDGE_UPDATE_NEWS]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, WINDOW_STATES.BRIDGE_UPDATE_NEWS, WINDOW_STATES.BRIDGE);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE_UPDATE_NEWS, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.BRIDGE_DAILY_BOX]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, WINDOW_STATES.BRIDGE_DAILY_BOX, WINDOW_STATES.BRIDGE);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE_DAILY_BOX, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.BRIDGE_SUPPORT_MEDALS]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, WINDOW_STATES.BRIDGE_SUPPORT_MEDALS, WINDOW_STATES.BRIDGE);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE_SUPPORT_MEDALS, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.TITLE_SCREEN]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, WINDOW_STATES.TITLE_SCREEN, WINDOW_STATES.BRIDGE);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.TITLE_SCREEN, WINDOW_STATES.BRIDGE);
     }
   },
 
