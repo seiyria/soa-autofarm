@@ -61,6 +61,7 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 
 ## Gotchas
 
+* Your windows must contain the name "NoxPlayer". This is the default, so as long as you're not changing it, you're fine.
 * You must use Nox v6.2.6.2. It probably works on other Nox versions, but this is the version it was developed against.
 * You cannot move Nox while this is running (unless you use `--nox-allow-move`).
 * You cannot block the Nox window while this is running.
