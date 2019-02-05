@@ -416,6 +416,19 @@ const WINDOW_TRANSITIONS = {
       }
     }
   },
+
+  // UPDATES
+  [WINDOW_STATES.UPDATED_DATA_AVAILABLE]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.UPDATED_DATA_AVAILABLE, WINDOW_STATES.UPDATE_SCREEN);
+    }
+  },
+
+  [WINDOW_STATES.UPDATE_SCREEN]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.UPDATE_SCREEN, WINDOW_STATES.BRIDGE);
+    }
+  },
 };
 
 module.exports = { WINDOW_TRANSITIONS };

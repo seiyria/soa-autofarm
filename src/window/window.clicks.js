@@ -148,6 +148,14 @@ const WINDOW_CLICKS = {
     [WINDOW_STATES.BRIDGE]: { x: 50, y: 930 },
     [WINDOW_STATES.EVENT_JOIN_ALL]: { x: 400, y: 850 }
   },
+
+  // UPDATES -> *
+  [WINDOW_STATES.UPDATED_DATA_AVAILABLE]: {
+    [WINDOW_STATES.UPDATE_SCREEN]: { x: 300, y: 590 }
+  },
+  [WINDOW_STATES.UPDATE_SCREEN]: {
+    [WINDOW_STATES.BRIDGE]: { x: 300, y: 850 }
+  },
 };
 
 module.exports = {

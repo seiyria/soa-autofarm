@@ -17,8 +17,8 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '979898', pos: { x: 460, y: -20 } },
 
   [WINDOW_STATES.TITLE_SCREEN]:               { hex: 'DBBA68', pos: { x: 280, y: 540 } },
-  [WINDOW_STATES.UPDATED_DATA_AVAILABLE]:     { hex: '', pos: { x: 0, y: 0 } },
-  [WINDOW_STATES.UPDATE_SCREEN]:              { hex: '', pos: { x: 0, y: 0 } },
+  [WINDOW_STATES.UPDATED_DATA_AVAILABLE]:     { hex: '9AA8BA', pos: { x: 465, y: 395 } },
+  [WINDOW_STATES.UPDATE_SCREEN]:              { hex: 'B8DAFC', pos: { x: 400, y: 90 } },
   [WINDOW_STATES.SESSION_EXPIRED]:            { hex: 'E8EBEF', pos: { x: 480, y: 425 } },
 
   [WINDOW_STATES.BRIDGE]:                     { hex: '159DF1', pos: { x: 210, y: 795 } },

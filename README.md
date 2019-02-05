@@ -65,6 +65,7 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 * You must use Nox v6.2.6.2. It probably works on other Nox versions, but this is the version it was developed against.
 * You cannot move Nox while this is running (unless you use `--nox-allow-move`).
 * You cannot block the Nox window while this is running.
+* Your SOA character party should probably be max level, just in case.
 * Your SOA settings must be maxed out for everything (Quality, Resolution)
 
 ### Multi-Nox Gotchas
