@@ -1,5 +1,3 @@
-
-
 const winpos = require('winpos');
 const pixcolor = require('pixcolor');
 const robot = require('robotjs');
@@ -11,7 +9,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices } = require('./src/helpers/window');
+const { windowName, getADBDevices, getTCPAndWindowNames } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -150,10 +148,10 @@ const getNoxPositions = () => {
     process.exit(1);
   }
 
-  return sortBy(noxPlayerPositions, 'left').reverse();
+  return sortBy(noxPlayerPositions, 'Left');
 };
 
-const run = () => {
+const run = async () => {
 
   const noxPlayerPositions = getNoxPositions();
 

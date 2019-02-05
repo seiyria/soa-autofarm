@@ -213,6 +213,12 @@ const WINDOW_TRANSITIONS = {
   },
 
   // MISSION
+  [WINDOW_STATES.MISSION_START]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_START_MP);
+    }
+  },
+
   [WINDOW_STATES.MISSION_START_MP]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP, WINDOW_STATES.MISSION_START_MP_MATCH);
@@ -222,12 +228,6 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.MISSION_START_MP_MATCH]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP_MATCH, WINDOW_STATES.MISSION_START_QUEUE);
-    }
-  },
-
-  [WINDOW_STATES.MISSION_START]: {
-    onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_QUEUE_RETRY, WINDOW_STATES.MISSION_START_QUEUE);
     }
   },
 
@@ -402,7 +402,7 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.REWARD3]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN_MISSION);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN);
     }
   },
 

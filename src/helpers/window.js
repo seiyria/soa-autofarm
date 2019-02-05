@@ -52,9 +52,25 @@ const killApp = (noxVmInfo) => {
   exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
 };
 
+// sadly, this doesn't work at all. but I'm keeping the code here in case I can figure out a way to tie NoxVMHandle <-> NoxPlayer
+const getTCPAndWindowNames = () => {
+
+  const cmd = `Get-NetTCPConnection | 
+  Select LocalAddress, LocalPort, State, OwningProcess, @{n='WindowTitle';e={(Get-Process -ErrorAction Ignore -Id $_.OwningProcess).MainWindowTitle}} |
+  Where {$_.State -eq 'Established' -and $_.WindowTitle -match '${OPTIONS.NOX_WINDOW_NAME}*'} | 
+  Format-Table -AutoSize`.split('\n').join(' ');
+
+  const retval = execSync(`powershell.exe -Command "${cmd}"`).toString();
+
+  return retval.split('\r\n').slice(3, -3).map(x => x.trim().replace(/\s\s+/g, ' ')).map(x => {
+    const [ip, port, , , name] = x.split(' ');
+    return { addr: `${ip}:${port}`, name };
+  });
+};
+
 const getADBDevices = () => {
   const res = execSync(`"${NOX_ADB_PATH}" devices`).toString();
-  return res.split('\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
+  return res.split('\r\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
 };
 
 module.exports = {
@@ -63,5 +79,6 @@ module.exports = {
   clickScreen,
   tryTransitionState,
   killApp,
-  getADBDevices
+  getADBDevices,
+  getTCPAndWindowNames
 };
