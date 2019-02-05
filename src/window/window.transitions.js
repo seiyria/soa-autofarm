@@ -4,7 +4,9 @@ const { WINDOW_STATES } = require('./window.states');
 
 const { tryTransitionState, clickScreen, killApp } = require('../helpers/window');
 
+// variables used by the screen transitions
 let failedUnknownStateAttemptsSequence = 0;
+let shouldStillLeave = false;
 
 const WINDOW_TRANSITIONS = {
 
@@ -75,31 +77,31 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.SESSION_EXPIRED]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 285, 520);
+      clickScreen(noxVmInfo, WINDOW_STATES.SESSION_EXPIRED, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.BRIDGE_UPDATE_NEWS]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 285, 850);
+      clickScreen(noxVmInfo, WINDOW_STATES.BRIDGE_UPDATE_NEWS, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.BRIDGE_DAILY_BOX]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 285, 830);
+      clickScreen(noxVmInfo, WINDOW_STATES.BRIDGE_DAILY_BOX, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.BRIDGE_SUPPORT_MEDALS]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 285, 620);
+      clickScreen(noxVmInfo, WINDOW_STATES.BRIDGE_SUPPORT_MEDALS, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.TITLE_SCREEN]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 250, 285);
+      clickScreen(noxVmInfo, WINDOW_STATES.TITLE_SCREEN, WINDOW_STATES.BRIDGE);
     }
   },
 
@@ -125,28 +127,28 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.ACHIEVEMENTS_AVAIL]: {
     onRepeat: (noxVmInfo) => {
       // repeatedly click the top achievement
-      clickScreen(noxVmInfo, 250, 285);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.ACHIEVEMENTS_AVAIL, WINDOW_STATES.ACHIEVEMENTS_MODAL);
     }
   },
 
   [WINDOW_STATES.ACHIEVEMENTS_MODAL]: {
     onRepeat: (noxVmInfo) => {
       // click the close button on the "earned achievement" modal
-      clickScreen(noxVmInfo, 275, 580);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.ACHIEVEMENTS_MODAL, WINDOW_STATES.ACHIEVEMENTS);
     }
   },
 
   [WINDOW_STATES.ACHIEVEMENTS]: {
     onRepeat: (noxVmInfo) => {
       // click the close button
-      clickScreen(noxVmInfo, 280, 800);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.ACHIEVEMENTS, WINDOW_STATES.BRIDGE);
     }
   },
 
   [WINDOW_STATES.ACHIEVEMENTS_CAT_CLEAR]: {
     onRepeat: (noxVmInfo) => {
       // click the close button
-      clickScreen(noxVmInfo, 280, 800);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.ACHIEVEMENTS_CAT_CLEAR, WINDOW_STATES.BRIDGE);
     }
   },
 
@@ -154,10 +156,14 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.EVENT_SCREEN]: {
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_MISSIONS) {
-        clickScreen(noxVmInfo, 130, 840);
+        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.BRIDGE);
       } else {
+
+        // click the specific event in the menu list
         if(OPTIONS.SPECIFIC_EVENT) {
           clickScreen(noxVmInfo, 285, 375 + (105 * (OPTIONS.SPECIFIC_EVENT - 1)));
+
+        // or, if none specified, click the join all button
         } else {
           tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
         }
@@ -168,7 +174,7 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.EVENT_SCREEN_MAP]: {
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_EVERYTHING) {
-        clickScreen(noxVmInfo, 85, 855);
+        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
         return;
       }
 
@@ -179,12 +185,15 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.EVENT_SCREEN_MISSION]: {
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_EVERYTHING) {
-        clickScreen(noxVmInfo, 85, 855);
+        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_SCREEN);
         return;
       }
 
+      // click a specific mission in the menu list
       if(OPTIONS.SPECIFIC_MISSION) {
         clickScreen(noxVmInfo, 285, 300 + (80 * (OPTIONS.SPECIFIC_MISSION - 1)));
+
+      // or, click join all if we're not doing farm everything
       } else {
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_JOIN_ALL);
       }
@@ -199,7 +208,7 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.EVENT_SCREEN_STORY]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 180, 530);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_STORY, WINDOW_STATES.EVENT_SCREEN_MAP);
     }
   },
 
@@ -224,7 +233,7 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_START_DISBAND]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 345, 610);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_DISBAND, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
@@ -236,48 +245,53 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_START_PARTY]: {
     onEnter: (noxVmInfo) => {
+      shouldStillLeave = true;
 
       // back out if they try to sit in the same lobby for 3 hours
       setTimeout(() => {
-        if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY) return;
-        clickScreen(noxVmInfo, 330, 830);
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY || !shouldStillLeave) return;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
       }, OPTIONS.PARTY_QUIT_DELAY);
+    },
+
+    onLeave: () => {
+      shouldStillLeave = false;
     }
   },
 
   [WINDOW_STATES.MISSION_START_PARTY_LEAVE]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 435, 610);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_LEAVE, WINDOW_STATES.MISSION_START_PARTY_LEFT);
     }
   },
 
   [WINDOW_STATES.MISSION_START_PARTY_LEFT]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 300, 590);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_LEFT, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
   [WINDOW_STATES.MISSION_START_CHAR_DETAILS]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 330, 850);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_CHAR_DETAILS, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
   [WINDOW_STATES.MISSION_START_DISCONNECT]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 345, 610);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_DISCONNECT, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
   [WINDOW_STATES.MISSION_START_UNKNOWN_ERR]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 300, 590);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_UNKNOWN_ERR, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
   [WINDOW_STATES.MISSION_START_UNSTABLE_ERR]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 300, 590);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_UNSTABLE_ERR, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
@@ -290,13 +304,13 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.COMBAT_DISCONNECT]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 325, 545);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.COMBAT_DISCONNECT, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
   [WINDOW_STATES.COMBAT_DISCONNECT_2]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 325, 545);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.COMBAT_DISCONNECT_2, WINDOW_STATES.MISSION_START_MP);
     }
   },
 
@@ -376,19 +390,19 @@ const WINDOW_TRANSITIONS = {
   // POST-COMBAT
   [WINDOW_STATES.REWARD1]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 280, 800);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD1, WINDOW_STATES.REWARD2);
     }
   },
 
   [WINDOW_STATES.REWARD2]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 280, 800);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD2, WINDOW_STATES.REWARD3);
     }
   },
 
   [WINDOW_STATES.REWARD3]: {
     onRepeat: (noxVmInfo) => {
-      clickScreen(noxVmInfo, 280, 800);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN_MISSION);
     }
   },
 

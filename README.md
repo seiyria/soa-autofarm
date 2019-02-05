@@ -57,12 +57,12 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 * Farm a particular event (`--farm-everything=0`) - start at the mission list for that particular event or use `--specific-event`
 * Farm a particular mission (`--farm-everything=1 --specific-event=X`) - start at the mission list for that particular event list and use `--specific-mission`
 * Farm missions (`--farm-missions=1`) - start at the Bridge
-* Farm a particular story mission - not yet possible
+* Farm a particular story mission - not yet possible, but not likely to be necessary
 
 ## Gotchas
 
 * You must use Nox v6.2.6.2. It probably works on other Nox versions, but this is the version it was developed against.
-* You cannot move Nox while this is running.
+* You cannot move Nox while this is running (unless you use `--nox-allow-move`).
 * You cannot block the Nox window while this is running.
 * Your SOA settings must be maxed out for everything (Quality, Resolution)
 
@@ -79,7 +79,6 @@ If you're using multiple Nox windows, they must be in order, left to right, that
 
 # TODO (Now)
 
-* Support multiple Nox instances
 * Auto-host when have stamina
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
