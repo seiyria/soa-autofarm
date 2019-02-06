@@ -5,8 +5,15 @@ const { WINDOW_STATES } = require('./window.states');
 const { tryTransitionState, clickScreen, killApp } = require('../helpers/window');
 
 // variables used by the screen transitions
+
+// used to check how many times we've seen an unknown state in a row - this could indicate a crash/freeze, usually
 let failedUnknownStateAttemptsSequence = 0;
+
+// used to check if we've been in the same party room for a period of time - we can quit after a period of time
 let shouldStillLeave = false;
+
+// used to check if we've been retrying too many times - we should probably go back to the event screen if so
+let failedRetryAttempts = 0;
 
 const WINDOW_TRANSITIONS = {
 
@@ -245,6 +252,13 @@ const WINDOW_TRANSITIONS = {
   },
 
   [WINDOW_STATES.MISSION_START_QUEUE_RETRY]: {
+    onEnter: (noxVmInfo) => {
+      failedRetryAttempts++;
+
+      if(failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
+        killApp(noxVmInfo);
+      }
+    },
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_QUEUE_RETRY, WINDOW_STATES.MISSION_START_QUEUE);
     }
@@ -304,6 +318,9 @@ const WINDOW_TRANSITIONS = {
 
   // COMBAT
   [WINDOW_STATES.COMBAT]: {
+    onEnter: () => {
+      failedRetryAttempts = 0;
+    },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);
     }

@@ -20,6 +20,7 @@ module.exports = {
     SPECIFIC_EVENT: isUndefined(argv['specific-event'])       ? false         : argv['specific-event'],
     SPECIFIC_MISSION: isUndefined(argv['specific-mission'])   ? false         : argv['specific-mission'],
     SAFETY_RADIUS: isUndefined(argv['safety-radius'])         ? 0             : argv['safety-radius'],
+    RETRY_FAIL_ATT: isUndefined(argv['retry-fail-attempts'])  ? 3             : argv['retry-fail-attempts'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],

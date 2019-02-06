@@ -20,37 +20,38 @@ Or you pass in whatever you want. The arguments are listed below.
 
 ### Useful Args
 
+* `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
 * `--auto-tap-attack` - whether or not to auto tap attack to force melee attacks. Default: `false`.
 * `--farm-everything` - farm every MP event (using the Join All feature) or just the specific one you enter into. Default: `true`.
-* `--poll-rate` - the speed at which the screen should be checked / updated. Default: `750`ms.
-* `--rush-tries` - the number of tries for auto-rush. Default: `1`.
-* `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
-* `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
-* `--skip-gifts` - skip opening the gift box. Default: `false`.
-* `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
-* `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
-* `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
-* `--is-jp` - whether or not you're playing JP. Default: `false`.
-* `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
-* `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
+* `--is-jp` - whether or not you're playing JP. Default: `false`.
+* `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
+* `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
+* `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
+* `--poll-rate` - the speed at which the screen should be checked / updated. Default: `750`ms.
+* `--retry-fail-attempts` - how many attempts to "retry" finding a mission. If this gets stuck, you could be trying to farm a dead mission, and get stuck for a long time. Default: `3`.
+* `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
+* `--rush-tries` - the number of tries for auto-rush. Default: `1`.
+* `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. Default: `0`.
+* `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
+* `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
 * `--specific-mission` - farm a specific event mission by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
-* `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. Default: `0`.
+* `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
 
 ### Debug Args
 
-* `--debug` - print all the debug messages. Warning, there are a lot of these. Default: `false`.
-* `--verbose` - if used with `--debug`, print even more messages. This is definitely for debugging only. Default: `false`.
-* `--debug-pointer` - move the mouse to where a particular state will be checking a pixel (`--debug-pointer=COMBAT_START_RUSH_1`). Can debug multiple (`--debug-pointer=COMBAT_START_RUSH_1,COMBAT_START_RUSH_2`). Default: `''`.
-* `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
-* `--nox-sidebar-width` - the width of the Nox sidebar. Default: `40`px.
-* `--nox-window-name` - the name of the Nox window. Default: `'NoxPlayer'`.
-* `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
-* `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
-* `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
 * `--app-homescreen-x` - the x-position of the app on the homescreen. Default: `495`.
 * `--app-homescreen-y` - the y-position of the app on the homescreen. Default: `160`.
+* `--debug` - print all the debug messages. Warning, there are a lot of these. Default: `false`.
+* `--debug-pointer` - move the mouse to where a particular state will be checking a pixel (`--debug-pointer=COMBAT_START_RUSH_1`). Can debug multiple (`--debug-pointer=COMBAT_START_RUSH_1,COMBAT_START_RUSH_2`). Default: `''`.
+* `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
+* `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
+* `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
+* `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
+* `--nox-sidebar-width` - the width of the Nox sidebar. Default: `40`px.
+* `--nox-window-name` - the name of the Nox window. Default: `'NoxPlayer'`.
+* `--verbose` - if used with `--debug`, print even more messages. This is definitely for debugging only. Default: `false`.
 
 ### Where Should I Start The App?
 
