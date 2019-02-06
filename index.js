@@ -1,6 +1,7 @@
 const winpos = require('winpos');
-const pixcolor = require('pixcolor');
+const rectshot = require('rectshot');
 const robot = require('robotjs');
+const Jimp = require('jimp');
 
 const sortBy = require('lodash.sortby');
 
@@ -9,7 +10,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, windowId, getADBDevices } = require('./src/helpers/window');
+const { windowName, getADBDevices } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -21,9 +22,11 @@ const NOX_SIDEBAR_WIDTH = 40;
 const noxInstances = [];
 
 // get the current state based on the nox instance Left/Top
-const getState = (x, y) => {
+const getState = async (noxVmInfo) => {
 
   let foundScreen = WINDOW_STATES.UNKNOWN;
+  const screenshot = rectshot([noxVmInfo.left, noxVmInfo.top, noxVmInfo.width, noxVmInfo.height], true);
+  const image = await Jimp.read(screenshot);
 
   Object.keys(WINDOW_INFORMATION).forEach(screenId => {
 
@@ -43,12 +46,13 @@ const getState = (x, y) => {
       return;
     }
 
-    const screenX = x + screen.pos.x;
-    const screenY = y + screen.pos.y + NOX_HEADER_HEIGHT;
+    const screenX = screen.pos.x;
+    const screenY = screen.pos.y + NOX_HEADER_HEIGHT;
 
     // get the color of the pixel at that particular location
     // robot.getColor doesn't work because it breaks if your coordinate is on a different monitor
-    const hexColor = pixcolor([screenX, screenY + NOX_HEADER_HEIGHT], true);
+    const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(screenX, screenY));
+    const hexColor = (hexColorRGBA.r.toString(16) + hexColorRGBA.g.toString(16) + hexColorRGBA.b.toString(16)).toUpperCase();
 
     // move the mouse to the location in debug mode only
     if(OPTIONS.DEBUG_STATES[windowName(screenId)] || screen.debug) robot.moveMouse(screenX, screenY + NOX_HEADER_HEIGHT);
@@ -71,11 +75,11 @@ const getState = (x, y) => {
 };
 
 // poll the nox instance
-const poll = (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => { 
+const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => { 
   const noxVmInfo = noxInstances[noxIdx];
   const { left, top, width, height } = noxVmInfo;
 
-  const state = getState(left, top);
+  const state = await getState(noxVmInfo);
   const oldTransitions = WINDOW_TRANSITIONS[lastState];
   const curTransitions = WINDOW_TRANSITIONS[state];
 

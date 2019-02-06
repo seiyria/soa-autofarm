@@ -6,6 +6,8 @@ A tool that autoplays SOA to farm events.
 
 Please, do not farm content you would not normally auto with this tool. You'll be making Eve cry if you do. This means that latest event M2/M3 is off-limits (in general). Most legacy content is easy enough if you are autoing as a defender or healer, but keep in mind you will never rush first - this tool only attempts to rush when someone else rushes first.
 
+Specifically regarding the characters that work best with this: defenders and attackers. Healers aren't the best because you will not currently rush first, ever. Invokers are ok, but you would want a higher rush delay to attempt to go last better. Sharpshooters are ok as long as you have someone in front of you rushing (again, you will not rush first).
+
 ## Current Args / Usage
 
 Right now, there is no executable. So, you would run:
@@ -87,7 +89,8 @@ If you're using multiple Nox windows, they must be in order, left to right, that
 
 # TODO (Future)
 
-* Support scrollbar use to get specific mission/event position
+* "Wait for all rush" feature (either wait for 4x rush, or wait for as many as can be waited for with dead people)
+* Support scrollbar use to get specific mission/event position (beyond what's supported)
 * Support JP (swap transitions/clicks/information at runtime)
 * Support Reroll
 * Support a distributed network of players to create/join lobbies effectively
