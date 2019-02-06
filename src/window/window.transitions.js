@@ -111,9 +111,16 @@ const WINDOW_TRANSITIONS = {
       tryTransitionState(noxVmInfo, WINDOW_STATES.GIFT_BOX, WINDOW_STATES.GIFT_BOX_MODAL);
     }
   },
+
   [WINDOW_STATES.GIFT_BOX_MODAL]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.GIFT_BOX_MODAL, WINDOW_STATES.GIFT_BOX);
+    }
+  },
+
+  [WINDOW_STATES.GIFT_BOX_MODAL_LB]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.GIFT_BOX_MODAL_LB, WINDOW_STATES.GIFT_BOX);
     }
   },
 

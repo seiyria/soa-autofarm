@@ -9,7 +9,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.HAS_ACHIEVEMENT_MAP]:        { hex: '710000', pos: { x: 460, y: 240 } },
   [WINDOW_STATES.HAS_ACHIEVEMENT_LIST]:       { hex: '7A0000', pos: { x: 455, y: 150 } },
   [WINDOW_STATES.HAS_ACHIEVEMENT_BRIDGE]:     { hex: 'E50909', pos: { x: 475, y: 290 } },
-  [WINDOW_STATES.HAS_GIFT]:                   { hex: '740000', pos: { x: 480, y: 195 } },
+  [WINDOW_STATES.HAS_GIFT]:                   { hex: 'FD6666', pos: { x: 470, y: 185 } },
 
   // rest of the states
   [WINDOW_STATES.UNKNOWN]:                    { hex: '000000', pos: { x: 100, y: 100 } },
@@ -32,10 +32,11 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.ACHIEVEMENTS_CAT_CLEAR]:     { hex: '1F406A', pos: { x: 240, y: 400 } },
 
   [WINDOW_STATES.GIFT_BOX]:                   { hex: '0C4277', pos: { x: 410, y: 840 } },
-  [WINDOW_STATES.GIFT_BOX_EMPTY]:             { hex: '060D10', pos: { x: 410, y: 840 } },
   [WINDOW_STATES.GIFT_BOX_MODAL]:             { hex: 'A7B4C4', pos: { x: 255, y: 310 } },
+  [WINDOW_STATES.GIFT_BOX_MODAL_LB]:          { hex: '193452', pos: { x: 335, y: 360 } },
+  [WINDOW_STATES.GIFT_BOX_EMPTY]:             { hex: '060D10', pos: { x: 410, y: 840 } },
   
-  [WINDOW_STATES.EVENT_SCREEN]:               { hex: '919191', pos: { x: 155, y: 280 } },
+  [WINDOW_STATES.EVENT_SCREEN]:               { hex: 'B3B4B4', pos: { x: 45, y: 175 } },
   [WINDOW_STATES.EVENT_SCREEN_MAP]:           { hex: '00427B', pos: { x: 150, y: 195 } },
   [WINDOW_STATES.EVENT_SCREEN_MISSION]:       { hex: '1B6AB7', pos: { x: 340, y: 270 } },
   [WINDOW_STATES.EVENT_JOIN_ALL]:             { hex: 'EBEEF2', pos: { x: 315, y: 425 } },
