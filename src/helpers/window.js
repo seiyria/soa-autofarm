@@ -50,7 +50,8 @@ const tryTransitionState = (noxVmInfo, curState, nextState) => {
   clickScreen(noxVmInfo, x, y);
 }
 
-const killApp = (noxVmInfo) => {
+const killApp = (noxVmInfo, reason) => {
+  Logger.log(`[Nox ${noxVmInfo.index}]`, reason || 'Killed for unknown reason.');
   exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
 };
 

@@ -15,7 +15,7 @@ module.exports = {
     MOUSE_BLOCK: isUndefined(argv['mouse-hover-block'])       ? false         : argv['mouse-hover-block'],
     PARTY_QUIT_DELAY: isUndefined(argv['party-quit-delay'])   ? 30000         : argv['party-quit-delay'],
     IS_JP: isUndefined(argv['is-jp'])                         ? false         : argv['is-jp'],
-    APP_KILL_COUNT: isUndefined(argv['app-kill-threshold'])   ? 100           : argv['app-kill-threshold'],
+    APP_KILL_COUNT: isUndefined(argv['app-kill-threshold'])   ? 600           : argv['app-kill-threshold'],
     FARM_MISSIONS: isUndefined(argv['farm-missions'])         ? false         : argv['farm-missions'],
     SPECIFIC_EVENT: isUndefined(argv['specific-event'])       ? false         : argv['specific-event'],
     SPECIFIC_MISSION: isUndefined(argv['specific-mission'])   ? false         : argv['specific-mission'],

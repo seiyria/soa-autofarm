@@ -140,7 +140,8 @@ const repositionNoxWindow = (loc, i) => {
     sidebarWidth: NOX_SIDEBAR_WIDTH,
 
     vmHeight: OPTIONS.NOX_RES_HEIGHT,
-    vmWidth: OPTIONS.NOX_RES_WIDTH
+    vmWidth: OPTIONS.NOX_RES_WIDTH,
+    index: i
   };
 
   noxInstances[i] = Object.assign({}, noxInstances[i] || {}, obj);

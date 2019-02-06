@@ -20,7 +20,7 @@ Or you pass in whatever you want. The arguments are listed below.
 
 ### Useful Args
 
-* `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `100`.
+* `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `600`.
 * `--auto-tap-attack` - whether or not to auto tap attack to force melee attacks. Default: `false`.
 * `--farm-everything` - farm every MP event (using the Join All feature) or just the specific one you enter into. Default: `true`.
 * `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
@@ -87,10 +87,13 @@ If you're using multiple Nox windows, they must be in order, left to right, that
 # TODO (Now)
 
 * Auto-host when have stamina
+  * Event - requires --specific-mission and --specific-event
+  * Mission - always click the current mission in the center
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)
 
+* Add auto-refill-stamina to auto-host
 * "Wait for all rush" feature (either wait for 4x rush, or wait for as many as can be waited for with dead people)
 * Support scrollbar use to get specific mission/event position (beyond what's supported)
 * Support JP (swap transitions/clicks/information at runtime)

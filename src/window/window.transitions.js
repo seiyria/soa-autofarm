@@ -1,4 +1,5 @@
 const { OPTIONS } = require('../helpers/env');
+const Logger = require('../helpers/logger');
 
 const { WINDOW_STATES } = require('./window.states');
 
@@ -26,7 +27,8 @@ const WINDOW_TRANSITIONS = {
       failedUnknownStateAttemptsSequence++;
 
       if(failedUnknownStateAttemptsSequence > OPTIONS.APP_KILL_COUNT) {
-        killApp(noxVmInfo);
+        failedUnknownStateAttemptsSequence = 0;
+        killApp(noxVmInfo, 'Killing app due to large UNKNOWN count.');
       } 
     },
 
@@ -256,7 +258,7 @@ const WINDOW_TRANSITIONS = {
       failedRetryAttempts++;
 
       if(failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
-        killApp(noxVmInfo);
+        killApp(noxVmInfo, 'Killing app due to exceeding --retry-fail-attempts threshold.');
       }
     },
     onRepeat: (noxVmInfo) => {
