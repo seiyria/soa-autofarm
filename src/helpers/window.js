@@ -75,6 +75,12 @@ const getADBDevices = () => {
   return res.split('\r\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
 };
 
+const componentToHexString = (num) => num.toString(16).padStart(2, '0');
+
+const rgbToHex = ({ r, g, b }) => {
+  return (componentToHexString(r) + componentToHexString(g) + componentToHexString(b)).toUpperCase();
+};
+
 module.exports = {
   windowName,
   windowId,
@@ -83,5 +89,6 @@ module.exports = {
   tryTransitionState,
   killApp,
   getADBDevices,
-  getTCPAndWindowNames
+  getTCPAndWindowNames,
+  rgbToHex
 };

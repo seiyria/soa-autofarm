@@ -10,7 +10,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices } = require('./src/helpers/window');
+const { windowName, getADBDevices, rgbToHex } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -27,6 +27,7 @@ const getState = async (noxVmInfo) => {
   let foundScreen = WINDOW_STATES.UNKNOWN;
   const screenshot = rectshot([noxVmInfo.left, noxVmInfo.top, noxVmInfo.width, noxVmInfo.height], true);
   const image = await Jimp.read(screenshot);
+  const OFFSET = OPTIONS.SAFETY_RADIUS;
 
   Object.keys(WINDOW_INFORMATION).forEach(screenId => {
 
@@ -46,28 +47,31 @@ const getState = async (noxVmInfo) => {
       return;
     }
 
-    const screenX = screen.pos.x;
-    const screenY = screen.pos.y + NOX_HEADER_HEIGHT;
+    for(let screenX = screen.pos.x - OFFSET; screenX <= screen.pos.x + OFFSET; screenX++) {
+      for(let screenY = screen.pos.y - OFFSET; screenY <= screen.pos.y + OFFSET; screenY++) {
 
-    // get the color of the pixel at that particular location
-    // robot.getColor doesn't work because it breaks if your coordinate is on a different monitor
-    const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(screenX, screenY));
-    const hexColor = (hexColorRGBA.r.toString(16) + hexColorRGBA.g.toString(16) + hexColorRGBA.b.toString(16)).toUpperCase();
+        // get the color of the pixel at that particular location
+        // robot.getColor doesn't work because it breaks if your coordinate is on a different monitor
+        const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(screenX, screenY + NOX_HEADER_HEIGHT));
+        const hexColor = rgbToHex(hexColorRGBA);
+    
+        // move the mouse to the location in debug mode only
+        if(OPTIONS.DEBUG_STATES[windowName(screenId)] || screen.debug) robot.moveMouse(noxVmInfo.left + screenX, noxVmInfo.top + screenY + NOX_HEADER_HEIGHT);
+    
+        // if we have a color set for this screen
+        if(screen.hex) {
+          Logger.verbose('SCREEN CHECK', windowName(screenId), 'foundcolor', hexColor, 'desiredcolor', screen.hex, 'x', screenX, 'y', screenY, 'match', hexColor === screen.hex);
+    
+          // if it matches, we have our screen
+          if(screen.hex === hexColor) foundScreen = screenId;
+    
+        // should only happen when adding a new screen
+        } else {
+          Logger.verbose('POTENTIAL SCREEN', windowName(screenId), screenX, screenY, hexColor);
+    
+        }
 
-    // move the mouse to the location in debug mode only
-    if(OPTIONS.DEBUG_STATES[windowName(screenId)] || screen.debug) robot.moveMouse(screenX, screenY + NOX_HEADER_HEIGHT);
-
-    // if we have a color set for this screen
-    if(screen.hex) {
-      Logger.verbose('SCREEN CHECK', windowName(screenId), 'foundcolor', hexColor, 'desiredcolor', screen.hex, 'x', screenX, 'y', screenY, 'match', hexColor === screen.hex);
-
-      // if it matches, we have our screen
-      if(screen.hex === hexColor) foundScreen = screenId;
-
-    // should only happen when adding a new screen
-    } else {
-      Logger.verbose('POTENTIAL SCREEN', windowName(screenId), screenX, screenY, hexColor);
-
+      }
     }
   });
 

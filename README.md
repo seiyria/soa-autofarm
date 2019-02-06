@@ -36,6 +36,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
 * `--specific-mission` - farm a specific event mission by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
+* `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. Default: `0`.
 
 ### Debug Args
 
