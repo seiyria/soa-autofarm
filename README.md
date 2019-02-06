@@ -13,7 +13,7 @@ Specifically regarding the characters that work best with this: defenders and at
 Right now, there is no executable. So, you would run:
 
 ```sh
-node index.js --farm-everything 0 --auto-tap-attack 1
+node index.js --farm-everything=0 --auto-tap-attack=1
 ```
 
 Or you pass in whatever you want. The arguments are listed below.
@@ -32,7 +32,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--retry-fail-attempts` - how many attempts to "retry" finding a mission. If this gets stuck, you could be trying to farm a dead mission, and get stuck for a long time. Default: `3`.
 * `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.
-* `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. Default: `0`.
+* `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. This can also lead to some minor mis-detections of different states, especially at higher numbers. Default: `0`.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
