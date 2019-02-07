@@ -19,7 +19,7 @@ const NOX_HEADER_HEIGHT = OPTIONS.NOX_HEADER_HEIGHT;
 const NOX_SIDEBAR_WIDTH = 40;
 
 // track all of the current nox instance data
-const noxInstances = [];
+let noxInstances = [];
 
 // get the current state based on the nox instance Left/Top
 const getState = async (noxVmInfo) => {
@@ -82,6 +82,8 @@ const getState = async (noxVmInfo) => {
 // poll the nox instance
 const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => { 
   const noxVmInfo = noxInstances[noxIdx];
+  if(!noxVmInfo.adb) return;
+
   const { left, top, width, height } = noxVmInfo;
 
   const state = await getState(noxVmInfo);
@@ -226,18 +228,21 @@ const run = async () => {
 
     noxInstances.forEach((loc) => {
       if(loc.adb) return;
-      Logger.error(`Found one Nox when calibrating with no ADB set. We can't keep doing this, captain.`);
-      process.exit(0);
+      Logger.error(`Found a Nox when calibrating with no ADB set. We can't keep doing this, captain. We're going to remove that Nox.`);
+    });
+
+    noxInstances = noxInstances.filter(x => x.adb);
+
+    noxInstances.forEach((nox, i) => poll(i, WINDOW_STATES.UNKNOWN));
+  } else {
+    noxPlayerPositions.forEach((loc, i) => {
+      repositionNoxWindow(loc, i);
+  
+      // set ADB if it isn't already set
+      if(!noxInstances[i].adb) noxInstances[i].adb = adb[i];
+      poll(i, WINDOW_STATES.UNKNOWN);
     });
   }
-
-  noxPlayerPositions.forEach((loc, i) => {
-    repositionNoxWindow(loc, i);
-
-    // set ADB if it isn't already set
-    if(!noxInstances[i].adb) noxInstances[i].adb = adb[i];
-    poll(i, WINDOW_STATES.UNKNOWN);
-  });
 };
 
 run();
