@@ -57,10 +57,10 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_HOST]:               { hex: '2068B1', pos: { x: 135, y: 685 } },
   [WINDOW_STATES.MISSION_HOST_RECRUIT]:       { hex: 'E9A61E', pos: { x: 100, y: 730 } },
   [WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL]: { hex: '133562', pos: { x: 380, y: 615 } },
-  [WINDOW_STATES.MISSION_HOST_START_YES]:     { hex: '297AC5', pos: { x: 255, y: 740 } },
-  [WINDOW_STATES.MISSION_HOST_START_NO]:      { hex: '325077', pos: { x: 45, y: 55 } },
   [WINDOW_STATES.MISSION_HOST_MODAL_REQ2]:    { hex: '24446E', pos: { x: 325, y: 480 } },
   [WINDOW_STATES.MISSION_HOST_MODAL_REQ0]:    { hex: 'A8B1BD', pos: { x: 345, y: 455 } },
+  [WINDOW_STATES.MISSION_HOST_START_YES]:     { hex: '297AC5', pos: { x: 255, y: 740 } },
+  [WINDOW_STATES.MISSION_HOST_START_NO]:      { hex: '325077', pos: { x: 45, y: 55 } },
   [WINDOW_STATES.MISSION_HOST_DISBAND]:       { hex: '0F325E', pos: { x: 295, y: 455 } },
   [WINDOW_STATES.MISSION_START_PARTY]:        { hex: '066CB0', pos: { x: 25, y: 595 } },
 

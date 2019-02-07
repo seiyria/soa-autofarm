@@ -2,6 +2,7 @@ const { OPTIONS } = require('../helpers/env');
 const Logger = require('../helpers/logger');
 
 const { WINDOW_STATES } = require('./window.states');
+const { WINDOW_CLICKS } = require('./window.clicks');
 
 const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } = require('../helpers/window');
 
@@ -507,21 +508,26 @@ const WINDOW_TRANSITIONS = {
   },
 
   // POST-COMBAT
+  // these are clickScreen because they require multiple clicks to get through
+  // the mutex doesn't like that
   [WINDOW_STATES.REWARD1]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD1, WINDOW_STATES.REWARD2);
+      const nextState = WINDOW_CLICKS[WINDOW_STATES.REWARD1][WINDOW_STATES.REWARD2];
+      clickScreen(noxVmInfo, nextState.x, nextState.y);
     }
   },
 
   [WINDOW_STATES.REWARD2]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD2, WINDOW_STATES.REWARD3);
+      const nextState = WINDOW_CLICKS[WINDOW_STATES.REWARD2][WINDOW_STATES.REWARD3];
+      clickScreen(noxVmInfo, nextState.x, nextState.y);
     }
   },
 
   [WINDOW_STATES.REWARD3]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN);
+      const nextState = WINDOW_CLICKS[WINDOW_STATES.REWARD3][WINDOW_STATES.EVENT_SCREEN];
+      clickScreen(noxVmInfo, nextState.x, nextState.y);
     }
   },
 
