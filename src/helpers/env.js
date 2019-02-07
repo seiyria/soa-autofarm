@@ -26,7 +26,7 @@ module.exports = {
     HOST_MISSION: isUndefined(argv['host-mission'])           ? 0             : argv['host-mission'],
     HOST_STORY: isUndefined(argv['host-story'])               ? false         : argv['host-story'],
     HOST_QUIT_DELAY: isUndefined(argv['host-quit-delay'])     ? 30000         : argv['host-quit-delay'],
-    HOST_START_DELAY: isUndefined(argv['host-start-delay'])   ? 10000         : argv['host-start-delay'],
+    HOST_START_DELAY: isUndefined(argv['host-start-delay'])   ? 5000          : argv['host-start-delay'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],

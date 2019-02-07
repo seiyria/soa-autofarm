@@ -29,7 +29,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--host-mission` - the particular mission to host for in the event list. For more information on hosting, see the section below. Default: `0`.
 * `--host-quit-delay` - the delay between opening a lobby and quitting to create a new one. Default: `30000`ms.
 * `--host-stam-percent` - the percentage of stamina required to host a mission. Calculating this is somewhat imprecise, so the math might not be _perfect_, but it should be close. For more information on hosting, see the section below. Default: `0`.
-* `--host-start-delay` - the delay between your first party member joining, and you starting the mission. Default: `10000`ms.
+* `--host-start-delay` - the delay between your first party member joining, and you starting the mission. Default: `5000`ms.
 * `--host-story` - whether or not to host story missions instead of events. For more information on hosting, see the section below. Default: `false`.
 * `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
