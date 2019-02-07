@@ -23,7 +23,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `600`.
 * `--auto-tap-attack` - whether or not to auto tap attack to force melee attacks. Default: `false`.
 * `--farm-everything` - farm every MP event (using the Join All feature) or just the specific one you enter into. Default: `true`.
-* `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
+* `--farm-story` - whether or not to farm story missions instead of events. Default: `false`.
 * `--is-jp` - whether or not you're playing JP. Default: `false`.
 * `--host-event` - the particular event to host for in the list. For more information on hosting, see the section below. Default: `0`.
 * `--host-mission` - the particular mission to host for in the event list. For more information on hosting, see the section below. Default: `0`.

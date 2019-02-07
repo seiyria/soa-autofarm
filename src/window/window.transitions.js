@@ -573,9 +573,22 @@ const WINDOW_TRANSITIONS = {
 
   // STORY MISSIONS
   [WINDOW_STATES.STORY_SCREEN]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.shouldHost = false;
+    },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_MISSIONS) {
-        tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+        noxVmInfo.shouldHost = isAtLeastPercentStaminaFull(noxVmInfo);
+
+        // if we can host, we click the button
+        if(noxVmInfo.shouldHost && OPTIONS.HOST_STORY) {
+          clickScreen(noxVmInfo, 275, 510);
+
+        // otherwise, we just join all
+        } else {
+          tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.EVENT_JOIN_ALL);
+        }
+
       } else {
         tryTransitionState(noxVmInfo, WINDOW_STATES.STORY_SCREEN, WINDOW_STATES.BRIDGE);
       }
