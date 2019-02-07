@@ -223,7 +223,6 @@ const run = async () => {
     });
 
     await calibrateNoxPositions(noxInstances, adb);
-    console.log(noxInstances)
 
     noxInstances.forEach((loc) => {
       if(loc.adb) return;
