@@ -37,6 +37,10 @@ const transitionState = (curState, nextState) => {
   return WINDOW_CLICKS[curState][nextState];
 };
 
+const clickScreenADB = (adb, x, y) => {
+  exec(`"${NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
+}
+
 const clickScreen = (noxVmInfo, screenX, screenY) => {
   if(IS_TRANSITIONING) return;
   
@@ -46,7 +50,7 @@ const clickScreen = (noxVmInfo, screenX, screenY) => {
   const y = headerHeight + Math.floor(screenY * (vmHeight / height));
 
   Logger.verbose(`Clicking screen at ${x} ${y}`);
-  exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
+  clickScreenADB(noxVmInfo.adb, x, y);
 };
 
 const tryTransitionState = (noxVmInfo, curState, nextState) => {
@@ -66,26 +70,14 @@ const killApp = (noxVmInfo, reason) => {
   exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
 };
 
-// sadly, this doesn't work at all. but I'm keeping the code here in case I can figure out a way to tie NoxVMHandle <-> NoxPlayer
-const getTCPAndWindowNames = () => {
-
-  const cmd = `Get-NetTCPConnection | 
-  Select LocalAddress, LocalPort, State, OwningProcess, @{n='WindowTitle';e={(Get-Process -ErrorAction Ignore -Id $_.OwningProcess).MainWindowTitle}} |
-  Where {$_.State -eq 'Established' -and $_.WindowTitle -match '${OPTIONS.NOX_WINDOW_NAME}*'} | 
-  Format-Table -AutoSize`.split('\n').join(' ');
-
-  const retval = execSync(`powershell.exe -Command "${cmd}"`).toString();
-
-  return retval.split('\r\n').slice(3, -3).map(x => x.trim().replace(/\s\s+/g, ' ')).map(x => {
-    const [ip, port, , , name] = x.split(' ');
-    return { addr: `${ip}:${port}`, name };
-  });
-};
-
 const getADBDevices = () => {
   const res = execSync(`"${NOX_ADB_PATH}" devices`).toString();
   return res.split('\r\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
 };
+
+const adbSettingToggle = (adb, toggle) => {
+  exec(`"${NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`);
+}
 
 const componentToHexString = (num) => num.toString(16).padStart(2, '0');
 
@@ -113,11 +105,12 @@ module.exports = {
   windowName,
   windowId,
   transitionState,
+  clickScreenADB,
   clickScreen,
   tryTransitionState,
   killApp,
   getADBDevices,
-  getTCPAndWindowNames,
+  adbSettingToggle,
   rgbToHex,
   isAtLeastPercentStaminaFull,
   transition,

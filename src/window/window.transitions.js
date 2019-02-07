@@ -424,8 +424,9 @@ const WINDOW_TRANSITIONS = {
 
   // COMBAT
   [WINDOW_STATES.COMBAT]: {
-    onEnter: () => {
+    onEnter: (noxVmInfo) => {
       failedRetryAttempts = 0;
+      noxVmInfo.shouldHost = false;
     },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);

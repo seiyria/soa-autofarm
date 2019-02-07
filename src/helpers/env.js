@@ -41,6 +41,7 @@ module.exports = {
     NOX_RES_WIDTH: isUndefined(argv['nox-res-width'])         ? 720           : argv['nox-res-width'],
     NOX_RES_HEIGHT: isUndefined(argv['nox-res-height'])       ? 1280          : argv['nox-res-height'],
     NOX_ALLOW_MOVE: isUndefined(argv['nox-allow-move'])       ? false         : argv['nox-allow-move'],
+    NOX_CALIBRATE: isUndefined(argv['nox-calibrate'])         ? false         : argv['nox-calibrate'],
 
     NOX_ADB_PATH: isUndefined(argv['nox-adb-path'])           ? 'D:\\Program Files\\Nox\\bin\\nox_adb.exe' : argv['nox-adb-path']
   }

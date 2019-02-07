@@ -10,7 +10,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices, rgbToHex, transition, untransition } = require('./src/helpers/window');
+const { windowName, getADBDevices, rgbToHex, adbSettingToggle, untransition, clickScreenADB } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -169,6 +169,39 @@ const getNoxPositions = () => {
   return sortBy(noxPlayerPositions, 'Left');
 };
 
+const calibrateNoxPositions = async (noxVmLocations, adbs) => {
+  Logger.log(`Calibrating ${noxVmLocations.length} Nox Player location(s) with respect to ADB...`);
+
+  const calibrateStartTimeout = async () => {
+    return new Promise(resolve => setTimeout(resolve, 1000));  
+  };
+
+  for(let adb of adbs) {
+    adbSettingToggle(adb, 1);
+    await calibrateStartTimeout();
+
+    for(let noxVmInfo of noxVmLocations) {
+      await calibrateStartTimeout();
+
+      const { headerHeight } = noxVmInfo;
+
+      const screenshot = rectshot([noxVmInfo.left, noxVmInfo.top, noxVmInfo.width, noxVmInfo.height], true);
+      const image = await Jimp.read(screenshot);
+
+      const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(5, headerHeight + 5));
+      const hexColor = rgbToHex(hexColorRGBA);
+      
+      // if it has the click settings bar up top, it's this one
+      if(hexColor === '808080') {
+        noxVmInfo.adb = adb;
+      }
+    }
+
+    adbSettingToggle(adb, 0);
+    await calibrateStartTimeout();
+  }
+};
+
 const run = async () => {
 
   const noxPlayerPositions = getNoxPositions();
@@ -182,9 +215,18 @@ const run = async () => {
     Logger.error(`Found ${adb.length} devices via ADB but could only find ${noxPlayerPositions.length} instances in Windows. Something is wrong.`);
   }
 
+  if(OPTIONS.NOX_CALIBRATE) {
+    noxPlayerPositions.forEach((loc, i) => {
+      repositionNoxWindow(loc, i);
+    });
+    await calibrateNoxPositions(noxInstances, adb);
+  }
+
   noxPlayerPositions.forEach((loc, i) => {
     repositionNoxWindow(loc, i);
-    noxInstances[i].adb = adb[i];
+
+    // set ADB if it isn't already set
+    if(!noxInstances[i].adb) noxInstances[i].adb = adb[i];
     poll(i, WINDOW_STATES.UNKNOWN);
   });
 };
