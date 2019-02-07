@@ -224,7 +224,11 @@ const WINDOW_TRANSITIONS = {
       }
 
       // click a specific mission in the menu list
-      if(OPTIONS.SPECIFIC_MISSION || ((noxVmInfo.shouldHost || shouldHostCheckAgain) && OPTIONS.HOST_MISSION)) {
+      // we host if:
+      // - we are in this screen and do not have a specific event to host, ie, we're farming this event
+      // - we were told to host by the event list
+      // - we only host if a HOST_MISSION is available
+      if(OPTIONS.SPECIFIC_MISSION || ((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION)) {
 
         // we set this again, in case you're not in FARM_EVERYTHING mode
         noxVmInfo.shouldHost = true;
