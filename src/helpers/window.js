@@ -1,6 +1,7 @@
 
-// ./nox_adb shell input touchscreen swipe 100 200 100 200 200 (x y destx desty duration)
 // to SCROLL THE SCROLL BAR JUST CLICK IT AT THE DESIRED LOC ./nox_adb shell input touchscreen swipe 630 680 630 680 100
+
+const Jimp = require('jimp');
 
 const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
@@ -10,8 +11,13 @@ const { OPTIONS } = require('./env');
 
 const NOX_ADB_PATH = OPTIONS.NOX_ADB_PATH;
 
+let IS_TRANSITIONING = false;
+
 const { WINDOW_NAMES, WINDOW_STATES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
+
+const transition = () => IS_TRANSITIONING = true;
+const untransition = () => IS_TRANSITIONING = false;
 
 const windowName = (id) => WINDOW_NAMES[id] || `UNKNOWN (${id})`;
 
@@ -32,6 +38,7 @@ const transitionState = (curState, nextState) => {
 };
 
 const clickScreen = (noxVmInfo, screenX, screenY) => {
+  if(IS_TRANSITIONING) return;
   
   const { headerHeight, vmHeight, vmWidth, height, width } = noxVmInfo;
 
@@ -43,11 +50,15 @@ const clickScreen = (noxVmInfo, screenX, screenY) => {
 };
 
 const tryTransitionState = (noxVmInfo, curState, nextState) => {
+  if(IS_TRANSITIONING) return;
+
   const nextStateRef = transitionState(curState, nextState);
   if(!nextStateRef) return;
 
   const { x, y } = nextStateRef;
   clickScreen(noxVmInfo, x, y);
+
+  transition();
 }
 
 const killApp = (noxVmInfo, reason) => {
@@ -82,6 +93,22 @@ const rgbToHex = ({ r, g, b }) => {
   return (componentToHexString(r) + componentToHexString(g) + componentToHexString(b)).toUpperCase();
 };
 
+const isAtLeastPercentStaminaFull = (noxVmInfo) => {
+  const percent = OPTIONS.HOST_STAM_PERCENT;
+
+  const STAM_MIN_PIX = 16;
+  const STAM_MAX_PIX = 212;
+  const STAM_Y_PIX = 56;
+
+  const CHECK_PIX = Math.floor(STAM_MIN_PIX + (STAM_MAX_PIX - STAM_MIN_PIX) * (percent / 100));
+
+  const hexAt = rgbToHex(Jimp.intToRGBA(noxVmInfo.curImageState.getPixelColor(CHECK_PIX, noxVmInfo.headerHeight + STAM_Y_PIX)));
+
+  // starting with 0 means it's in the gray range, background color, aka stamina used
+  // in this case, we should *not* host
+  return !hexAt.startsWith('0');
+};
+
 module.exports = {
   windowName,
   windowId,
@@ -91,5 +118,8 @@ module.exports = {
   killApp,
   getADBDevices,
   getTCPAndWindowNames,
-  rgbToHex
+  rgbToHex,
+  isAtLeastPercentStaminaFull,
+  transition,
+  untransition
 };

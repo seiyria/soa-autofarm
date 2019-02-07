@@ -21,6 +21,12 @@ module.exports = {
     SPECIFIC_MISSION: isUndefined(argv['specific-mission'])   ? false         : argv['specific-mission'],
     SAFETY_RADIUS: isUndefined(argv['safety-radius'])         ? 0             : argv['safety-radius'],
     RETRY_FAIL_ATT: isUndefined(argv['retry-fail-attempts'])  ? 3             : argv['retry-fail-attempts'],
+    HOST_STAM_PERCENT: isUndefined(argv['host-stam-percent']) ? 0             : argv['host-stam-percent'],
+    HOST_EVENT: isUndefined(argv['host-event'])               ? 0             : argv['host-event'],
+    HOST_MISSION: isUndefined(argv['host-mission'])           ? 0             : argv['host-mission'],
+    HOST_STORY: isUndefined(argv['host-story'])               ? false         : argv['host-story'],
+    HOST_QUIT_DELAY: isUndefined(argv['host-quit-delay'])     ? 30000         : argv['host-quit-delay'],
+    HOST_START_DELAY: isUndefined(argv['host-start-delay'])   ? 10000         : argv['host-start-delay'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],

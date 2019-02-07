@@ -3,14 +3,14 @@ const Logger = require('../helpers/logger');
 
 const { WINDOW_STATES } = require('./window.states');
 
-const { tryTransitionState, clickScreen, killApp } = require('../helpers/window');
+const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } = require('../helpers/window');
 
 // variables used by the screen transitions
 
 // used to check how many times we've seen an unknown state in a row - this could indicate a crash/freeze, usually
 let failedUnknownStateAttemptsSequence = 0;
 
-// used to check if we've been in the same party room for a period of time - we can quit after a period of time
+// used to check if we've been in the same party room for a period of time - we can quit/disband after a period of time
 let shouldStillLeave = false;
 
 // used to check if we've been retrying too many times - we should probably go back to the event screen if so
@@ -170,14 +170,26 @@ const WINDOW_TRANSITIONS = {
 
   // EVENT LIST
   [WINDOW_STATES.EVENT_SCREEN]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.shouldHost = false;
+    },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_MISSIONS) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.BRIDGE);
+
       } else {
 
+        noxVmInfo.shouldHost = isAtLeastPercentStaminaFull(noxVmInfo);
+
+        if(noxVmInfo.shouldHost && !OPTIONS.HOST_EVENT) {
+          Logger.log(`[Nox ${noxVmInfo.index}]`, 'Determined that I should host, but no --host-event to do. Joining instead.');
+        }
+
         // click the specific event in the menu list
-        if(OPTIONS.SPECIFIC_EVENT) {
-          clickScreen(noxVmInfo, 285, 375 + (105 * (OPTIONS.SPECIFIC_EVENT - 1)));
+        // or, if we're hosting, click into that particular event
+        if(OPTIONS.SPECIFIC_EVENT || (noxVmInfo.shouldHost && OPTIONS.HOST_EVENT)) {
+          const event = OPTIONS.SPECIFIC_EVENT || OPTIONS.HOST_EVENT;
+          clickScreen(noxVmInfo, 285, 375 + (105 * (event - 1)));
 
         // or, if none specified, click the join all button
         } else {
@@ -189,6 +201,8 @@ const WINDOW_TRANSITIONS = {
   
   [WINDOW_STATES.EVENT_SCREEN_MAP]: {
     onRepeat: (noxVmInfo) => {
+      // TODO HOST CENTER SCREEN MISSION
+
       if(OPTIONS.FARM_EVERYTHING) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
         return;
@@ -200,17 +214,30 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.EVENT_SCREEN_MISSION]: {
     onRepeat: (noxVmInfo) => {
-      if(OPTIONS.FARM_EVERYTHING) {
-        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_SCREEN);
-        return;
+
+      // we check again, in case you're not in FARM_EVERYTHING mode
+      const shouldHostCheckAgain = isAtLeastPercentStaminaFull(noxVmInfo);
+
+      if(noxVmInfo.shouldHost && !OPTIONS.HOST_MISSION) {
+        Logger.log(`[Nox ${noxVmInfo.index}]`, 'Determined that I should host, but no --host-mission to do. Backing out. Will probably not be doing anything any time soon.');
       }
 
       // click a specific mission in the menu list
-      if(OPTIONS.SPECIFIC_MISSION) {
-        clickScreen(noxVmInfo, 285, 300 + (80 * (OPTIONS.SPECIFIC_MISSION - 1)));
+      if(OPTIONS.SPECIFIC_MISSION || ((noxVmInfo.shouldHost || shouldHostCheckAgain) && OPTIONS.HOST_MISSION)) {
+
+        // we set this again, in case you're not in FARM_EVERYTHING mode
+        noxVmInfo.shouldHost = true;
+
+        const mission = OPTIONS.SPECIFIC_MISSION || OPTIONS.HOST_MISSION;
+        clickScreen(noxVmInfo, 285, 300 + (80 * (mission - 1)));
 
       // or, click join all if we're not doing farm everything
       } else {
+        if(OPTIONS.FARM_EVERYTHING) {
+          tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_SCREEN);
+          return;
+        }
+        
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_JOIN_ALL);
       }
     }
@@ -237,6 +264,11 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_START_MP]: {
     onRepeat: (noxVmInfo) => {
+      if(noxVmInfo.shouldHost) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP, WINDOW_STATES.MISSION_START_MP_HOST);
+        return;
+      }
+
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP, WINDOW_STATES.MISSION_START_MP_MATCH);
     }
   },
@@ -315,6 +347,67 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.MISSION_START_UNSTABLE_ERR]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_UNSTABLE_ERR, WINDOW_STATES.MISSION_START_MP);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST, WINDOW_STATES.MISSION_HOST_RECRUIT);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_RECRUIT]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_RECRUIT, WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_START_NO]: {
+    onEnter: (noxVmInfo) => {
+      shouldStillLeave = true;
+
+      // back out if no one joins
+      setTimeout(() => {
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_HOST_START_NO || !shouldStillLeave) return;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_START_NO, WINDOW_STATES.MISSION_HOST_DISBAND);
+      }, OPTIONS.HOST_QUIT_DELAY);
+    },
+
+    onLeave: () => {
+      shouldStillLeave = false;
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL, WINDOW_STATES.MISSION_HOST_START_NO);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_START_YES]: {
+    onRepeat: (noxVmInfo) => {
+      setTimeout(() => {
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_HOST_START_YES) return;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_START_YES, WINDOW_STATES.MISSION_HOST_MODAL_REQ0);
+      }, OPTIONS.HOST_START_DELAY);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_MODAL_REQ2]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_MODAL_REQ2, WINDOW_STATES.COMBAT);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_MODAL_REQ0]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_MODAL_REQ0, WINDOW_STATES.COMBAT);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_DISBAND]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_DISBAND, WINDOW_STATES.MISSION_START_DISBAND);
     }
   },
 

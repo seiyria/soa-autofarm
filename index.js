@@ -10,7 +10,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices, rgbToHex } = require('./src/helpers/window');
+const { windowName, getADBDevices, rgbToHex, transition, untransition } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -27,6 +27,7 @@ const getState = async (noxVmInfo) => {
   let foundScreen = WINDOW_STATES.UNKNOWN;
   const screenshot = rectshot([noxVmInfo.left, noxVmInfo.top, noxVmInfo.width, noxVmInfo.height], true);
   const image = await Jimp.read(screenshot);
+  noxVmInfo.curImageState = image;
   const OFFSET = OPTIONS.SAFETY_RADIUS;
 
   Object.keys(WINDOW_INFORMATION).forEach(screenId => {
@@ -60,14 +61,14 @@ const getState = async (noxVmInfo) => {
     
         // if we have a color set for this screen
         if(screen.hex) {
-          Logger.verbose('SCREEN CHECK', windowName(screenId), 'foundcolor', hexColor, 'desiredcolor', screen.hex, 'x', screenX, 'y', screenY, 'match', hexColor === screen.hex);
+          Logger.verbose(`[Nox ${noxVmInfo.index}]`, 'SCREEN CHECK', windowName(screenId), 'foundcolor', hexColor, 'desiredcolor', screen.hex, 'x', screenX, 'y', screenY, 'match', hexColor === screen.hex);
     
           // if it matches, we have our screen
           if(screen.hex === hexColor) foundScreen = screenId;
     
         // should only happen when adding a new screen
         } else {
-          Logger.verbose('POTENTIAL SCREEN', windowName(screenId), screenX, screenY, hexColor);
+          Logger.verbose(`[Nox ${noxVmInfo.index}]`, 'POTENTIAL SCREEN', windowName(screenId), screenX, screenY, hexColor);
     
         }
 
@@ -102,21 +103,26 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
   Logger.debug(`[Nox ${noxIdx}]`, '-----------> FOUND STATE', windowName(state));
 
   // we only change state if it's a new state
-  if(state !== lastState && state !== WINDOW_STATES.UNKNOWN) {
-    Logger.log(`[Nox ${noxIdx}]`, 'New State', windowName(state));
+  if(state !== lastState) {
+    untransition();
 
-    if(oldTransitions && oldTransitions.onLeave) {
-      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:LEAVE', windowName(lastState));
-      oldTransitions.onLeave(noxVmInfo);
-    }
-
-    if(curTransitions && curTransitions.onEnter) {
-      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:ENTER', windowName(state));
-      curTransitions.onEnter(noxVmInfo);
+    if(state !== WINDOW_STATES.UNKNOWN) {
+      Logger.log(`[Nox ${noxIdx}]`, 'New State', windowName(state));
+  
+      if(oldTransitions && oldTransitions.onLeave) {
+        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:LEAVE', windowName(lastState));
+        oldTransitions.onLeave(noxVmInfo);
+      }
+  
+      if(curTransitions && curTransitions.onEnter) {
+        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:ENTER', windowName(state));
+        curTransitions.onEnter(noxVmInfo);
+      }
     }
     
 
   } else if(state === lastState) {
+
     if(curTransitions && curTransitions.onRepeat) {
       Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:REPEAT', windowName(state));
       curTransitions.onRepeat(noxVmInfo);
@@ -141,7 +147,10 @@ const repositionNoxWindow = (loc, i) => {
 
     vmHeight: OPTIONS.NOX_RES_HEIGHT,
     vmWidth: OPTIONS.NOX_RES_WIDTH,
-    index: i
+    index: i,
+
+    // curImageState
+    // adb
   };
 
   noxInstances[i] = Object.assign({}, noxInstances[i] || {}, obj);

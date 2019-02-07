@@ -25,6 +25,12 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--farm-everything` - farm every MP event (using the Join All feature) or just the specific one you enter into. Default: `true`.
 * `--farm-missions` - whether or not to farm missions instead of events. Default: `false`.
 * `--is-jp` - whether or not you're playing JP. Default: `false`.
+* `--host-event` - the particular event to host for in the list. For more information on hosting, see the section below. Default: `0`.
+* `--host-mission` - the particular mission to host for in the event list. For more information on hosting, see the section below. Default: `0`.
+* `--host-quit-delay` - the delay between opening a lobby and quitting to create a new one. Default: `30000`ms.
+* `--host-stam-percent` - the percentage of stamina required to host a mission. Calculating this is somewhat imprecise, so the math might not be _perfect_, but it should be close. For more information on hosting, see the section below. Default: `0`.
+* `--host-start-delay` - the delay between your first party member joining, and you starting the mission. Default: `10000`ms.
+* `--host-story` - whether or not to host story missions instead of events. For more information on hosting, see the section below. Default: `false`.
 * `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
@@ -63,6 +69,14 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 * Farm missions (`--farm-missions=1`) - start at the Bridge
 * Farm a particular story mission - not yet possible, but not likely to be necessary
 
+### Hosting Missions
+
+You probably will want to use your stamina to also host missions instead of just leeching off of them (for farming event hosts). These parameters will host specific missions (it is not possible to host random missions), in addition to your other parameters. So, you can `--farm-everything` and still host a specific mission. The host parameters will take over when you reach the certain stamina percentage. For example:
+
+* Host story missions: `--host-stam-percent=40 --host-story`
+* Host the top event, second mission (for missions in list format): `--host-stam-percent=40 --host-event=1 --host-mission=2`
+* Host the top event, current map mission (for missions in map format): `--host-stam-percent=40 --host-event=1`
+
 ## Gotchas
 
 * This will only run on Windows.
@@ -77,6 +91,12 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 
 If you're using multiple Nox windows, they must be in order, left to right, that you opened them. You probably shouldn't close them. Hopefully this limitation will be able to go away in the future.
 
+### Hosting Gotchas
+
+If you plan to host a map mission (not a list mission), it will pick the last mission you were in. There is no current way to pan around the map to the mission you want (nor will this be supported). If you plan to do this, I would recommend doing it manually.
+
+Additionally, unlike other automated aspects of this program, to host, you must start on a screen where stamina is visible (event screen, event mission list, event map list, story screen, or bridge). Otherwise, it will just join and do it's thing, but host when it gets out. If you're not paired with `--farm-everything`, it will host the current mission in your current event list / map screen.
+
 ## About Source Code
 
 * `window.clicks.js` has information on where you click in one particular state to get to another state.
@@ -86,8 +106,8 @@ If you're using multiple Nox windows, they must be in order, left to right, that
 
 # TODO (Now)
 
-* Auto-host when have stamina
-  * Event - requires --specific-mission and --specific-event
+* Single Player Story Farm
+  * Event - requires --specific-mission and --specific-event (support map and list)
   * Mission - always click the current mission in the center
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
@@ -100,3 +120,14 @@ If you're using multiple Nox windows, they must be in order, left to right, that
 * Support Reroll
 * Support a distributed network of players to create/join lobbies effectively
 * Track statistics like number of particular events emitted, such as MISSION_START_PARTY and emit them when program halts (to show session statistics). Possibly track these variables over time and store current session, lifetime, etc.
+
+# Note To Users
+
+I take no liability in what happens to your account in the event that:
+
+* An item gets sold (lock your items - I will never implement a bypass for those)
+* You run out of tickets
+* Your gems get used
+* You get banned (unlikely)
+
+Watch the program play the game to make sure it covers your cases correctly - it is very hard to test all possible combinations / scenarios.
