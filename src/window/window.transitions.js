@@ -303,6 +303,12 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.MISSION_START_STAMPS]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_STAMPS, WINDOW_STATES.MISSION_START_PARTY);
+    }
+  },
+
   [WINDOW_STATES.MISSION_START_PARTY]: {
     onEnter: (noxVmInfo) => {
       shouldStillLeave = true;
