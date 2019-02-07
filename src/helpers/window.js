@@ -11,13 +11,8 @@ const { OPTIONS } = require('./env');
 
 const NOX_ADB_PATH = OPTIONS.NOX_ADB_PATH;
 
-let IS_TRANSITIONING = false;
-
 const { WINDOW_NAMES, WINDOW_STATES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
-
-const transition = () => IS_TRANSITIONING = true;
-const untransition = () => IS_TRANSITIONING = false;
 
 const windowName = (id) => WINDOW_NAMES[id] || `UNKNOWN (${id})`;
 
@@ -41,9 +36,7 @@ const clickScreenADB = (adb, x, y) => {
   exec(`"${NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
 }
 
-const clickScreen = (noxVmInfo, screenX, screenY) => {
-  if(IS_TRANSITIONING) return;
-  
+const clickScreen = (noxVmInfo, screenX, screenY) => {  
   const { headerHeight, vmHeight, vmWidth, height, width } = noxVmInfo;
 
   const x = Math.floor(screenX * (vmWidth / width));
@@ -54,15 +47,11 @@ const clickScreen = (noxVmInfo, screenX, screenY) => {
 };
 
 const tryTransitionState = (noxVmInfo, curState, nextState) => {
-  if(IS_TRANSITIONING) return;
-
   const nextStateRef = transitionState(curState, nextState);
   if(!nextStateRef) return;
 
   const { x, y } = nextStateRef;
   clickScreen(noxVmInfo, x, y);
-
-  transition();
 }
 
 const killApp = (noxVmInfo, reason) => {
@@ -112,7 +101,5 @@ module.exports = {
   getADBDevices,
   adbSettingToggle,
   rgbToHex,
-  isAtLeastPercentStaminaFull,
-  transition,
-  untransition
+  isAtLeastPercentStaminaFull
 };
