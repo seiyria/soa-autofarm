@@ -219,6 +219,7 @@ const run = async () => {
     Logger.error(`Found ${adb.length} devices via ADB but could only find ${noxPlayerPositions.length} instances in Windows. Something is wrong.`);
   }
 
+  // do different things if we calibrate than if we don't
   if(OPTIONS.NOX_CALIBRATE) {
     noxPlayerPositions.forEach((loc, i) => {
       repositionNoxWindow(loc, i);
@@ -234,12 +235,13 @@ const run = async () => {
     noxInstances = noxInstances.filter(x => x.adb);
 
     noxInstances.forEach((nox, i) => poll(i, WINDOW_STATES.UNKNOWN));
+
+  // run the nox instances in order, same order as adb
   } else {
     noxPlayerPositions.forEach((loc, i) => {
       repositionNoxWindow(loc, i);
   
-      // set ADB if it isn't already set
-      if(!noxInstances[i].adb) noxInstances[i].adb = adb[i];
+      noxInstances[i].adb = adb[i];
       poll(i, WINDOW_STATES.UNKNOWN);
     });
   }

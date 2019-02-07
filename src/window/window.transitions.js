@@ -202,14 +202,32 @@ const WINDOW_TRANSITIONS = {
   
   [WINDOW_STATES.EVENT_SCREEN_MAP]: {
     onRepeat: (noxVmInfo) => {
-      // TODO HOST CENTER SCREEN MISSION
+      const shouldHostCheckAgain = isAtLeastPercentStaminaFull(noxVmInfo);
 
-      if(OPTIONS.FARM_EVERYTHING) {
-        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
-        return;
+      if(noxVmInfo.shouldHost && !OPTIONS.HOST_MISSION) {
+        Logger.log(`[Nox ${noxVmInfo.index}]`, 'Determined that I should host, but no --host-mission set. It does need to be set, but can be set to anything.');
       }
 
-      tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.EVENT_JOIN_ALL);
+      // click the center mission on the map
+      // we host if:
+      // - we are in this screen and do not have a specific event to host, ie, we're farming this event
+      // - we were told to host by the event list
+      // - we only host if a HOST_MISSION is available
+      if((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION) {
+
+        // we set this again, in case you're not in FARM_EVERYTHING mode
+        noxVmInfo.shouldHost = true;
+        clickScreen(noxVmInfo, 275, 510);
+
+      // or, click join all if we're not doing farm everything
+      } else {
+        if(OPTIONS.FARM_EVERYTHING) {
+          tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
+          return;
+        }
+        
+        tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.EVENT_JOIN_ALL);
+      }
     }
   },
 

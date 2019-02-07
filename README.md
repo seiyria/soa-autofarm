@@ -76,7 +76,7 @@ You probably will want to use your stamina to also host missions instead of just
 
 * Host story missions: `--host-stam-percent=40 --host-story`
 * Host the top event, second mission (for missions in list format): `--host-stam-percent=40 --host-event=1 --host-mission=2`
-* Host the top event, current map mission (for missions in map format): `--host-stam-percent=40 --host-event=1`
+* Host the top event, current map mission - the one in the center of the screen (for missions in map format): `--host-stam-percent=40 --host-event=1 --host-mission=1`
 
 ## Gotchas
 
