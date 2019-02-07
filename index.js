@@ -179,6 +179,8 @@ const calibrateNoxPositions = async (noxVmLocations, adbs) => {
   for(let adb of adbs) {
     adbSettingToggle(adb, 1);
     await calibrateStartTimeout();
+    
+    clickScreenADB(adb, 30, 500);
 
     for(let noxVmInfo of noxVmLocations) {
       await calibrateStartTimeout();
@@ -188,12 +190,12 @@ const calibrateNoxPositions = async (noxVmLocations, adbs) => {
       const screenshot = rectshot([noxVmInfo.left, noxVmInfo.top, noxVmInfo.width, noxVmInfo.height], true);
       const image = await Jimp.read(screenshot);
 
-      const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(5, headerHeight + 5));
-      const hexColor = rgbToHex(hexColorRGBA);
+      const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(500, headerHeight + 5));
       
-      // if it has the click settings bar up top, it's this one
-      if(hexColor === '808080') {
+      // if it has the click settings bar up top and it has a gigantic chunk of red, it's this one
+      if(hexColorRGBA.r > 200) {
         noxVmInfo.adb = adb;
+        break;
       }
     }
 
@@ -219,7 +221,15 @@ const run = async () => {
     noxPlayerPositions.forEach((loc, i) => {
       repositionNoxWindow(loc, i);
     });
+
     await calibrateNoxPositions(noxInstances, adb);
+    console.log(noxInstances)
+
+    noxInstances.forEach((loc) => {
+      if(loc.adb) return;
+      Logger.error(`Found one Nox when calibrating with no ADB set. We can't keep doing this, captain.`);
+      process.exit(0);
+    });
   }
 
   noxPlayerPositions.forEach((loc, i) => {
