@@ -448,6 +448,9 @@ const WINDOW_TRANSITIONS = {
     },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);
+    },
+    onLeave: (noxVmInfo) => {
+      noxVmInfo.shouldHost = false;
     }
   },
 
