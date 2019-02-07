@@ -204,6 +204,10 @@ const WINDOW_TRANSITIONS = {
     onRepeat: (noxVmInfo) => {
       const shouldHostCheckAgain = isAtLeastPercentStaminaFull(noxVmInfo);
 
+      if(!shouldHostCheckAgain) {
+        noxVmInfo.shouldHost = false;
+      }
+
       if(noxVmInfo.shouldHost && !OPTIONS.HOST_MISSION) {
         Logger.log(`[Nox ${noxVmInfo.index}]`, 'Determined that I should host, but no --host-mission set. It does need to be set, but can be set to anything.');
       }
@@ -236,6 +240,10 @@ const WINDOW_TRANSITIONS = {
 
       // we check again, in case you're not in FARM_EVERYTHING mode
       const shouldHostCheckAgain = isAtLeastPercentStaminaFull(noxVmInfo);
+
+      if(!shouldHostCheckAgain) {
+        noxVmInfo.shouldHost = false;
+      }
 
       if(noxVmInfo.shouldHost && !OPTIONS.HOST_MISSION) {
         Logger.log(`[Nox ${noxVmInfo.index}]`, 'Determined that I should host, but no --host-mission to do. Backing out. Will probably not be doing anything any time soon.');
