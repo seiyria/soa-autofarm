@@ -4,6 +4,7 @@ const invert = require('lodash.invert');
  * ------------------------------------
  * RANK_UP - We rank up and can click anywhere to dismiss it.
  * MISSION_STARTING - Not super necessary really. Will be treated as UNKNOWN while loading.
+ * SUPPORT_RANK_UP - Treated as "support medals" popup, so it doesn't have to be worried about.
  */
 
 const WINDOW_STATES = {
