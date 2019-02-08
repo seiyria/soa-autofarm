@@ -8,9 +8,6 @@ const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } 
 
 // variables used by the screen transitions
 
-// used to check how many times we've seen an unknown state in a row - this could indicate a crash/freeze, usually
-let failedUnknownStateAttemptsSequence = 0;
-
 // used to check if we've been in the same party room for a period of time - we can quit/disband after a period of time
 let shouldStillLeave = false;
 
@@ -19,24 +16,7 @@ let failedRetryAttempts = 0;
 
 const WINDOW_TRANSITIONS = {
 
-  [WINDOW_STATES.UNKNOWN]: {
-    onEnter: () => {
-      failedUnknownStateAttemptsSequence = 0;
-    },
-
-    onRepeat: (noxVmInfo) => {
-      failedUnknownStateAttemptsSequence++;
-
-      if(failedUnknownStateAttemptsSequence > OPTIONS.APP_KILL_COUNT) {
-        failedUnknownStateAttemptsSequence = 0;
-        killApp(noxVmInfo, 'Killing app due to large UNKNOWN count.');
-      } 
-    },
-
-    onLeave: () => {
-      failedUnknownStateAttemptsSequence = 0;
-    }
-  },
+  [WINDOW_STATES.UNKNOWN]: { },
 
   // priority states
   [WINDOW_STATES.HAS_GIFT]: {

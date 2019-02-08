@@ -91,6 +91,7 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
   const curTransitions = WINDOW_TRANSITIONS[state];
 
   noxVmInfo.state = +state;
+  noxVmInfo.stateRepeats = noxVmInfo.stateRepeats || 0;
 
   if(OPTIONS.MOUSE_BLOCK) {
     const { x, y } = robot.getMousePos();
@@ -106,6 +107,7 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
 
   // we only change state if it's a new state
   if(state !== lastState) {
+    noxVmInfo.stateRepeats = 0;
 
     if(state !== WINDOW_STATES.UNKNOWN) {
       Logger.log(`[Nox ${noxIdx}]`, 'New State', windowName(state));
@@ -123,6 +125,12 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     
 
   } else if(state === lastState) {
+    noxVmInfo.stateRepeats++;
+    
+    if(noxVmInfo.stateRepeats > OPTIONS.APP_KILL_COUNT) {
+      noxVmInfo.stateRepeats = 0;
+      killApp(noxVmInfo, 'Killing app due to large UNKNOWN count.');
+    } 
 
     if(curTransitions && curTransitions.onRepeat) {
       Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:REPEAT', windowName(state));
