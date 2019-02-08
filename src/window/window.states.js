@@ -1,19 +1,25 @@
 const invert = require('lodash.invert');
+/*
+ * States we don't have to worry about!
+ * ------------------------------------
+ * RANK_UP - We rank up and can click anywhere to dismiss it.
+ * MISSION_STARTING - Not super necessary really. Will be treated as UNKNOWN while loading.
+ */
 
 const WINDOW_STATES = {
-  UNKNOWN: 0,
+  UNKNOWN: 0,                             // unknown state
 
-  HAS_ACHIEVEMENT_MAP: 1,
-  HAS_ACHIEVEMENT_LIST: 2,
-  HAS_ACHIEVEMENT_BRIDGE: 3,
+  HAS_ACHIEVEMENT_MAP: 1,                 // if you have an achievement and are on a map screen (story, event map)
+  HAS_ACHIEVEMENT_LIST: 2,                // if you have an achievement and are on a list screen (events, missions)
+  HAS_ACHIEVEMENT_BRIDGE: 3,              // if you have an achievement and are on the bridge
 
-  HAS_GIFT: 10,
+  HAS_GIFT: 10,                           // if you have a gift available
 
-  ANDROID_HOMESCREEN: 20,
+  ANDROID_HOMESCREEN: 20,                 // if you're on the android homescreen
 
-  TITLE_SCREEN: 41,
-  UPDATED_DATA_AVAILABLE: 42, // needs pic
-  UPDATE_SCREEN: 43,  // needs pic
+  TITLE_SCREEN: 41,                       // if you're at the title screen
+  UPDATED_DATA_AVAILABLE: 42,             // if you're at the "updated data available" prompt
+  UPDATE_SCREEN: 43,                      // if you're on the data download screen
   SESSION_EXPIRED: 44,
 
   BRIDGE: 50,

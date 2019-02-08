@@ -14,11 +14,11 @@ const WINDOW_INFORMATION = {
   // rest of the states
   [WINDOW_STATES.UNKNOWN]:                    { hex: '000000', pos: { x: 100, y: 130 } },
 
-  [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '020506', pos: { x: 450, y: 20 } },
+  [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '020506', pos: { x: 450, y: 20 }, ignoreKillswitch: true },
 
   [WINDOW_STATES.TITLE_SCREEN]:               { hex: 'DBBA68', pos: { x: 280, y: 570 } },
   [WINDOW_STATES.UPDATED_DATA_AVAILABLE]:     { hex: '9AA8BA', pos: { x: 465, y: 425 } },
-  [WINDOW_STATES.UPDATE_SCREEN]:              { hex: 'B8DAFC', pos: { x: 400, y: 120 } },
+  [WINDOW_STATES.UPDATE_SCREEN]:              { hex: 'B8DAFC', pos: { x: 400, y: 120 }, ignoreKillswitch: true },
   [WINDOW_STATES.SESSION_EXPIRED]:            { hex: 'E8EBEF', pos: { x: 480, y: 455 } },
 
   [WINDOW_STATES.BRIDGE]:                     { hex: '159DF1', pos: { x: 210, y: 825 } },
@@ -66,13 +66,13 @@ const WINDOW_INFORMATION = {
   
   [WINDOW_STATES.MISSION_START_PARTY]:        { hex: '066CB0', pos: { x: 25, y: 595 } },
 
-  [WINDOW_STATES.COMBAT_START_RUSH_1]:        { hex: '31C9AE', pos: { x: 190, y: 685 } },
-  [WINDOW_STATES.COMBAT_START_RUSH_2]:        { hex: '2E76C8', pos: { x: 215, y: 770 } },
-  [WINDOW_STATES.COMBAT_START_RUSH_3]:        { hex: '3AACE2', pos: { x: 215, y: 850 } },
-  [WINDOW_STATES.COMBAT_START_RUSH_4]:        { hex: '4FEEF9', pos: { x: 215, y: 930 } },
-  [WINDOW_STATES.COMBAT_DISCONNECT]:          { hex: '0F325F', pos: { x: 310, y: 445 } },
-  [WINDOW_STATES.COMBAT_DISCONNECT_2]:        { hex: '637997', pos: { x: 310, y: 545 } },
-  [WINDOW_STATES.COMBAT]:                     { hex: '61D5FF', pos: { x: 500, y: 515 } },
+  [WINDOW_STATES.COMBAT_START_RUSH_1]:        { hex: '31C9AE', pos: { x: 190, y: 685 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT_START_RUSH_2]:        { hex: '2E76C8', pos: { x: 215, y: 770 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT_START_RUSH_3]:        { hex: '3AACE2', pos: { x: 215, y: 850 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT_START_RUSH_4]:        { hex: '4FEEF9', pos: { x: 215, y: 930 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT_DISCONNECT]:          { hex: '0F325F', pos: { x: 310, y: 445 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT_DISCONNECT_2]:        { hex: '637997', pos: { x: 310, y: 545 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT]:                     { hex: '61D5FF', pos: { x: 500, y: 515 }, ignoreKillswitch: true },
 
   [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 450 } },
   [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 535 } },

@@ -125,7 +125,9 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     
 
   } else if(state === lastState) {
-    noxVmInfo.stateRepeats++;
+    if(!WINDOW_INFORMATION[state].ignoreKillswitch) {
+      noxVmInfo.stateRepeats++;
+    }
     
     if(noxVmInfo.stateRepeats > OPTIONS.APP_KILL_COUNT) {
       noxVmInfo.stateRepeats = 0;
