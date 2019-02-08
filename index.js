@@ -10,7 +10,7 @@ const { OPTIONS } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices, rgbToHex, adbSettingToggle, clickScreenADB } = require('./src/helpers/window');
+const { windowName, getADBDevices, rgbToHex, adbSettingToggle, clickScreenADB, killApp } = require('./src/helpers/window');
 
 const Logger = require('./src/helpers/logger');
 
@@ -129,7 +129,7 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     
     if(noxVmInfo.stateRepeats > OPTIONS.APP_KILL_COUNT) {
       noxVmInfo.stateRepeats = 0;
-      killApp(noxVmInfo, 'Killing app due to large UNKNOWN count.');
+      killApp(noxVmInfo, 'Killing app due to large state repeat count (possibly frozen).');
     } 
 
     if(curTransitions && curTransitions.onRepeat) {
