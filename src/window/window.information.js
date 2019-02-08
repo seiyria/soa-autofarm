@@ -7,7 +7,7 @@ const WINDOW_INFORMATION = {
 
   // these 4 states have the highest priority, so they get checked first
   [WINDOW_STATES.HAS_ACHIEVEMENT_MAP]:        { hex: '710000', pos: { x: 460, y: 270 } },
-  [WINDOW_STATES.HAS_ACHIEVEMENT_LIST]:       { hex: '840000', pos: { x: 475, y: 180 } },
+  [WINDOW_STATES.HAS_ACHIEVEMENT_LIST]:       { hex: 'F48181', pos: { x: 455, y: 170 } },
   [WINDOW_STATES.HAS_ACHIEVEMENT_BRIDGE]:     { hex: 'E50909', pos: { x: 475, y: 320 } },
   [WINDOW_STATES.HAS_GIFT]:                   { hex: 'FD6666', pos: { x: 470, y: 215 } },
 

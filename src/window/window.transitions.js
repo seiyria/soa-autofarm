@@ -29,14 +29,14 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.HAS_ACHIEVEMENT_BRIDGE]: {
     canEnter: () => !OPTIONS.SKIP_ACHIEVEMENTS,
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.ACHIEVEMENTS);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.HAS_ACHIEVEMENT_BRIDGE, WINDOW_STATES.ACHIEVEMENTS);
     }
   },
 
   [WINDOW_STATES.HAS_ACHIEVEMENT_LIST]: {
     canEnter: () => !OPTIONS.SKIP_ACHIEVEMENTS,
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.ACHIEVEMENTS);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.HAS_ACHIEVEMENT_LIST, WINDOW_STATES.ACHIEVEMENTS);
     }
   },
 
