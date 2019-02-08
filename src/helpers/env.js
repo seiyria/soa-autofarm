@@ -20,7 +20,7 @@ module.exports = {
     SPECIFIC_EVENT: isUndefined(argv['specific-event'])       ? false         : argv['specific-event'],
     SPECIFIC_MISSION: isUndefined(argv['specific-mission'])   ? false         : argv['specific-mission'],
     SAFETY_RADIUS: isUndefined(argv['safety-radius'])         ? 0             : argv['safety-radius'],
-    RETRY_FAIL_ATT: isUndefined(argv['retry-fail-attempts'])  ? 3             : argv['retry-fail-attempts'],
+    RETRY_FAIL_ATT: isUndefined(argv['retry-fail-attempts'])  ? 10            : argv['retry-fail-attempts'],
     HOST_STAM_PERCENT: isUndefined(argv['host-stam-percent']) ? 0             : argv['host-stam-percent'],
     HOST_EVENT: isUndefined(argv['host-event'])               ? 0             : argv['host-event'],
     HOST_MISSION: isUndefined(argv['host-mission'])           ? 0             : argv['host-mission'],
