@@ -107,6 +107,7 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 * `n` - see what each of the Nox VM states are
 * `d` - toggle debug mode
 * `v` - toggle verbose mode (and, if on, will make sure debug mode on too)
+* `c` - toggle if the application should click, or just watch you click (pauses the automatic killswitch as well)
 
 ## About Source Code
 

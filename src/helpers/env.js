@@ -32,6 +32,7 @@ module.exports = {
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
     VERBOSE: isUndefined(argv['verbose'])                     ? false         : argv['verbose'],
     REPL: isUndefined(argv['repl'])                           ? true          : argv['repl'],
+    NO_CLICK: isUndefined(argv['no-click'])                   ? false         : argv['no-click'],
 
     HOMESCREEN_APP_X: isUndefined(argv['homescreen-app-x'])   ? 495           : argv['homescreen-app-x'],
     HOMESCREEN_APP_Y: isUndefined(argv['homescreen-app-y'])   ? 160           : argv['homescreen-app-y'],

@@ -36,7 +36,9 @@ const clickScreenADB = (adb, x, y) => {
   exec(`"${NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
 }
 
-const clickScreen = (noxVmInfo, screenX, screenY) => {  
+const clickScreen = (noxVmInfo, screenX, screenY) => {
+  if(OPTIONS.NO_CLICK) return;
+  
   const { headerHeight, vmHeight, vmWidth, height, width } = noxVmInfo;
 
   const x = Math.floor(screenX * (vmWidth / width));
