@@ -330,7 +330,7 @@ const WINDOW_TRANSITIONS = {
       }, OPTIONS.PARTY_QUIT_DELAY);
     },
 
-    onLeave: () => {
+    onLeave: (noxVmInfo) => {
       noxVmInfo.shouldStillLeave = false;
     }
   },
@@ -394,7 +394,7 @@ const WINDOW_TRANSITIONS = {
       }, OPTIONS.HOST_QUIT_DELAY);
     },
 
-    onLeave: () => {
+    onLeave: (noxVmInfo) => {
       noxVmInfo.shouldStillLeave = false;
     }
   },
