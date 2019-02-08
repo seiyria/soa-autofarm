@@ -31,6 +31,7 @@ module.exports = {
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
     VERBOSE: isUndefined(argv['verbose'])                     ? false         : argv['verbose'],
+    REPL: isUndefined(argv['repl'])                           ? true          : argv['repl'],
 
     HOMESCREEN_APP_X: isUndefined(argv['homescreen-app-x'])   ? 495           : argv['homescreen-app-x'],
     HOMESCREEN_APP_Y: isUndefined(argv['homescreen-app-y'])   ? 160           : argv['homescreen-app-y'],

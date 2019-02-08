@@ -11,6 +11,7 @@ const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
 const { windowName, getADBDevices, rgbToHex, adbSettingToggle, clickScreenADB, killApp } = require('./src/helpers/window');
+const { replkeyhelper } = require('./src/helpers/repl');
 
 const Logger = require('./src/helpers/logger');
 
@@ -91,6 +92,7 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
   const curTransitions = WINDOW_TRANSITIONS[state];
 
   noxVmInfo.state = +state;
+  noxVmInfo.stateName = windowName(noxVmInfo.state);
   noxVmInfo.stateRepeats = noxVmInfo.stateRepeats || 0;
 
   if(OPTIONS.MOUSE_BLOCK) {
@@ -103,22 +105,22 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     }
   }
 
-  Logger.debug(`[Nox ${noxIdx}]`, '-----------> FOUND STATE', windowName(state));
+  Logger.debug(`[Nox ${noxIdx}]`, '-----------> FOUND STATE', noxVmInfo.stateName);
 
   // we only change state if it's a new state
   if(state !== lastState) {
     noxVmInfo.stateRepeats = 0;
 
     if(state !== WINDOW_STATES.UNKNOWN) {
-      Logger.log(`[Nox ${noxIdx}]`, 'New State', windowName(state));
+      Logger.log(`[Nox ${noxIdx}]`, 'New State', noxVmInfo.stateName);
   
       if(oldTransitions && oldTransitions.onLeave) {
-        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:LEAVE', windowName(lastState));
+        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:LEAVE', noxVmInfo.stateName);
         oldTransitions.onLeave(noxVmInfo);
       }
   
       if(curTransitions && curTransitions.onEnter) {
-        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:ENTER', windowName(state));
+        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:ENTER', noxVmInfo.stateName);
         curTransitions.onEnter(noxVmInfo);
       }
     }
@@ -135,7 +137,7 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     } 
 
     if(curTransitions && curTransitions.onRepeat) {
-      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:REPEAT', windowName(state));
+      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:REPEAT', noxVmInfo.stateName);
       curTransitions.onRepeat(noxVmInfo);
     }
     
@@ -271,4 +273,16 @@ if(OPTIONS.NOX_ALLOW_MOVE) {
   };
 
   setInterval(() => reposition(), OPTIONS.POLL_RATE);
+}
+
+if(OPTIONS.REPL) {
+
+  Logger.log('Starting in REPL mode... See README for key combinations!');
+
+  require('readline').emitKeypressEvents(process.stdin);
+  process.stdin.setRawMode(true);
+
+  process.stdin.on('keypress', (chunk, key) => {
+    replkeyhelper(key, noxInstances);
+  });
 }

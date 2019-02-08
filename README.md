@@ -59,6 +59,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-sidebar-width` - the width of the Nox sidebar. Default: `40`px.
 * `--nox-window-name` - the name of the Nox window. Default: `'NoxPlayer'`.
 * `--verbose` - if used with `--debug`, print even more messages. This is definitely for debugging only. Default: `false`.
+* `--repl` - allow for certain keys to be pressed while the application is running. See the REPL section for more details. Default: `true`.
 
 ### Where Should I Start The App?
 
@@ -98,6 +99,15 @@ If you plan to host a map mission (not a list mission), it will pick the last mi
 
 Additionally, unlike other automated aspects of this program, to host, you must start on a screen where stamina is visible (event screen, event mission list, event map list, story screen, or bridge). Otherwise, it will just join and do it's thing, but host when it gets out. If you're not paired with `--farm-everything`, it will host the current mission in your current event list / map screen.
 
+## REPL
+
+Sometimes, weird things happen and you want to inspect the state of the application without restarting it. That's where this comes in. If you pass in `--repl` it will let you press the following keys and get those results:
+
+* `q` - quit running the app
+* `n` - see what each of the Nox VM states are
+* `d` - toggle debug mode
+* `v` - toggle verbose mode (and, if on, will make sure debug mode on too)
+
 ## About Source Code
 
 * `window.clicks.js` has information on where you click in one particular state to get to another state.
@@ -109,12 +119,11 @@ Additionally, unlike other automated aspects of this program, to host, you must 
 
 * Single Player Story Farm
   * Event - requires --specific-mission and --specific-event (support map and list)
-  * Mission - always click the current mission in the center
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)
 
-* Add auto-refill-stamina to auto-host
+* Add auto-refill-stamina
 * "Wait for all rush" feature (either wait for 4x rush, or wait for as many as can be waited for with dead people)
 * Support scrollbar use to get specific mission/event position (beyond what's supported)
 * Support JP (swap transitions/clicks/information at runtime)

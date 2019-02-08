@@ -9,10 +9,10 @@ const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } 
 // variables used by the screen transitions
 
 // used to check if we've been in the same party room for a period of time - we can quit/disband after a period of time
-let shouldStillLeave = false;
+// shouldStillLeave = false;
 
 // used to check if we've been retrying too many times - we should probably go back to the event screen if so
-let failedRetryAttempts = 0;
+// let failedRetryAttempts = 0;
 
 const WINDOW_TRANSITIONS = {
 
@@ -298,9 +298,10 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_START_QUEUE_RETRY]: {
     onEnter: (noxVmInfo) => {
-      failedRetryAttempts++;
+      noxVmInfo.failedRetryAttempts = noxVmInfo.failedRetryAttempts || 0;
+      noxVmInfo.failedRetryAttempts++;
 
-      if(failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
+      if(noxVmInfo.failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
         killApp(noxVmInfo, 'Killing app due to exceeding --retry-fail-attempts threshold.');
       }
     },
@@ -317,17 +318,17 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_START_PARTY]: {
     onEnter: (noxVmInfo) => {
-      shouldStillLeave = true;
+      noxVmInfo.shouldStillLeave = true;
 
       // back out if they try to sit in the same lobby for 3 hours
       setTimeout(() => {
-        if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY || !shouldStillLeave) return;
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY || !noxVmInfo.shouldStillLeave) return;
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
       }, OPTIONS.PARTY_QUIT_DELAY);
     },
 
     onLeave: () => {
-      shouldStillLeave = false;
+      noxVmInfo.shouldStillLeave = false;
     }
   },
 
@@ -381,17 +382,17 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_HOST_START_NO]: {
     onEnter: (noxVmInfo) => {
-      shouldStillLeave = true;
+      noxVmInfo.shouldStillLeave = true;
 
       // back out if no one joins
       setTimeout(() => {
-        if(noxVmInfo.state !== WINDOW_STATES.MISSION_HOST_START_NO || !shouldStillLeave) return;
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_HOST_START_NO || !noxVmInfo.shouldStillLeave) return;
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_START_NO, WINDOW_STATES.MISSION_HOST_DISBAND);
       }, OPTIONS.HOST_QUIT_DELAY);
     },
 
     onLeave: () => {
-      shouldStillLeave = false;
+      noxVmInfo.shouldStillLeave = false;
     }
   },
 
@@ -431,7 +432,7 @@ const WINDOW_TRANSITIONS = {
   // COMBAT
   [WINDOW_STATES.COMBAT]: {
     onEnter: (noxVmInfo) => {
-      failedRetryAttempts = 0;
+      noxVmInfo.failedRetryAttempts = 0;
       noxVmInfo.shouldHost = false;
     },
     onRepeat: (noxVmInfo) => {
