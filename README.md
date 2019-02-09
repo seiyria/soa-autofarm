@@ -39,7 +39,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.
 * `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. This can also lead to some minor mis-detections of different states, especially at higher numbers. Default: `0`.
-* `--safety-threshold` - the tolerance for the found color and the desired color on screen. Higher numbers are more likely to match, but also to cause false positives. Default: `5`%.
+* `--safety-threshold` - the tolerance for the found color and the desired color on screen. Higher numbers are more likely to match, but also to cause false positives. Default: `2`%.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
