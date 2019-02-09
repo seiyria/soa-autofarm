@@ -17,6 +17,8 @@ const hexToRgb = (hex) => {
 };
 
 const areColorsWithinTolerance = (hex1, hex2) => {
+  if(OPTIONS.SAFETY_THRESHOLD === 0) return hex1 === hex2;
+  
   const rgb1 = hexToRgb(hex1);
   const rgb2 = hexToRgb(hex2);
 
