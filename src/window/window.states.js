@@ -2,7 +2,6 @@ const invert = require('lodash.invert');
 /*
  * States we don't have to worry about!
  * ------------------------------------
- * RANK_UP - We rank up and can click anywhere to dismiss it.
  * MISSION_STARTING - Not super necessary really. Will be treated as UNKNOWN while loading.
  * SUPPORT_RANK_UP - Treated as "support medals" popup, so it doesn't have to be worried about.
  */
@@ -22,6 +21,7 @@ const WINDOW_STATES = {
   UPDATED_DATA_AVAILABLE: 42,             // if you're at the "updated data available" prompt
   UPDATE_SCREEN: 43,                      // if you're on the data download screen
   SESSION_EXPIRED: 44,                    // if you got the "session expired" popup
+  SUSPENDED_DATA: 45,                     // "resume from suspended data" screen
 
   BRIDGE: 50,                             // if you're on the bridge
   BRIDGE_UPDATE_NEWS: 51,                 // if you can see the bridge update news popup
@@ -81,6 +81,7 @@ const WINDOW_STATES = {
   REWARD1: 130,                           // the first reward screen
   REWARD2: 131,                           // the second reward screen
   REWARD3: 132,                           // the third reward screen
+  REWARD_RANKUP: 133,                     // the reward rank-up popup
 
   STORY_SCREEN: 140                       // the mission popup for story missions
 };

@@ -2,7 +2,6 @@ const { OPTIONS } = require('../helpers/env');
 const Logger = require('../helpers/logger');
 
 const { WINDOW_STATES } = require('./window.states');
-const { WINDOW_CLICKS } = require('./window.clicks');
 
 const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } = require('../helpers/window');
 
@@ -51,6 +50,13 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.ANDROID_HOMESCREEN]: {
     onRepeat: (noxVmInfo) => {
       clickScreen(noxVmInfo, OPTIONS.HOMESCREEN_APP_X, OPTIONS.HOMESCREEN_APP_Y);
+    }
+  },
+
+  // suspended data
+  [WINDOW_STATES.SUSPENDED_DATA]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.SUSPENDED_DATA, WINDOW_STATES.COMBAT);
     }
   },
 
@@ -239,13 +245,8 @@ const WINDOW_TRANSITIONS = {
       // - we are in this screen and do not have a specific event to host, ie, we're farming this event
       // - we were told to host by the event list
       // - we only host if a HOST_MISSION is available
-      const shouldHostSpecificMission = (noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION;
+      const shouldHostSpecificMission = !!((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION);
       if(OPTIONS.SPECIFIC_MISSION || shouldHostSpecificMission) {
-
-        // we set this again, in case you're not in FARM_EVERYTHING mode and we *are* hosting
-        if(shouldHostSpecificMission) {
-          noxVmInfo.shouldHost = true;
-        }
 
         const mission = OPTIONS.SPECIFIC_MISSION || OPTIONS.HOST_MISSION;
         clickScreen(noxVmInfo, 285, 300 + (80 * (mission - 1)));
@@ -270,6 +271,9 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.EVENT_SCREEN_STORY]: {
     onRepeat: (noxVmInfo) => {
+
+      // swallow every other click to not get stuck here forever accidentally
+      if((noxVmInfo.stateRepeats % 2) === 0) return;
       tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_STORY, WINDOW_STATES.EVENT_SCREEN_MAP);
     }
   },
@@ -445,9 +449,6 @@ const WINDOW_TRANSITIONS = {
     },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);
-    },
-    onLeave: (noxVmInfo) => {
-      noxVmInfo.shouldHost = false;
     }
   },
 
@@ -541,22 +542,25 @@ const WINDOW_TRANSITIONS = {
   // the mutex doesn't like that
   [WINDOW_STATES.REWARD1]: {
     onRepeat: (noxVmInfo) => {
-      const nextState = WINDOW_CLICKS[WINDOW_STATES.REWARD1][WINDOW_STATES.REWARD2];
-      clickScreen(noxVmInfo, nextState.x, nextState.y);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD1, WINDOW_STATES.REWARD2);
     }
   },
 
   [WINDOW_STATES.REWARD2]: {
     onRepeat: (noxVmInfo) => {
-      const nextState = WINDOW_CLICKS[WINDOW_STATES.REWARD2][WINDOW_STATES.REWARD3];
-      clickScreen(noxVmInfo, nextState.x, nextState.y);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD2, WINDOW_STATES.REWARD3);
     }
   },
 
   [WINDOW_STATES.REWARD3]: {
     onRepeat: (noxVmInfo) => {
-      const nextState = WINDOW_CLICKS[WINDOW_STATES.REWARD3][WINDOW_STATES.EVENT_SCREEN];
-      clickScreen(noxVmInfo, nextState.x, nextState.y);
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN);
+    }
+  },
+
+  [WINDOW_STATES.REWARD_RANKUP]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD_RANKUP, WINDOW_STATES.REWARD1);
     }
   },
 

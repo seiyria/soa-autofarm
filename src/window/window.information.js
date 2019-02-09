@@ -20,6 +20,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.UPDATED_DATA_AVAILABLE]:     { hex: '9AA8BA', pos: { x: 465, y: 425 } },
   [WINDOW_STATES.UPDATE_SCREEN]:              { hex: 'B8DAFC', pos: { x: 400, y: 120 }, ignoreKillswitch: true },
   [WINDOW_STATES.SESSION_EXPIRED]:            { hex: 'E8EBEF', pos: { x: 480, y: 455 } },
+  [WINDOW_STATES.SUSPENDED_DATA]:             { hex: '91A1B6', pos: { x: 35, y: 450 } },
 
   [WINDOW_STATES.BRIDGE]:                     { hex: '159DF1', pos: { x: 210, y: 825 } },
   [WINDOW_STATES.BRIDGE_UPDATE_NEWS]:         { hex: '125B72', pos: { x: 470, y: 915 } },
@@ -77,6 +78,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 450 } },
   [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 535 } },
   [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 265 } },
+  [WINDOW_STATES.REWARD_RANKUP]:              { hex: '8394AB', pos: { x: 160, y: 505 } },
 
   [WINDOW_STATES.STORY_SCREEN]:               { hex: '006AA6', pos: { x: 265, y: 785 } }
 };
