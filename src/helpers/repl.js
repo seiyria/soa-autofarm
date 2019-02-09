@@ -55,6 +55,8 @@ const replkeyhelper = (key, noxState) => {
 
     const ts = Date.now();
 
+    Logger.Log(`[REPL "u"]`, `Dumping state and screen for ${noxState.length} Nox. Timestamp: ${ts}`);
+
     noxState.forEach(async (noxVmInfo, i) => {
       const cloneState = Object.assign({}, noxVmInfo);
       delete cloneState.curImageState;
