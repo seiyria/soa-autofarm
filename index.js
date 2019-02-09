@@ -5,7 +5,7 @@ const Jimp = require('jimp');
 
 const sortBy = require('lodash.sortby');
 
-const { OPTIONS } = require('./src/helpers/env');
+const { OPTIONS, isEnvValid } = require('./src/helpers/env');
 
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
@@ -221,7 +221,7 @@ const run = async () => {
 
   const noxPlayerPositions = getNoxPositions();
 
-  Logger.log(`Calibrating ${noxPlayerPositions.length} Nox Player location(s)...`);
+  Logger.log(`Getting ${noxPlayerPositions.length} Nox Player location(s)...`);
   Logger.debug('Positions:', noxPlayerPositions);
 
   const adb = getADBDevices();
@@ -257,6 +257,13 @@ const run = async () => {
     });
   }
 };
+
+const error = isEnvValid();
+if(error) {
+  Logger.log('[Startup Error]', error);
+  Logger.log('Exiting...');
+  process.exit(0);
+}
 
 run();
 
