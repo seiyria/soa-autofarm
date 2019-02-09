@@ -103,11 +103,12 @@ Additionally, unlike other automated aspects of this program, to host, you must 
 
 Sometimes, weird things happen and you want to inspect the state of the application without restarting it. That's where this comes in. If you pass in `--repl` it will let you press the following keys and get those results:
 
-* `q` - quit running the app
-* `n` - see what each of the Nox VM states are
-* `d` - toggle debug mode
-* `v` - toggle verbose mode (and, if on, will make sure debug mode on too)
 * `c` - toggle if the application should click, or just watch you click (pauses the automatic killswitch as well)
+* `d` - toggle debug mode
+* `n` - see what each of the Nox VM states are
+* `o` - print the options used in the app currently
+* `q` - quit running the app
+* `v` - toggle verbose mode (and, if on, will make sure debug mode on too)
 
 ## About Source Code
 
@@ -119,12 +120,13 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 # TODO (Now)
 
 * Single Player Story Farm
+  * Auto refill stamina
   * Event - requires --specific-mission and --specific-event (support map and list)
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)
 
-* Add auto-refill-stamina
+* Add sync state feature to allow multiple Nox to not proceed clicking unless they're in the same state as each other
 * "Wait for all rush" feature (either wait for 4x rush, or wait for as many as can be waited for with dead people)
 * Support scrollbar use to get specific mission/event position (beyond what's supported)
 * Support JP (swap transitions/clicks/information at runtime)

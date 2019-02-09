@@ -39,6 +39,11 @@ const replkeyhelper = (key, noxState) => {
 
     console.log(OPTIONS.NO_CLICK ? 'No more clicking!' : 'Will resume clicking!');
   }
+
+  // print options
+  if(key.name === 'o') {
+    console.log(OPTIONS);
+  }
 };
 
 module.exports = {

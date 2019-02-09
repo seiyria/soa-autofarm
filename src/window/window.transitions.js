@@ -56,6 +56,11 @@ const WINDOW_TRANSITIONS = {
 
   // other states
   [WINDOW_STATES.BRIDGE]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.shouldHost = false;
+      noxVmInfo.shouldStillLeave = false;
+      noxVmInfo.failedRetryAttempts = 0;
+    },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_MISSIONS) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.STORY_SCREEN);
@@ -228,13 +233,13 @@ const WINDOW_TRANSITIONS = {
       if(noxVmInfo.shouldHost && !OPTIONS.HOST_MISSION) {
         Logger.log(`[Nox ${noxVmInfo.index}]`, 'Determined that I should host, but no --host-mission to do. Backing out. Will probably not be doing anything any time soon.');
       }
-
+      
       // click a specific mission in the menu list
       // we host if:
       // - we are in this screen and do not have a specific event to host, ie, we're farming this event
       // - we were told to host by the event list
       // - we only host if a HOST_MISSION is available
-      const shouldHostSpecificMission = ((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION);
+      const shouldHostSpecificMission = (noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION;
       if(OPTIONS.SPECIFIC_MISSION || shouldHostSpecificMission) {
 
         // we set this again, in case you're not in FARM_EVERYTHING mode and we *are* hosting
@@ -557,15 +562,12 @@ const WINDOW_TRANSITIONS = {
 
   // STORY MISSIONS
   [WINDOW_STATES.STORY_SCREEN]: {
-    onEnter: (noxVmInfo) => {
-      noxVmInfo.shouldHost = false;
-    },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.FARM_MISSIONS) {
-        noxVmInfo.shouldHost = isAtLeastPercentStaminaFull(noxVmInfo);
+        const shouldHost = isAtLeastPercentStaminaFull(noxVmInfo);
 
         // if we can host, we click the button
-        if(noxVmInfo.shouldHost && OPTIONS.HOST_STORY) {
+        if(shouldHost && OPTIONS.HOST_STORY) {
           clickScreen(noxVmInfo, 275, 510);
 
         // otherwise, we just join all
