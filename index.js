@@ -10,7 +10,8 @@ const { OPTIONS, isEnvValid } = require('./src/helpers/env');
 const { WINDOW_STATES } = require('./src/window/window.states');
 const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
 const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices, rgbToHex, adbSettingToggle, clickScreenADB, killApp } = require('./src/helpers/window');
+const { windowName, getADBDevices, adbSettingToggle, clickScreenADB, killApp } = require('./src/helpers/window');
+const { rgbToHex, areColorsWithinTolerance } = require('./src/helpers/color');
 const { replkeyhelper } = require('./src/helpers/repl');
 
 const Logger = require('./src/helpers/logger');
@@ -65,7 +66,7 @@ const getState = async (noxVmInfo) => {
           Logger.verbose(`[Nox ${noxVmInfo.index}]`, 'SCREEN CHECK', windowName(screenId), 'foundcolor', hexColor, 'desiredcolor', screen.hex, 'x', screenX, 'y', screenY, 'match', hexColor === screen.hex);
     
           // if it matches, we have our screen
-          if(screen.hex === hexColor) foundScreen = screenId;
+          if(areColorsWithinTolerance(screen.hex, hexColor)) foundScreen = screenId;
     
         // should only happen when adding a new screen
         } else {

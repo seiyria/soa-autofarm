@@ -39,6 +39,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.
 * `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. This can also lead to some minor mis-detections of different states, especially at higher numbers. Default: `0`.
+* `--safety-threshold` - the tolerance for the found color and the desired color on screen. Higher numbers are more likely to match, but also to cause false positives. Default: `5`%.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
@@ -84,6 +85,9 @@ You probably will want to use your stamina to also host missions instead of just
 * This will only run on Windows.
 * Your windows must contain the name "NoxPlayer". This is the default, so as long as you're not changing it, you're fine.
 * You must use Nox v6.2.6.2. It probably works on other Nox versions, but this is the version it was developed against.
+* Nox must be in OpenGL mode. If the screen is dark in combat, run these two commands:
+  * `nox_adb shell setprop persist.nox.quality 1`
+  * `nox_adb shell setprop persist.nox.gles 3`
 * You cannot move Nox while this is running (unless you use `--nox-allow-move`).
 * You cannot block the Nox window while this is running.
 * Your SOA character party should probably be max level, just in case.

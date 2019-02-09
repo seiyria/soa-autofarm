@@ -13,6 +13,7 @@ const NOX_ADB_PATH = OPTIONS.NOX_ADB_PATH;
 
 const { WINDOW_NAMES, WINDOW_STATES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
+const { rgbToHex } = require('./color');
 
 const windowName = (id) => WINDOW_NAMES[id] || `UNKNOWN (${id})`;
 
@@ -69,13 +70,6 @@ const getADBDevices = () => {
 const adbSettingToggle = (adb, toggle) => {
   exec(`"${NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`);
 }
-
-const componentToHexString = (num) => num.toString(16).padStart(2, '0');
-
-const rgbToHex = ({ r, g, b }) => {
-  return (componentToHexString(r) + componentToHexString(g) + componentToHexString(b)).toUpperCase();
-};
-
 const isAtLeastPercentStaminaFull = (noxVmInfo) => {
   const percent = OPTIONS.HOST_STAM_PERCENT;
 
@@ -102,6 +96,5 @@ module.exports = {
   killApp,
   getADBDevices,
   adbSettingToggle,
-  rgbToHex,
   isAtLeastPercentStaminaFull
 };

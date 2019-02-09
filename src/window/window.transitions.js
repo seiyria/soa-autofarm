@@ -217,6 +217,10 @@ const WINDOW_TRANSITIONS = {
       // or, click join all if we're not doing farm everything
       } else {
         if(OPTIONS.FARM_EVERYTHING) {
+
+          // swallow every other click to not double click on accident
+          if((noxVmInfo.stateRepeats % 2) === 0) return;
+
           tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
           return;
         }
@@ -254,6 +258,10 @@ const WINDOW_TRANSITIONS = {
       // or, click join all if we're not doing farm everything
       } else {
         if(OPTIONS.FARM_EVERYTHING) {
+
+          // swallow every other click to not double click on accident
+          if((noxVmInfo.stateRepeats % 2) === 0) return;
+          
           tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_SCREEN);
           return;
         }
