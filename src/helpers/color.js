@@ -24,7 +24,7 @@ const areColorsWithinTolerance = (hex1, hex2) => {
   const g = rgb1.g - rgb2.g;
   const b = rgb1.b - rgb2.b;
   
-  return (r * r + g * g + b * b) < OPTIONS.SAFETY_THRESHOLD * OPTIONS.SAFETY_THRESHOLD;
+  return ((r * r) + (g * g) + (b * b)) < (OPTIONS.SAFETY_THRESHOLD * OPTIONS.SAFETY_THRESHOLD);
 };
 
 module.exports = {
