@@ -1,4 +1,7 @@
 
+const fs = require('fs');
+const Jimp = require('jimp');
+
 const { OPTIONS } = require('./env');
 const Logger = require('./logger');
 
@@ -45,6 +48,21 @@ const replkeyhelper = (key, noxState) => {
   if(key.name === 'o') {
     Logger.log(`[REPL "o"]`, 'Options:');
     Logger.log(OPTIONS);
+  }
+
+  // dump everything about the current state. u is for ugh.
+  if(key.name === 'u') {
+
+    const ts = Date.now();
+
+    noxState.forEach(async (noxVmInfo, i) => {
+      const cloneState = Object.assign({}, noxVmInfo);
+      delete cloneState.curImageState;
+
+      fs.writeFile(process.cwd() + `/${ts}-state-${i}.json`, JSON.stringify({ options: OPTIONS, vm: cloneState }, null, 4), () => {});
+      fs.writeFile(process.cwd() + `/${ts}-screen-${i}.png`, await noxVmInfo.curImageState.getBufferAsync(Jimp.MIME_PNG), () => {});
+    });
+
   }
 };
 

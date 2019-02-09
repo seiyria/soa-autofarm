@@ -208,6 +208,7 @@ const calibrateNoxPositions = async (noxVmLocations, adbs) => {
       // if it has the click settings bar up top and it has a gigantic chunk of red, it's this one
       if(hexColorRGBA.r > 200) {
         noxVmInfo.adb = adb;
+        Logger.log(`Calibrated ${adb} and tied it to Nox ${noxVmInfo.index}`);
         break;
       }
     }
