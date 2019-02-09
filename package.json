@@ -15,5 +15,7 @@
     "robotjs": "^0.5.1",
     "winpos": "^1.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "pkg": "^4.3.7"
+  }
 }

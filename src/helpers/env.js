@@ -1,5 +1,10 @@
 const argv = require('minimist')(process.argv.slice(2));
 
+if(argv['help']) {
+  console.log('--help Go look at the README.md!');
+  process.exit(0);
+}
+
 const isUndefined = (val) => typeof val === 'undefined';
 
 const OPTIONS ={
