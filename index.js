@@ -99,28 +99,28 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     const { x, y } = robot.getMousePos();
     
     if(x > left && x < left + width && y > top && y < top + height) {
-      Logger.debug(`[Nox ${noxIdx}]`, '---> MOUSE ---> BLOCK');
+      Logger.debug(`[Nox ${noxVmInfo.index}]`, '---> MOUSE ---> BLOCK');
       setTimeout(() => poll(noxIdx, state), OPTIONS.POLL_RATE);
       return;
     }
   }
 
-  Logger.debug(`[Nox ${noxIdx}]`, '-----------> FOUND STATE', noxVmInfo.stateName);
+  Logger.debug(`[Nox ${noxVmInfo.index}]`, '-----------> FOUND STATE', noxVmInfo.stateName);
 
   // we only change state if it's a new state
   if(state !== lastState) {
     noxVmInfo.stateRepeats = 0;
 
     if(state !== WINDOW_STATES.UNKNOWN) {
-      Logger.log(`[Nox ${noxIdx}]`, 'New State', noxVmInfo.stateName);
+      Logger.log(`[Nox ${noxVmInfo.index}]`, 'New State', noxVmInfo.stateName);
   
       if(oldTransitions && oldTransitions.onLeave) {
-        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:LEAVE', noxVmInfo.stateName);
+        Logger.debug(`[Nox ${noxVmInfo.index}]`, '===========> TRANSITION:LEAVE', noxVmInfo.stateName);
         oldTransitions.onLeave(noxVmInfo);
       }
   
       if(curTransitions && curTransitions.onEnter) {
-        Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:ENTER', noxVmInfo.stateName);
+        Logger.debug(`[Nox ${noxVmInfo.index}]`, '===========> TRANSITION:ENTER', noxVmInfo.stateName);
         curTransitions.onEnter(noxVmInfo);
       }
     }
@@ -137,7 +137,7 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     } 
 
     if(curTransitions && curTransitions.onRepeat) {
-      Logger.debug(`[Nox ${noxIdx}]`, '===========> TRANSITION:REPEAT', noxVmInfo.stateName);
+      Logger.debug(`[Nox ${noxVmInfo.index}]`, '===========> TRANSITION:REPEAT', noxVmInfo.stateName);
       curTransitions.onRepeat(noxVmInfo);
     }
     

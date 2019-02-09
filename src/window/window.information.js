@@ -58,7 +58,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_HOST_RECRUIT]:       { hex: 'E9A61E', pos: { x: 100, y: 730 } },
   [WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL]: { hex: '133562', pos: { x: 380, y: 615 } },
   [WINDOW_STATES.MISSION_HOST_MODAL_REQ2]:    { hex: '24446E', pos: { x: 325, y: 480 } },
-  [WINDOW_STATES.MISSION_HOST_MODAL_REQ0]:    { hex: 'A8B1BD', pos: { x: 345, y: 455 } },
+  [WINDOW_STATES.MISSION_HOST_MODAL_REQ0]:    { hex: 'A7B1BD', pos: { x: 345, y: 455 } },
   [WINDOW_STATES.MISSION_START_STAMPS]:       { hex: '29A0AE', pos: { x: 45, y: 735 } },
   [WINDOW_STATES.MISSION_HOST_START_YES]:     { hex: '297AC5', pos: { x: 255, y: 740 } },
   [WINDOW_STATES.MISSION_HOST_START_NO]:      { hex: '325077', pos: { x: 45, y: 55 } },
