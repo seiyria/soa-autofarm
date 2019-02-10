@@ -22,7 +22,9 @@ Or you pass in whatever you want. The arguments are listed below.
 
 * `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `600`.
 * `--auto-tap-attack` - whether or not to auto tap attack to force melee attacks. Default: `false`.
+* `--auto-refresh-stam` - whether or not to automatically refresh stamina from tickets (will not use gems). Default: `false`.
 * `--farm-everything` - farm every MP event (using the Join All feature) or just the specific one you enter into. Default: `true`.
+* `--farm-single` - farm in single-player. Needs `--farm-event` and possibly `--farm-mission` to work. Default: `false`.
 * `--farm-story` - whether or not to farm story missions instead of events. Default: `false`.
 * `--is-jp` - whether or not you're playing JP. Default: `false`.
 * `--host-event` - the particular event to host for in the list. For more information on hosting, see the section below. Default: `0`.
@@ -53,6 +55,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--app-homescreen-y` - the y-position of the app on the homescreen. Default: `160`.
 * `--debug` - print all the debug messages. Warning, there are a lot of these. Default: `false`.
 * `--debug-pointer` - move the mouse to where a particular state will be checking a pixel (`--debug-pointer=COMBAT_START_RUSH_1`). Can debug multiple (`--debug-pointer=COMBAT_START_RUSH_1,COMBAT_START_RUSH_2`). Default: `''`.
+* `--ignore-click` - do not click the screen, but do normal state observation. Default: `false`.
 * `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
 * `--nox-calibrate` - calibrate Nox when the program starts, so the app knows which window belongs to which adb device. Only useful if you have more than one Nox running. Default: `false`.
 * `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
@@ -72,6 +75,7 @@ Most of the params will assume you start from the Bridge. However, not all. Here
 * Farm a particular mission (`--farm-everything=1 --specific-event=X`) - start at the mission list for that particular event list and use `--specific-mission`
 * Farm missions (`--farm-missions=1`) - start at the Bridge
 * Farm a particular story mission - not yet possible, but not likely to be necessary
+* Farm a particular event mission in single player (`--farm-single --single-event=X --single-mission-Y`) - start at the Bridge
 
 ### Hosting Missions
 
@@ -80,6 +84,12 @@ You probably will want to use your stamina to also host missions instead of just
 * Host story missions: `--host-stam-percent=40 --host-story`
 * Host the top event, second mission (for missions in list format): `--host-stam-percent=40 --host-event=1 --host-mission=2`
 * Host the top event, current map mission - the one in the center of the screen (for missions in map format): `--host-stam-percent=40 --host-event=1 --host-mission=1`
+
+### Single Player Farming
+
+In the event that you do not want to use your stamina for hosting, you can instead opt to do single player farming. The format is similar to join/host specific MP missions:
+
+* Spam the top event, mission 3: `--single-event=1 --single-mission=3`
 
 ## Gotchas
 
@@ -113,6 +123,7 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 * `n` - see what each of the Nox VM states are
 * `o` - print the options used in the app currently
 * `q` - quit running the app
+* `u` - dump the current state of the app
 * `v` - toggle verbose mode (and, if on, will make sure debug mode on too)
 
 ## About Source Code
@@ -124,9 +135,7 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 
 # TODO (Now)
 
-* Single Player Story Farm
-  * Auto refill stamina
-  * Event - requires --specific-mission and --specific-event (support map and list)
+* Auto refill stamina (check if 2 boxes, if so, click first one, otherwise sit at this screen)
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)

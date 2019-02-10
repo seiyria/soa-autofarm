@@ -166,7 +166,11 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.shouldHost = false;
     },
     onRepeat: (noxVmInfo) => {
-      if(OPTIONS.FARM_MISSIONS) {
+      if(OPTIONS.FARM_SINGLE) {
+        const event = OPTIONS.SINGLE_EVENT;
+        clickScreen(noxVmInfo, 285, 375 + (105 * (event - 1)));
+
+      } else if(OPTIONS.FARM_MISSIONS) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.BRIDGE);
 
       } else {
@@ -208,7 +212,8 @@ const WINDOW_TRANSITIONS = {
       // - we are in this screen and do not have a specific event to host, ie, we're farming this event
       // - we were told to host by the event list
       // - we only host if a HOST_MISSION is available
-      if((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION) {
+      // - we start single player mode
+      if((noxVmInfo.shouldHost || OPTIONS.FARM_SINGLE || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION) {
 
         // we set this again, in case you're not in FARM_EVERYTHING mode
         noxVmInfo.shouldHost = true;
@@ -249,10 +254,11 @@ const WINDOW_TRANSITIONS = {
       // - we are in this screen and do not have a specific event to host, ie, we're farming this event
       // - we were told to host by the event list
       // - we only host if a HOST_MISSION is available
+      // - we are in single player mode
       const shouldHostSpecificMission = !!((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION);
-      if(OPTIONS.SPECIFIC_MISSION || shouldHostSpecificMission) {
+      if(OPTIONS.SINGLE_MISSION || OPTIONS.SPECIFIC_MISSION || shouldHostSpecificMission) {
 
-        const mission = OPTIONS.SPECIFIC_MISSION || OPTIONS.HOST_MISSION;
+        const mission = OPTIONS.SINGLE_MISSION || OPTIONS.SPECIFIC_MISSION || OPTIONS.HOST_MISSION;
         clickScreen(noxVmInfo, 285, 300 + (80 * (mission - 1)));
 
       // or, click join all if we're not doing farm everything
@@ -289,7 +295,15 @@ const WINDOW_TRANSITIONS = {
   // MISSION
   [WINDOW_STATES.MISSION_START]: {
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_START_MP);
+
+      // farm single player missions instead of multi
+      if(OPTIONS.FARM_SINGLE) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_SINGLE_CHARCHOICE);
+
+      // or, just do multi
+      } else {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_START_MP);
+      }
     }
   },
 
@@ -446,6 +460,24 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.MISSION_HOST_DISBAND]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_DISBAND, WINDOW_STATES.MISSION_START_DISBAND);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_HOST_SINGLE]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_SINGLE, WINDOW_STATES.MISSION_SINGLE_READYMODAL);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_SINGLE_CHARCHOICE]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_SINGLE_CHARCHOICE, WINDOW_STATES.MISSION_HOST_SINGLE);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_SINGLE_READYMODAL]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_SINGLE_READYMODAL, WINDOW_STATES.COMBAT);
     }
   },
 

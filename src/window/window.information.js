@@ -55,6 +55,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_START_PARTY_LEFT]:   { hex: '0F325F', pos: { x: 385, y: 445 } },
   [WINDOW_STATES.MISSION_START_UNKNOWN_ERR]:  { hex: '0F2235', pos: { x: 380, y: 440 } },
   [WINDOW_STATES.MISSION_START_UNSTABLE_ERR]: { hex: '4F698A', pos: { x: 265, y: 440 } },
+  [WINDOW_STATES.MISSION_HOST_SINGLE]:        { hex: '2068B1', pos: { x: 95, y: 685 } }, 
   [WINDOW_STATES.MISSION_HOST]:               { hex: '2068B1', pos: { x: 135, y: 685 } },
   [WINDOW_STATES.MISSION_HOST_RECRUIT]:       { hex: 'E9A61E', pos: { x: 100, y: 730 } },
   [WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL]: { hex: '133562', pos: { x: 380, y: 615 } },
@@ -66,6 +67,8 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_HOST_DISBAND]:       { hex: '0F325E', pos: { x: 295, y: 455 } },
   
   [WINDOW_STATES.MISSION_START_PARTY]:        { hex: '066CB0', pos: { x: 25, y: 595 } },
+  [WINDOW_STATES.MISSION_SINGLE_CHARCHOICE]:  { hex: '325077', pos: { x: 255, y: 115 } }, 
+  [WINDOW_STATES.MISSION_SINGLE_READYMODAL]:  { hex: '132C4C', pos: { x: 210, y: 455 } },
 
   [WINDOW_STATES.COMBAT_START_RUSH_1]:        { hex: '31C9AE', pos: { x: 190, y: 685 }, ignoreKillswitch: true },
   [WINDOW_STATES.COMBAT_START_RUSH_2]:        { hex: '2E76C8', pos: { x: 215, y: 770 }, ignoreKillswitch: true },

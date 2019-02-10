@@ -7,10 +7,10 @@ if(argv['help']) {
 
 const isUndefined = (val) => typeof val === 'undefined';
 
-const OPTIONS ={
+const OPTIONS = {
   POLL_RATE: isUndefined(argv['poll-rate'])                 ? 750           : argv['poll-rate'],            
   AUTO_TAP_ATTACK: isUndefined(argv['auto-tap-attack'])     ? false         : argv['auto-tap-attack'],
-  FARM_EVERYTHING: isUndefined(argv['farm-everything'])     ? true          : argv['farm-everything'],
+  FARM_EVERYTHING: isUndefined(argv['farm-everything'])     ? false         : argv['farm-everything'],
   RUSH_RETRIES: isUndefined(argv['rush-tries'])             ? 1             : argv['rush-tries'],
   RUSH_DELAY: isUndefined(argv['rush-delay'])               ? 1000          : argv['rush-delay'],
   SWIPE_DURATION: isUndefined(argv['swipe-duration'])       ? 100           : argv['swipe-duration'],
@@ -33,12 +33,16 @@ const OPTIONS ={
   HOST_QUIT_DELAY: isUndefined(argv['host-quit-delay'])     ? 30000         : argv['host-quit-delay'],
   HOST_START_DELAY: isUndefined(argv['host-start-delay'])   ? 5000          : argv['host-start-delay'],
   RESTART_DELAY: isUndefined(argv['restart-delay'])         ? 10800000      : argv['restart-delay'],
+  FARM_SINGLE: isUndefined(argv['farm-single'])             ? false         : argv['farm-single'],
+  SINGLE_EVENT: isUndefined(argv['single-event'])           ? 0             : argv['single-event'],
+  SINGLE_MISSION: isUndefined(argv['single-mission'])       ? 0             : argv['single-mission'],
+  AUTO_REFRESH_STAM: isUndefined(argv['auto-refresh-stam']) ? false         : argv['auto-refresh-stam'],
 
   DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
   DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
   VERBOSE: isUndefined(argv['verbose'])                     ? false         : argv['verbose'],
   REPL: isUndefined(argv['repl'])                           ? true          : argv['repl'],
-  NO_CLICK: isUndefined(argv['no-click'])                   ? false         : argv['no-click'],
+  NO_CLICK: isUndefined(argv['ignore-click'])               ? false         : argv['ignore-click'],
 
   HOMESCREEN_APP_X: isUndefined(argv['homescreen-app-x'])   ? 495           : argv['homescreen-app-x'],
   HOMESCREEN_APP_Y: isUndefined(argv['homescreen-app-y'])   ? 160           : argv['homescreen-app-y'],
@@ -67,15 +71,23 @@ const isEnvValid = () => {
   if(OPTIONS.HOST_QUIT_DELAY < 5000) return '--host-quit-delay should be at least 5000 (5s) or you will cycle host lobbies way too quickly.';
   if(OPTIONS.HOST_START_DELAY < 1000) return '--host-start-delay should be at least 1000 (1s) to allow other people to join.'
 
-  if(OPTIONS.FARM_EVERYTHING && OPTIONS.FARM_MISSIONS) return '--farm-missions and --farm-everything specified. Choose one.';
+  if(OPTIONS.FARM_EVERYTHING && OPTIONS.FARM_MISSIONS) return '--farm-story and --farm-everything specified. Choose one.';
+  if(OPTIONS.FARM_SINGLE && OPTIONS.FARM_MISSIONS) return '--farm-story and --farm-single specified. Choose one.';
+  if(OPTIONS.FARM_EVERYTHING && OPTIONS.FARM_SINGLE) return '--farm-single and --farm-everything specified. Choose one.';
+
+  if(!OPTIONS.FARM_EVERYTHING
+  && !OPTIONS.FARM_SINGLE
+  && !OPTIONS.FARM_MISSIONS
+  && !OPTIONS.SPECIFIC_EVENT) return 'One of the following is required: --farm-single, --farm-everything, --farm-story, --specific-event';
 
   if(OPTIONS.RUSH_RETRIES < 1) return '--rush-retries should be at least 1. You don\'t want to be that guy.';
   if(OPTIONS.RUSH_DELAY < 1000) return '--rush-delay should be at least 1000 (1s). You will not successfully rush otherwise.';
 
   if(OPTIONS.RESTART_DELAY < 3600000) return '--restart-delay should be at least 3600000 (1h) or you\'re not going to get anything done.';
 
-  // single player host and normal host overlap
-  // farm and single player overlap
+  if(OPTIONS.FARM_SINGLE && !OPTIONS.SINGLE_EVENT) return '--farm-single specified but no --single-event.';
+  if(OPTIONS.SINGLE_EVENT && OPTIONS.SPECIFIC_EVENT) return '--single-event and --specific-event specified. Choose one.';
+  if(OPTIONS.SINGLE_MISSION && OPTIONS.SPECIFIC_MISSION) return '--single-mission and --specific-mission specified. Choose one.';
 
   // no error
   return '';

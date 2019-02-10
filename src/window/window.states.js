@@ -57,33 +57,37 @@ const WINDOW_STATES = {
   MISSION_START_UNKNOWN_ERR: 100,         // the "unknown error" popup
   MISSION_START_UNSTABLE_ERR: 101,        // the "you have an unstable connection error" popup
 
-  MISSION_HOST: 102,                      // the party screen, but from a hosting perspective
-  MISSION_HOST_RECRUIT: 103,              // the party screen, but in a state where you can hit the recruit button
-  MISSION_HOST_RECRUIT_MODAL: 104,        // the "begin recruiting?" modal
-  MISSION_HOST_MODAL_REQ2: 105,           // the popup you get when you have 1 or 2 missing party members and go to start
-  MISSION_HOST_MODAL_REQ0: 106,           // the popup you get when you have a full party
-  MISSION_START_STAMPS: 107,              // the stamp menu popup on the mission screen
-  MISSION_HOST_START_YES: 108,            // if you can start the mission, this state is visible
-  MISSION_HOST_START_NO: 109,             // if you can't start the mission, this state is visible
-  MISSION_HOST_DISBAND: 110,              // disbanding the mission popup
+  MISSION_HOST_SINGLE: 102,               // the party screen, but from a single-player perspective
+  MISSION_HOST: 103,                      // the party screen, but from a hosting perspective
+  MISSION_HOST_RECRUIT: 104,              // the party screen, but in a state where you can hit the recruit button
+  MISSION_HOST_RECRUIT_MODAL: 105,        // the "begin recruiting?" modal
+  MISSION_HOST_MODAL_REQ2: 106,           // the popup you get when you have 1 or 2 missing party members and go to start
+  MISSION_HOST_MODAL_REQ0: 107,           // the popup you get when you have a full party
+  MISSION_START_STAMPS: 108,              // the stamp menu popup on the mission screen
+  MISSION_HOST_START_YES: 109,            // if you can start the mission, this state is visible
+  MISSION_HOST_START_NO: 110,             // if you can't start the mission, this state is visible
+  MISSION_HOST_DISBAND: 111,              // disbanding the mission popup
   
-  MISSION_START_PARTY: 111,               // the "plain" host leader party screen (recruit state is checked first because it is prioritized)
+  MISSION_START_PARTY: 112,               // the "plain" host leader party screen (recruit state is checked first because it is prioritized)
 
-  COMBAT_START_RUSH_1: 120,               // combat - the first person is rushing
-  COMBAT_START_RUSH_2: 121,               // combat - the second person is rushing
-  COMBAT_START_RUSH_3: 122,               // combat - the third person is rushing
-  COMBAT_START_RUSH_4: 123,               // combat - the fourth person is rushing
-  COMBAT_DISCONNECT: 124,                 // the "you have been disconnected" popup in combat
-  COMBAT_DISCONNECT_2: 125,               // another disconnect popup.
+  MISSION_SINGLE_CHARCHOICE: 113,         // the "character on loan" screen in single player
+  MISSION_SINGLE_READYMODAL: 114,         // the "start mission" popup
 
-  COMBAT: 126,                            // the "plain" combat state (checked last because other states are more important)
+  COMBAT_START_RUSH_1: 140,               // combat - the first person is rushing
+  COMBAT_START_RUSH_2: 141,               // combat - the second person is rushing
+  COMBAT_START_RUSH_3: 142,               // combat - the third person is rushing
+  COMBAT_START_RUSH_4: 143,               // combat - the fourth person is rushing
+  COMBAT_DISCONNECT: 144,                 // the "you have been disconnected" popup in combat
+  COMBAT_DISCONNECT_2: 145,               // another disconnect popup.
 
-  REWARD1: 130,                           // the first reward screen
-  REWARD2: 131,                           // the second reward screen
-  REWARD3: 132,                           // the third reward screen
-  REWARD_RANKUP: 133,                     // the reward rank-up popup
+  COMBAT: 146,                            // the "plain" combat state (checked last because other states are more important)
 
-  STORY_SCREEN: 140                       // the mission popup for story missions
+  REWARD1: 150,                           // the first reward screen
+  REWARD2: 151,                           // the second reward screen
+  REWARD3: 152,                           // the third reward screen
+  REWARD_RANKUP: 153,                     // the reward rank-up popup
+
+  STORY_SCREEN: 160                       // the mission popup for story missions
 };
 
 const WINDOW_NAMES = invert(WINDOW_STATES);
