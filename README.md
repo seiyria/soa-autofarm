@@ -35,6 +35,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
 * `--poll-rate` - the speed at which the screen should be checked / updated. Default: `750`ms.
+* `--restart-delay` - the delay to restart the app (should be done periodically). This clears up most of the lag you get while in game, but it's not perfect. It will not restart while in combat. Default: `10800000`ms (3 hours).
 * `--retry-fail-attempts` - how many attempts to "retry" finding a mission. If this gets stuck, you could be trying to farm a dead mission, and get stuck for a long time. Default: `10`.
 * `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.

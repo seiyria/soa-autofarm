@@ -20,6 +20,9 @@ const Logger = require('./src/helpers/logger');
 const NOX_HEADER_HEIGHT = OPTIONS.NOX_HEADER_HEIGHT;
 const NOX_SIDEBAR_WIDTH = 40;
 
+// the next time we should do a restart
+let restartTime = 0;
+
 // track all of the current nox instance data
 let noxInstances = [];
 
@@ -81,27 +84,37 @@ const getState = async (noxVmInfo) => {
   return foundScreen;
 };
 
+const updateRestartTime = () => {
+  restartTime = Date.now() + OPTIONS.RESTART_DELAY;
+};
+
 // poll the nox instance
-const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => { 
-  const noxVmInfo = noxInstances[noxIdx];
+const poll = async (noxVmInfo) => { 
   if(!noxVmInfo.adb) return;
 
+  const lastState = noxVmInfo.state;
   const { left, top, width, height } = noxVmInfo;
 
-  const state = await getState(noxVmInfo);
+  const state = +(await getState(noxVmInfo));
   const oldTransitions = WINDOW_TRANSITIONS[lastState];
   const curTransitions = WINDOW_TRANSITIONS[state];
 
-  noxVmInfo.state = +state;
+  noxVmInfo.state = state;
   noxVmInfo.stateName = windowName(noxVmInfo.state);
   noxVmInfo.stateRepeats = noxVmInfo.stateRepeats || 0;
 
+  // check if we were flagged to restart. we do that if we're... not in combat, basically.
+  if(noxVmInfo.shouldRestart && noxVmInfo.state !== WINDOW_STATES.UNKNOWN && !WINDOW_INFORMATION[state].ignoreKillswitch) {
+    killApp(noxVmInfo, 'Restarting to clear up memory.');
+    noxVmInfo.shouldRestart = false;
+  }
+
+  // if mouse block is set, we check mouse pos before running anything further.
   if(OPTIONS.MOUSE_BLOCK) {
     const { x, y } = robot.getMousePos();
     
     if(x > left && x < left + width && y > top && y < top + height) {
       Logger.debug(`[Nox ${noxVmInfo.index}]`, '---> MOUSE ---> BLOCK');
-      setTimeout(() => poll(noxIdx, state), OPTIONS.POLL_RATE);
       return;
     }
   }
@@ -143,9 +156,27 @@ const poll = async (noxIdx, lastState = WINDOW_STATES.UNKNOWN) => {
     }
     
   }
+};
+
+const pollBoth = async (noxes) => {
+
+  const waits = [];
+
+  noxes.forEach(nox => {
+    waits.push(poll(nox));
+  });
+
+  await Promise.all(waits);
+
+  if(Date.now() > restartTime) {
+    Logger.log('Flagged Nox instance(s) for restart.');
+    noxes.forEach(nox => nox.shouldRestart = true);
+
+    updateRestartTime();
+  }
 
   // do it again
-  setTimeout(() => poll(noxIdx, state), OPTIONS.POLL_RATE);
+  setTimeout(() => pollBoth(noxes), OPTIONS.POLL_RATE);
 };
 
 const repositionNoxWindow = (loc, i) => {
@@ -165,6 +196,7 @@ const repositionNoxWindow = (loc, i) => {
 
     // curImageState
     // adb
+    // shouldRestart
   };
 
   noxInstances[i] = Object.assign({}, noxInstances[i] || {}, obj);
@@ -221,6 +253,8 @@ const calibrateNoxPositions = async (noxVmLocations, adbs) => {
 
 const run = async () => {
 
+  updateRestartTime();
+
   const noxPlayerPositions = getNoxPositions();
 
   Logger.log(`Getting ${noxPlayerPositions.length} Nox Player location(s)...`);
@@ -247,7 +281,7 @@ const run = async () => {
 
     noxInstances = noxInstances.filter(x => x.adb);
 
-    noxInstances.forEach((nox, i) => poll(i, WINDOW_STATES.UNKNOWN));
+    pollBoth(noxInstances);
 
   // run the nox instances in order, same order as adb
   } else {
@@ -255,8 +289,9 @@ const run = async () => {
       repositionNoxWindow(loc, i);
   
       noxInstances[i].adb = adb[i];
-      poll(i, WINDOW_STATES.UNKNOWN);
     });
+
+    pollBoth(noxInstances);
   }
 };
 

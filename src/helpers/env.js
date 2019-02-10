@@ -32,6 +32,7 @@ const OPTIONS ={
   HOST_STORY: isUndefined(argv['host-story'])               ? false         : argv['host-story'],
   HOST_QUIT_DELAY: isUndefined(argv['host-quit-delay'])     ? 30000         : argv['host-quit-delay'],
   HOST_START_DELAY: isUndefined(argv['host-start-delay'])   ? 5000          : argv['host-start-delay'],
+  RESTART_DELAY: isUndefined(argv['restart-delay'])         ? 10800000      : argv['restart-delay'],
 
   DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
   DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],
@@ -70,6 +71,8 @@ const isEnvValid = () => {
 
   if(OPTIONS.RUSH_RETRIES < 1) return '--rush-retries should be at least 1. You don\'t want to be that guy.';
   if(OPTIONS.RUSH_DELAY < 1000) return '--rush-delay should be at least 1000 (1s). You will not successfully rush otherwise.';
+
+  if(OPTIONS.RESTART_DELAY < 3600000) return '--restart-delay should be at least 3600000 (1h) or you\'re not going to get anything done.';
 
   // single player host and normal host overlap
   // farm and single player overlap
