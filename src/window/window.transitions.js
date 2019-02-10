@@ -637,6 +637,34 @@ const WINDOW_TRANSITIONS = {
       tryTransitionState(noxVmInfo, WINDOW_STATES.UPDATE_SCREEN, WINDOW_STATES.BRIDGE);
     }
   },
+
+  // RECOVER_STAMINA
+  [WINDOW_STATES.RECOVER_STAMINA]: {
+    onRepeat: (noxVmInfo) => {
+      if(OPTIONS.AUTO_REFRESH_STAM) {
+        Logger.log(`[Nox ${noxVmInfo.index}]`, 'Auto-recovering stamina...');
+        tryTransitionState(noxVmInfo, WINDOW_STATES.RECOVER_STAMINA, WINDOW_STATES.RECOVER_STAMINA_ITEM);
+      } else {
+        Logger.log(`[Nox ${noxVmInfo.index}]`, 'Not auto-recovering stamina. Please change the farm settings to go back to normal function.');
+        tryTransitionState(noxVmInfo, WINDOW_STATES.RECOVER_STAMINA, WINDOW_STATES.MISSION_START);
+      }
+    }
+  },
+  [WINDOW_STATES.RECOVER_STAMINA_ITEM]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.RECOVER_STAMINA_ITEM, WINDOW_STATES.RECOVER_STAMINA_CONFIRM);
+    }
+  },
+  [WINDOW_STATES.RECOVER_STAMINA_CONFIRM]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.RECOVER_STAMINA_CONFIRM, WINDOW_STATES.RECOVER_STAMINA_DONE);
+    }
+  },
+  [WINDOW_STATES.RECOVER_STAMINA_DONE]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.RECOVER_STAMINA_DONE, WINDOW_STATES.MISSION_START);
+    }
+  },
 };
 
 module.exports = { WINDOW_TRANSITIONS };

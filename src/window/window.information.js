@@ -83,7 +83,11 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 265 } },
   [WINDOW_STATES.REWARD_RANKUP]:              { hex: '8394AB', pos: { x: 160, y: 505 } },
 
-  [WINDOW_STATES.STORY_SCREEN]:               { hex: '006AA6', pos: { x: 265, y: 785 } }
+  [WINDOW_STATES.STORY_SCREEN]:               { hex: '006AA6', pos: { x: 265, y: 785 } },
+  [WINDOW_STATES.RECOVER_STAMINA]:            { hex: '123158', pos: { x: 235, y: 455 } },
+  [WINDOW_STATES.RECOVER_STAMINA_ITEM]:       { hex: '153C86', pos: { x: 50, y: 445 } },
+  [WINDOW_STATES.RECOVER_STAMINA_CONFIRM]:    { hex: '466184', pos: { x: 110, y: 480 } },
+  [WINDOW_STATES.RECOVER_STAMINA_DONE]:       { hex: '112F57', pos: { x: 445, y: 410 } }
 };
 
 module.exports = {

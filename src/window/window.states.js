@@ -87,7 +87,13 @@ const WINDOW_STATES = {
   REWARD3: 152,                           // the third reward screen
   REWARD_RANKUP: 153,                     // the reward rank-up popup
 
-  STORY_SCREEN: 160                       // the mission popup for story missions
+  STORY_SCREEN: 160,                      // the mission popup for story missions,
+
+  RECOVER_STAMINA: 161,                   // the "recover stamina?" popup
+  RECOVER_STAMINA_ITEM: 162,              // the "select the item you want to use to recover stamina" popup
+  RECOVER_STAMINA_CONFIRM: 163,           // the confirmation dialog confirming you want to recover stamina
+  RECOVER_STAMINA_DONE: 164               // the confirmation dialog after confirming you recovered stamina
+
 };
 
 const WINDOW_NAMES = invert(WINDOW_STATES);
