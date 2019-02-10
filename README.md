@@ -146,7 +146,6 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 * Support JP (swap transitions/clicks/information at runtime - main included file checks env variable and exports Object.assign({}, gl|jp, custom overrides [new json file]))
 * Support Reroll
 * Support a distributed network of players to create/join lobbies effectively
-* Track statistics like number of particular events emitted, such as MISSION_START_PARTY and emit them when program halts (to show session statistics). Possibly track these variables over time and store current session, lifetime, etc.
 
 # Note To Users
 
