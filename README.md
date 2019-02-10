@@ -107,7 +107,7 @@ In the event that you do not want to use your stamina for hosting, you can inste
 
 ### Multi-Nox Gotchas
 
-If you're using multiple Nox windows, they must be in order, left to right, that you opened them. You probably shouldn't close them. Hopefully this limitation will be able to go away in the future.
+If you're using multiple Nox windows, they must all be visible. You probably shouldn't close any of them while the script is running. Their locations will be calibrated upon startup.
 
 ### Hosting Gotchas
 
@@ -136,7 +136,6 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 
 # TODO (Now)
 
-* Auto refill stamina (check if 2 boxes, if so, click first one, otherwise sit at this screen)
 * Add test to validate that each WINDOW_STATE has a WINDOW_CLICKS, WINDOW_INFORMATION, and WINDOW_TRANSITION entry.
 
 # TODO (Future)
