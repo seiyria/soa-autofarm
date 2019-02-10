@@ -57,7 +57,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--debug-pointer` - move the mouse to where a particular state will be checking a pixel (`--debug-pointer=COMBAT_START_RUSH_1`). Can debug multiple (`--debug-pointer=COMBAT_START_RUSH_1,COMBAT_START_RUSH_2`). Default: `''`.
 * `--ignore-click` - do not click the screen, but do normal state observation. Default: `false`.
 * `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
-* `--nox-calibrate` - calibrate Nox when the program starts, so the app knows which window belongs to which adb device. Only useful if you have more than one Nox running. Default: `false`.
+* `--nox-calibrate` - calibrate Nox when the program starts, so the app knows which window belongs to which adb device. Only useful if you have more than one Nox running. Default: `true`.
 * `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
 * `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
 * `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.

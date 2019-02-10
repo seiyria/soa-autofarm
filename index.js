@@ -267,7 +267,7 @@ const run = async () => {
   }
 
   // do different things if we calibrate than if we don't
-  if(OPTIONS.NOX_CALIBRATE) {
+  if(OPTIONS.NOX_CALIBRATE && noxPlayerPositions.length > 1) {
     noxPlayerPositions.forEach((loc, i) => {
       repositionNoxWindow(loc, i);
     });
