@@ -90,12 +90,12 @@ You probably will want to use your stamina to also host missions instead of just
 
 In the event that you do not want to use your stamina for hosting, you can instead opt to do single player farming. The format is similar to join/host specific MP missions:
 
-* Spam the top event, mission 3: `--single-event=1 --single-mission=3`
+* Farm the top event, mission 3: `--single-event=1 --single-mission=3`
+* Farm story mode: not currently possible (seemingly not useful at this time)
 
 ## Gotchas
 
 * This will only run on Windows.
-* Your windows must contain the name "NoxPlayer". This is the default, so as long as you're not changing it, you're fine.
 * You must use Nox v6.2.6.2. It probably works on other Nox versions, but this is the version it was developed against.
 * Nox must be in OpenGL mode. If the screen is dark in combat, run these two commands:
   * `nox_adb shell setprop persist.nox.quality 1`
