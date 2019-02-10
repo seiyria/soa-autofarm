@@ -47,6 +47,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
 * `--specific-mission` - farm a specific event mission by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
+* `--stats` - track stats for how many times each state was visited while this runs. Default: `true`.
 * `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
 
 ### Debug Args
@@ -143,7 +144,7 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 * Add sync state feature to allow multiple Nox to not proceed clicking unless they're in the same state as each other
 * "Wait for all rush" feature (either wait for 4x rush, or wait for as many as can be waited for with dead people)
 * Support scrollbar use to get specific mission/event position (beyond what's supported)
-* Support JP (swap transitions/clicks/information at runtime)
+* Support JP (swap transitions/clicks/information at runtime - main included file checks env variable and exports Object.assign({}, gl|jp, custom overrides [new json file]))
 * Support Reroll
 * Support a distributed network of players to create/join lobbies effectively
 * Track statistics like number of particular events emitted, such as MISSION_START_PARTY and emit them when program halts (to show session statistics). Possibly track these variables over time and store current session, lifetime, etc.

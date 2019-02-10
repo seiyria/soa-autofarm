@@ -10,6 +10,14 @@ const replkeyhelper = (key, noxState) => {
   // CTRL-C, q, kill app
   if(key.sequence === '\u0003' || key.name === 'q') {
     Logger.log(`[REPL "q"]`, 'See ya!');
+    if(OPTIONS.STATS) {
+      noxState.forEach(noxVmInfo => {
+        console.log();
+        console.log(`Transition stats for Nox ${noxVmInfo.index}:`);
+        console.log(JSON.stringify(noxVmInfo.stats || {}, null, 4));
+      });
+    }
+
     process.exit();
   }
 

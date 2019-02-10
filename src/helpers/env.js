@@ -37,6 +37,7 @@ const OPTIONS = {
   SINGLE_EVENT: isUndefined(argv['single-event'])           ? 0             : argv['single-event'],
   SINGLE_MISSION: isUndefined(argv['single-mission'])       ? 0             : argv['single-mission'],
   AUTO_REFRESH_STAM: isUndefined(argv['auto-refresh-stam']) ? false         : argv['auto-refresh-stam'],
+  STATS: isUndefined(argv['stats'])                         ? true          : argv['stats'],
 
   DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
   DEBUG: isUndefined(argv['debug'])                         ? false         : argv['debug'],

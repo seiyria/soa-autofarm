@@ -136,6 +136,9 @@ const poll = async (noxVmInfo) => {
       if(curTransitions && curTransitions.onEnter) {
         Logger.debug(`[Nox ${noxVmInfo.index}]`, '===========> TRANSITION:ENTER', noxVmInfo.stateName);
         curTransitions.onEnter(noxVmInfo);
+
+        noxVmInfo.stats[noxVmInfo.stateName] = noxVmInfo.stats[noxVmInfo.stateName] || 0;
+        noxVmInfo.stats[noxVmInfo.stateName]++;
       }
     }
     
@@ -193,10 +196,12 @@ const repositionNoxWindow = (loc, i) => {
     vmHeight: OPTIONS.NOX_RES_HEIGHT,
     vmWidth: OPTIONS.NOX_RES_WIDTH,
     index: i,
+    stats: {},
 
     // curImageState
     // adb
     // shouldRestart
+    // stats
   };
 
   noxInstances[i] = Object.assign({}, noxInstances[i] || {}, obj);
