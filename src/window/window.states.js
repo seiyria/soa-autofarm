@@ -40,9 +40,10 @@ const WINDOW_STATES = {
 
   EVENT_SCREEN: 80,                       // the event listing page
   EVENT_SCREEN_MAP: 81,                   // a specific event, the map screen for it (ffbe, nier, etc)
-  EVENT_SCREEN_MISSION: 82,               // a specific event, the mission list screen for it (reruns, frost tree, etc)
-  EVENT_JOIN_ALL: 83,                     // the "join all" button
-  EVENT_SCREEN_STORY: 84,                 // the story mission map area (bridge -> missions)
+  EVENT_SCREEN_MAP_ENDING: 82,            // a specific event, the map screen for it (ffbe, nier, etc)
+  EVENT_SCREEN_MISSION: 83,               // a specific event, the mission list screen for it (reruns, frost tree, etc)
+  EVENT_JOIN_ALL: 84,                     // the "join all" button
+  EVENT_SCREEN_STORY: 85,                 // the story mission map area (bridge -> missions)
 
   MISSION_START: 90,                      // the modal with "join lobby" / "search with lobby id"
   MISSION_START_MP: 91,                   // the party selection screen

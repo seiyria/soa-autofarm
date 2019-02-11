@@ -39,6 +39,7 @@ const WINDOW_INFORMATION = {
   
   [WINDOW_STATES.EVENT_SCREEN]:               { hex: 'B3B4B4', pos: { x: 45, y: 205 } },
   [WINDOW_STATES.EVENT_SCREEN_MAP]:           { hex: '00427B', pos: { x: 150, y: 225 } },
+  [WINDOW_STATES.EVENT_SCREEN_MAP_ENDING]:    { hex: '7A0336', pos: { x: 150, y: 225 } },
   [WINDOW_STATES.EVENT_SCREEN_MISSION]:       { hex: '1B6AB7', pos: { x: 340, y: 300 } },
   [WINDOW_STATES.EVENT_JOIN_ALL]:             { hex: 'EBEEF2', pos: { x: 315, y: 455 } },
   [WINDOW_STATES.EVENT_SCREEN_STORY]:         { hex: '053B81', pos: { x: 500, y: 450 } },

@@ -235,6 +235,12 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.EVENT_SCREEN_MAP_ENDING]: {
+    onRepeat: (noxVmInfo) => {
+      WINDOW_TRANSITIONS[WINDOW_STATES.EVENT_SCREEN_MAP].onRepeat(noxVmInfo);
+    }
+  },
+
   [WINDOW_STATES.EVENT_SCREEN_MISSION]: {
     onRepeat: (noxVmInfo) => {
 
