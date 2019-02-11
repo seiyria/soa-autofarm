@@ -152,7 +152,7 @@ const poll = async (noxVmInfo) => {
     
 
   } else if(state === lastState) {
-    if(!WINDOW_INFORMATION[state].ignoreKillswitch || !OPTIONS.NO_CLICK) {
+    if(!WINDOW_INFORMATION[state].ignoreKillswitch || OPTIONS.NO_CLICK) {
       noxVmInfo.stateRepeats++;
     }
     
