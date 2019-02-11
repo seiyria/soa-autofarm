@@ -3,16 +3,22 @@
   "version": "1.0.0",
   "description": "A tool to automatically play Star Ocean Anamnesis on Nox",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node src/index.js",
+    "build": "pkg --output build/node.exe --targets node10-win-x64 build.js",
+    "postbuild": "node build-post.js"
+  },
   "author": "Kyle Kemp <kyle@seiyria.com>",
   "license": "GPL-3.0",
   "dependencies": {
+    "edge-js": "^11.3.0",
     "jimp": "^0.6.0",
     "lodash.invert": "^4.3.0",
     "lodash.sortby": "^4.7.0",
     "minimist": "^1.2.0",
-    "rectshot": "^1.0.0",
-    "robotjs": "^0.5.1",
-    "winpos": "^1.0.0"
+    "robotjs": "^0.5.1"
+  },
+  "devDependencies": {
+    "pkg": "^4.3.7"
   }
 }

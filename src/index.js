@@ -1,20 +1,28 @@
-const winpos = require('winpos');
-const rectshot = require('rectshot');
-const robot = require('robotjs');
-const Jimp = require('jimp');
+const edge = require('edge-js');
+const path = require('path');
 
+const basepath = process.pkg ? process.cwd() : __dirname + '/ext';
+
+// native deps
+const winpos = edge.func(path.join(basepath, 'winpos.cs'));
+const rectshot = edge.func(path.join(basepath, 'rectshot.cs'));
+const robot = require('robotjs');
+
+// other deps / imports
+const Jimp = require('jimp');
 const sortBy = require('lodash.sortby');
 
-const { OPTIONS, isEnvValid } = require('./src/helpers/env');
+// helpers
+const { OPTIONS, isEnvValid } = require('./helpers/env');
 
-const { WINDOW_STATES } = require('./src/window/window.states');
-const { WINDOW_TRANSITIONS } = require('./src/window/window.transitions');
-const { WINDOW_INFORMATION } = require('./src/window/window.information');
-const { windowName, getADBDevices, adbSettingToggle, clickScreenADB, killApp } = require('./src/helpers/window');
-const { rgbToHex, areColorsWithinTolerance } = require('./src/helpers/color');
-const { replkeyhelper } = require('./src/helpers/repl');
+const { WINDOW_STATES } = require('./window/window.states');
+const { WINDOW_TRANSITIONS } = require('./window/window.transitions');
+const { WINDOW_INFORMATION } = require('./window/window.information');
+const { windowName, getADBDevices, adbSettingToggle, clickScreenADB, killApp } = require('./helpers/window');
+const { rgbToHex, areColorsWithinTolerance } = require('./helpers/color');
+const { replkeyhelper } = require('./helpers/repl');
 
-const Logger = require('./src/helpers/logger');
+const Logger = require('./helpers/logger');
 
 // the nox header height
 const NOX_HEADER_HEIGHT = OPTIONS.NOX_HEADER_HEIGHT;
@@ -223,7 +231,7 @@ const getNoxPositions = () => {
 const calibrateNoxPositions = async (noxVmLocations, adbs) => {
   Logger.log(`Calibrating ${noxVmLocations.length} Nox Player location(s) with respect to ADB...`);
 
-  const calibrateStartTimeout = async () => {
+  const calibrateStartTimeout = () => {
     return new Promise(resolve => setTimeout(resolve, 1000));  
   };
 
@@ -325,13 +333,17 @@ if(OPTIONS.NOX_ALLOW_MOVE) {
 }
 
 if(OPTIONS.REPL) {
-
-  Logger.log('Starting in REPL mode... See README for key combinations!');
-
   require('readline').emitKeypressEvents(process.stdin);
-  process.stdin.setRawMode(true);
 
-  process.stdin.on('keypress', (chunk, key) => {
-    replkeyhelper(key, noxInstances);
-  });
+  if(process.stdin.setRawMode) {
+    process.stdin.setRawMode(true);
+  
+    process.stdin.on('keypress', (chunk, key) => {
+      replkeyhelper(key, noxInstances);
+    });
+  
+    Logger.log('Starting in REPL mode... See README for key combinations!');
+  } else {
+    Logger.log('Could not start in REPL mode.');
+  }
 }
