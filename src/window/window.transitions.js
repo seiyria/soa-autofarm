@@ -523,7 +523,8 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
+        const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
+        const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -541,7 +542,8 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
+        const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
+        const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -559,7 +561,8 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
+        const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
+        const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }
@@ -577,7 +580,8 @@ const WINDOW_TRANSITIONS = {
       for(let i = 0; i < OPTIONS.RUSH_RETRIES; i++) totalChecks = totalChecks.concat(checks);
 
       totalChecks.forEach((check, i) => {
-        const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
+        const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
+        const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
         setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
       });
     }

@@ -13,6 +13,7 @@ const OPTIONS = {
   FARM_EVERYTHING: isUndefined(argv['farm-everything'])     ? false         : argv['farm-everything'],
   RUSH_RETRIES: isUndefined(argv['rush-tries'])             ? 1             : argv['rush-tries'],
   RUSH_DELAY: isUndefined(argv['rush-delay'])               ? 1000          : argv['rush-delay'],
+  RUSH_RETRY_DELAY: isUndefined(argv['rush-retry-delay'])   ? 5000          : argv['rush-retry-delay'],
   SWIPE_DURATION: isUndefined(argv['swipe-duration'])       ? 100           : argv['swipe-duration'],
   SKIP_ACHIEVEMENTS: isUndefined(argv['skip-achievements']) ? false         : argv['skip-achievements'],
   SKIP_GIFTS: isUndefined(argv['skip-gifts'])               ? false         : argv['skip-gifts'],
