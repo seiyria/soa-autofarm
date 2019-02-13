@@ -141,6 +141,11 @@ Sometimes, weird things happen and you want to inspect the state of the applicat
 
 # TODO (Future)
 
+* Allow for this to work with phones connected via ADB using `adb shell screencap`.
+* Stamp on event:
+  * Join - stamp position
+  * Die - stamp position
+  * Boss hp <5% - stamp position
 * Add sync state feature to allow multiple Nox to not proceed clicking unless they're in the same state as each other
 * "Wait for all rush" feature (either wait for 4x rush, or wait for as many as can be waited for with dead people)
 * Support scrollbar use to get specific mission/event position (beyond what's supported)
