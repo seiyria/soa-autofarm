@@ -525,7 +525,10 @@ const WINDOW_TRANSITIONS = {
       totalChecks.forEach((check, i) => {
         const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
         const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
-        setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
+        setTimeout(() => {
+          if(noxVmInfo.state !== WINDOW_STATES.COMBAT_START_RUSH_1) return;
+          clickScreen(noxVmInfo, check[0], check[1]), checkTime;
+        });
       });
     }
   },
@@ -544,7 +547,10 @@ const WINDOW_TRANSITIONS = {
       totalChecks.forEach((check, i) => {
         const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
         const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
-        setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
+        setTimeout(() => {
+          if(noxVmInfo.state !== WINDOW_STATES.COMBAT_START_RUSH_1) return;
+          clickScreen(noxVmInfo, check[0], check[1]), checkTime;
+        });
       });
     }
   },
@@ -563,7 +569,10 @@ const WINDOW_TRANSITIONS = {
       totalChecks.forEach((check, i) => {
         const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
         const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
-        setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
+        setTimeout(() => {
+          if(noxVmInfo.state !== WINDOW_STATES.COMBAT_START_RUSH_1) return;
+          clickScreen(noxVmInfo, check[0], check[1]), checkTime;
+        });
       });
     }
   },
@@ -582,7 +591,10 @@ const WINDOW_TRANSITIONS = {
       totalChecks.forEach((check, i) => {
         const BONUS_DELAY = Math.floor(i / 3) * OPTIONS.RUSH_RETRY_DELAY;
         const checkTime = BONUS_DELAY + OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
-        setTimeout(() => clickScreen(noxVmInfo, check[0], check[1]), checkTime);
+        setTimeout(() => {
+          if(noxVmInfo.state !== WINDOW_STATES.COMBAT_START_RUSH_1) return;
+          clickScreen(noxVmInfo, check[0], check[1]), checkTime;
+        });
       });
     }
   },
