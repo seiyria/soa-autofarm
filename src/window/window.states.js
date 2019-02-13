@@ -4,6 +4,7 @@ const invert = require('lodash.invert');
  * ------------------------------------
  * MISSION_STARTING - Not super necessary really. Will be treated as UNKNOWN while loading.
  * SUPPORT_RANK_UP - Treated as "support medals" popup, so it doesn't have to be worried about.
+ * ANDROID_APP_CRASH - Seems to dismiss itself after a while on its own.
  */
 
 const WINDOW_STATES = {
@@ -16,6 +17,7 @@ const WINDOW_STATES = {
   HAS_GIFT: 10,                           // if you have a gift available
 
   ANDROID_HOMESCREEN: 20,                 // if you're on the android homescreen
+  ANDROID_APP_CRASH: 21,                  // "unfortunately, STAR OCEAN has stopped"
 
   TITLE_SCREEN: 41,                       // if you're at the title screen
   UPDATED_DATA_AVAILABLE: 42,             // if you're at the "updated data available" prompt

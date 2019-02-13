@@ -98,6 +98,7 @@ In the event that you do not want to use your stamina for hosting, you can inste
 
 * This will only run on Windows.
 * You must use Nox v6.2.6.2. It probably works on other Nox versions, but this is the version it was developed against.
+* Nox must be running android 4 for crash detection features to work correctly.
 * Nox must be in OpenGL mode. If the screen is dark in combat, run these two commands:
   * `nox_adb shell setprop persist.nox.quality 1`
   * `nox_adb shell setprop persist.nox.gles 3`
