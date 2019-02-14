@@ -326,6 +326,9 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.MISSION_START_MP_MATCH]: {
     onRepeat: (noxVmInfo) => {
+      
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.stateRepeats % 2) === 0) return;
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP_MATCH, WINDOW_STATES.MISSION_START_QUEUE);
     }
   },
