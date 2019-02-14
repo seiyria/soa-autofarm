@@ -1,11 +1,15 @@
 const edge = require('edge-js');
 const path = require('path');
 
+const WIN_SIZE_W = 559;
+const WIN_SIZE_H = 1020;
+
 const basepath = process.pkg ? process.cwd() : __dirname + '/ext';
 
 // native deps
 const winpos = edge.func(path.join(basepath, 'winpos.cs'));
 const rectshot = edge.func(path.join(basepath, 'rectshot.cs'));
+const winsize = edge.func(path.join(basepath, 'winsize.cs'));
 const robot = require('robotjs');
 
 // other deps / imports
@@ -264,9 +268,15 @@ const calibrateNoxPositions = async (noxVmLocations, adbs) => {
   }
 };
 
+const resizeWindows = () => {
+  Logger.log('Resizing windows...');
+  winsize([OPTIONS.NOX_WINDOW_NAME, WIN_SIZE_W, WIN_SIZE_H], true);
+};
+
 const run = async () => {
 
   updateRestartTime();
+  resizeWindows();
 
   const noxPlayerPositions = getNoxPositions();
 
