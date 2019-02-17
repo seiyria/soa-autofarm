@@ -18,7 +18,7 @@ const replkeyhelper = (key, noxState) => {
       });
     }
 
-    process.exit();
+    process.exit(0);
   }
 
   // n, log state

@@ -34,7 +34,6 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--host-start-delay` - the delay between your first party member joining, and you starting the mission. Default: `5000`ms.
 * `--host-story` - whether or not to host story missions instead of events. For more information on hosting, see the section below. Default: `false`.
 * `--mouse-hover-block` - if `true`, you can hover over the Nox window and pause execution of clicks. Default: `false`.
-* `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--party-quit-delay` - quit each party after a given time if they do not start (to prevent AFK trap rooms). Default: `30000`ms.
 * `--poll-rate` - the speed at which the screen should be checked / updated. Default: `750`ms.
 * `--restart-delay` - the delay to restart the app (should be done periodically). This clears up most of the lag you get while in game, but it's not perfect. It will not restart while in combat. Default: `10800000`ms (3 hours).
@@ -44,6 +43,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.
 * `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. This can also lead to some minor mis-detections of different states, especially at higher numbers. Default: `0`.
 * `--safety-threshold` - the tolerance for the found color and the desired color on screen. Higher numbers are more likely to match, but also to cause false positives. Default: `0`% (exact match).
+* `--single-event` - farm a specific event (solo) by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
+* `--single-mission` - farm a specific event mission (solo) by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
@@ -58,7 +59,8 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--debug` - print all the debug messages. Warning, there are a lot of these. Default: `false`.
 * `--debug-pointer` - move the mouse to where a particular state will be checking a pixel (`--debug-pointer=COMBAT_START_RUSH_1`). Can debug multiple (`--debug-pointer=COMBAT_START_RUSH_1,COMBAT_START_RUSH_2`). Default: `''`.
 * `--ignore-click` - do not click the screen, but do normal state observation. Default: `false`.
-* `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'D:\\Program Files\\Nox\\bin\\nox_adb.exe'`
+* `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'C:\\Program Files\\Nox\\bin\\nox_adb.exe'`
+* `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--nox-calibrate` - calibrate Nox when the program starts, so the app knows which window belongs to which adb device. Only useful if you have more than one Nox running. Default: `true`.
 * `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
 * `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.

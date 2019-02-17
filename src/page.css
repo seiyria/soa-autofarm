@@ -1,0 +1,22 @@
+
+#app {
+  margin-top: 100px;
+}
+
+legend {
+  background-color: #000;
+  color: #fff;
+  padding: 3px 12px;
+  border-radius: 5px;
+}
+
+fieldset {
+  padding: 6px 6px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.input-group-text {
+  min-width: 150px;
+  max-width: 150px;
+}

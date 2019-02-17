@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Autonesiac</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./page.css">
+  </head>
+  <body>
+    <div id="app">
+      <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+        <a class="navbar-brand" href="#">Autonesiac</a>
+
+        <div class="form-inline my-2">
+          <button class="btn btn-outline-success my-0" v-if="!isRunning && !isStarting" v-on:click="run()">
+            Run
+          </button>
+
+          <button class="btn btn-outline-success my-0" v-if="!isRunning && isStarting" disabled>
+            <div class="spinner-border spinner-border-sm"></div> Starting...
+          </button>
+
+          <button class="btn btn-outline-success my-0" v-if="isRunning && !isStopping" v-on:click="stop()">
+            Stop Running
+          </button>
+
+          <button class="btn btn-outline-success my-0" v-if="isRunning && isStopping" disabled>
+            <div class="spinner-border spinner-border-sm"></div> Stopping...
+          </button>
+        </div>
+      </nav>
+  
+      <div class="container">
+
+        <fieldset class="mb-3" v-if="isRunning">
+          <legend>Actions</legend>
+
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-info" @click="callreplkey('c')">Toggle Clicking</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-info" @click="callreplkey('u')">Dump Screen/State</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-info" @click="callreplkey('n')">Dump State</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-info" @click="callreplkey('d')">Quick Debug</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-info" @click="callreplkey('v')">Quick Verbose</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="mb-3 pb-3" v-for="group in groups">
+          <legend>{{ group.name }}</legend>
+
+          <div class="row">
+            <div class="col-6" v-for="field in group.fields">
+
+              <div v-if="field.type === 'checkbox'">
+                <input :id="field.val" :disabled="isRunning" type="checkbox" @change="updateEnvValue(field)" v-model="cliEnv[field.val]" />
+                <label :for="field.val">{{ field.name }}</label>
+              </div>
+
+              <div v-if="field.type === 'number'">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" :id="field.val">{{ field.name }}</span>
+                  </div>
+                  <input :id="field.val" :disabled="isRunning" :min="field.min" :max="field.max" type="number" class="form-control" placeholder="#" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
+                </div>
+              </div>
+
+              <div v-if="field.type === 'text'">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" :id="field.val">{{ field.name }}</span>
+                  </div>
+                  <input :id="field.val" :disabled="isRunning" type="text" class="form-control" :placeholder="field.name" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="mb-3">
+          <legend>Config Management</legend>
+
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-primary" @click="saveConfig()">Save Config</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary" @click="loadConfig()">Load Config</button>
+            </div>
+          </div>
+        </fieldset>
+
+      </div>
+    </div>
+
+    <script type="text/javascript" src="./page.js"></script>
+  </body>
+</html>
