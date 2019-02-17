@@ -192,12 +192,12 @@ const vue = new Vue({
     },
 
     saveConfig() {
-      const path = remote.dialog.showSaveDialog({ title: 'Save Config', defaultPath: process.cwd() + '/config.json' });
+      const path = remote.dialog.showSaveDialog({ title: 'Save Config', defaultPath: process.cwd() + '/config.soaafconfig' });
       fs.writeFileSync(path, JSON.stringify(this.cliEnv, null, 4), 'utf-8');
       alert(`Saved config to ${path}.`)
     },
     loadConfig() {
-      const path = remote.dialog.showOpenDialog({ title: 'Load Config', defaultPath: process.cwd() + '/config.json' });
+      const path = remote.dialog.showOpenDialog({ title: 'Load Config', defaultPath: process.cwd() + '/config.soaafconfig' });
       const fileData = fs.readFileSync(path[0], 'utf-8');
 
       try {
