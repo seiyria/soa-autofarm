@@ -1,4 +1,4 @@
-const edge = require('edge-js');
+const edge = require('electron-edge-js');
 const path = require('path');
 
 const WIN_SIZE_W = 559;
@@ -10,7 +10,6 @@ const basepath = process.pkg ? process.cwd() : __dirname + '/ext';
 const winpos = edge.func(path.join(basepath, 'winpos.cs'));
 const rectshot = edge.func(path.join(basepath, 'rectshot.cs'));
 const winsize = edge.func(path.join(basepath, 'winsize.cs'));
-const robot = require('robotjs');
 
 // other deps / imports
 const Jimp = require('jimp');
@@ -80,7 +79,7 @@ const getState = async (noxVmInfo) => {
         const hexColor = rgbToHex(hexColorRGBA);
     
         // move the mouse to the location in debug mode only
-        if(OPTIONS.DEBUG_STATES[windowName(screenId)] || screen.debug) robot.moveMouse(noxVmInfo.left + screenX, noxVmInfo.top + screenY + NOX_HEADER_HEIGHT);
+        // if(OPTIONS.DEBUG_STATES[windowName(screenId)] || screen.debug) robot.moveMouse(noxVmInfo.left + screenX, noxVmInfo.top + screenY + NOX_HEADER_HEIGHT);
     
         // if we have a color set for this screen
         if(screen.hex) {
@@ -128,6 +127,7 @@ const poll = async (noxVmInfo) => {
   }
 
   // if mouse block is set, we check mouse pos before running anything further.
+  /*
   if(OPTIONS.MOUSE_BLOCK) {
     const { x, y } = robot.getMousePos();
     
@@ -136,6 +136,7 @@ const poll = async (noxVmInfo) => {
       return;
     }
   }
+  */
 
   Logger.debug(`[Nox ${noxVmInfo.index}]`, '-----------> FOUND STATE', noxVmInfo.stateName);
 
