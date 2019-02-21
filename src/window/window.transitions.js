@@ -619,6 +619,7 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.REWARD3]: {
     onRepeat: (noxVmInfo) => {
+      if(noxVmInfo.stateRepeats < 5) return;
       tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN);
     }
   },
