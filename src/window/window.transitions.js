@@ -603,8 +603,6 @@ const WINDOW_TRANSITIONS = {
   },
 
   // POST-COMBAT
-  // these are clickScreen because they require multiple clicks to get through
-  // the mutex doesn't like that
   [WINDOW_STATES.REWARD1]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD1, WINDOW_STATES.REWARD2);
