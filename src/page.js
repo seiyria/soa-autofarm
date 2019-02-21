@@ -302,7 +302,7 @@ const vue = new Vue({
 
   mounted() {
     if(localStorage.cliOpts) {
-      this.cliEnv = Object.assign({}, DEFAULTS, JSON.parse(localStorage.cliOpts));
+      this.cliEnv = Object.assign({}, DEFAULT_OPTIONS, JSON.parse(localStorage.cliOpts));
     }
 
     ipcRenderer.on('running', () => {

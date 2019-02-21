@@ -335,8 +335,12 @@ const run = async ({ onFail, onStatus, options, edge } = {}) => {
     return;
   }
 
+  onStatus({ type: 'success', value: `Warming up...` });
+
   if(adb.length !== noxPlayerPositions.length) {
     Logger.error(`Found ${adb.length} devices via ADB but could only find ${noxPlayerPositions.length} instances in Windows. Something is wrong.`);
+
+    onStatus({ type: 'warning', value: `Running ${adb.length} instances of Nox (but could only find ${noxPlayerPositions.length})...` });
   }
 
   // do different things if we calibrate than if we don't
@@ -357,7 +361,7 @@ const run = async ({ onFail, onStatus, options, edge } = {}) => {
     noxInstances.forEach((loc) => {
       if(loc.adb) return;
       Logger.error(`Found a Nox when calibrating with no ADB set. We can't keep doing this, captain. We're going to remove that Nox.`);
-      onStatus({ type: 'danger', value: 'Did not find the correct number of Nox instances that ADB reports.' });
+      onStatus({ type: 'danger', value: 'Did not find the correct number of Nox instances that ADB reports. Can still operate normally, but not sure what will happen from here on out.' });
     });
 
     noxInstances = noxInstances.filter(x => x.adb);
