@@ -80,10 +80,10 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.COMBAT_DISCONNECT_2]:        { hex: '637997', pos: { x: 310, y: 545 }, ignoreKillswitch: true },
   [WINDOW_STATES.COMBAT]:                     { hex: '61D5FF', pos: { x: 500, y: 515 }, ignoreKillswitch: true },
 
-  [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 450 } },
-  [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 535 } },
-  [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 265 } },
-  [WINDOW_STATES.REWARD_RANKUP]:              { hex: '8394AB', pos: { x: 160, y: 505 } },
+  [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 450 }, ignoreKillswitch: true },
+  [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 535 }, ignoreKillswitch: true },
+  [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 265 }, ignoreKillswitch: true },
+  [WINDOW_STATES.REWARD_RANKUP]:              { hex: '8394AB', pos: { x: 160, y: 505 }, ignoreKillswitch: true },
 
   [WINDOW_STATES.STORY_SCREEN]:               { hex: '006AA6', pos: { x: 265, y: 785 } },
   [WINDOW_STATES.RECOVER_STAMINA]:            { hex: '123158', pos: { x: 235, y: 455 } },
