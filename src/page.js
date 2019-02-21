@@ -22,6 +22,7 @@ const DEFAULT_OPTIONS = {
   'nox-allow-move': false,
   'party-quit-delay': 30000,
   'poll-rate': 750,
+  'post-combat-wait': 1,
   'restart-delay': 10800000,
   'retry-fail-attempts': 10,
   'rush-delay': 1000,
@@ -136,7 +137,9 @@ const vue = new Vue({
           { name: 'Retry Attempts', val: 'retry-fail-attempts', type: 'number', min: 0,
             desc: 'The number of attempts to "retry" looking for a lobby before killing the app (prevents accidental stuckness).' },
           { name: 'Quit Delay', val: 'party-quit-delay', type: 'number', min: 5000,
-            desc: 'The delay between joining a party room and quitting (in case the host does not start in a reasonable timeframe).' }
+            desc: 'The delay between joining a party room and quitting (in case the host does not start in a reasonable timeframe).' },
+          { name: 'Post Combat Ticks', val: 'post-combat-wait', type: 'number', min: 0,
+            desc: 'The number of ticks to wait at the follow/block screen, in case you want to follow someone back. Higher = more delay.' }
         ]
       },
 
@@ -175,7 +178,7 @@ const vue = new Vue({
           { name: 'Safety Threshold', val: 'safety-threshold', type: 'number', min: 0,
             desc: 'How flexible the pixel checker should be (in %). 0 = exact match. Can create false positives the higher you go.' },
           { name: 'Poll Rate', val: 'poll-rate', type: 'number', min: 250,
-            desc: 'How often to check the screen. Too low of a number will freeze the Nox VM, so be careful.' }
+            desc: 'How often to check the screen. Too low of a number will freeze the Nox VM, so be careful. One tick = the poll rate.' }
         ]
       },
 
@@ -207,7 +210,7 @@ const vue = new Vue({
 
         fields: [
           { name: 'Kill Threshold', val: 'app-kill-threshold', type: 'number', min: 0,
-            desc: 'The number of times a state repeat will trigger an app kill. This can help if the app freezes for some reason.' },
+            desc: 'The number of ticks to trigger an app kill. This can help if the app freezes for some reason.' },
           { name: 'Restart Delay', val: 'restart-delay', type: 'number', min: 0,
             desc: 'The delay between opening and restarting the app. When a restart is triggered, the app will kill and reload to free memory. The default is some absurd number like 3 hours. You may not need this, but you should have it anyway.' },
           { name: 'Homescreen X', val: 'app-homescreen-x', type: 'number', min: 0,
@@ -299,7 +302,7 @@ const vue = new Vue({
 
   mounted() {
     if(localStorage.cliOpts) {
-      this.cliEnv = JSON.parse(localStorage.cliOpts);
+      this.cliEnv = Object.assign({}, DEFAULTS, JSON.parse(localStorage.cliOpts));
     }
 
     ipcRenderer.on('running', () => {
