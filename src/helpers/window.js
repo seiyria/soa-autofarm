@@ -9,8 +9,6 @@ const execSync = require('child_process').execSync;
 const Logger = require('./logger');
 const { OPTIONS } = require('./env');
 
-const NOX_ADB_PATH = OPTIONS.NOX_ADB_PATH;
-
 const { WINDOW_NAMES, WINDOW_STATES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
 const { rgbToHex } = require('./color');
@@ -34,7 +32,7 @@ const transitionState = (curState, nextState) => {
 };
 
 const clickScreenADB = (adb, x, y) => {
-  exec(`"${NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
+  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`);
 }
 
 const clickScreen = (noxVmInfo, screenX, screenY) => {
@@ -44,6 +42,8 @@ const clickScreen = (noxVmInfo, screenX, screenY) => {
 
   const x = Math.floor(screenX * (vmWidth / width));
   const y = headerHeight + Math.floor(screenY * (vmHeight / height));
+
+  console.log(x, screenX, y, screenY)
 
   Logger.verbose(`Clicking screen at ${x} ${y}`);
   clickScreenADB(noxVmInfo.adb, x, y);
@@ -59,19 +59,20 @@ const tryTransitionState = (noxVmInfo, curState, nextState) => {
 
 const killApp = (noxVmInfo, reason) => {
   Logger.log(`[Nox ${noxVmInfo.index}]`, reason || 'Killed for unknown reason.');
-  exec(`"${NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
+  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`);
 };
 
 const getADBDevices = () => {
-  const res = execSync(`"${NOX_ADB_PATH}" devices`).toString();
+  const res = execSync(`"${OPTIONS.NOX_ADB_PATH}" devices`).toString();
   return res.split('\r\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
 };
 
 const adbSettingToggle = (adb, toggle) => {
-  exec(`"${NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`);
+  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`);
 }
 const isAtLeastPercentStaminaFull = (noxVmInfo) => {
   const percent = OPTIONS.HOST_STAM_PERCENT;
+  if(percent <= 0) return false;
 
   const STAM_MIN_PIX = 16;
   const STAM_MAX_PIX = 212;

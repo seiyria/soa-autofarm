@@ -1,6 +1,7 @@
 const edge = require('electron-edge-js');
 const path = require('path');
 
+// hardcoded width/height - do not change - values are calibrated based on these sizes
 const WIN_SIZE_W = 559;
 const WIN_SIZE_H = 1020;
 
@@ -27,10 +28,6 @@ const { replkeyhelper } = require('./helpers/repl');
 
 const Logger = require('./helpers/logger');
 
-// the nox header height
-const NOX_HEADER_HEIGHT = OPTIONS.NOX_HEADER_HEIGHT;
-const NOX_SIDEBAR_WIDTH = 40;
-
 // the next time we should do a restart
 let restartTime = 0;
 
@@ -41,7 +38,11 @@ let noxInstances = [];
 let SHOULD_RUN = false;
 
 // if the app fails, what should happen?
-let onFail = () => process.exit(0);
+let globalOnFail = () => process.exit(0);
+
+// when a status change happens, what happens?
+// jokes on you, this is for UI only.
+let globalOnStatus = () => {};
 
 // get the current state based on the nox instance Left/Top
 const getState = async (noxVmInfo) => {
@@ -75,7 +76,7 @@ const getState = async (noxVmInfo) => {
 
         // get the color of the pixel at that particular location
         // robot.getColor doesn't work because it breaks if your coordinate is on a different monitor
-        const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(screenX, screenY + NOX_HEADER_HEIGHT));
+        const hexColorRGBA = Jimp.intToRGBA(image.getPixelColor(screenX, screenY + OPTIONS.NOX_HEADER_HEIGHT));
         const hexColor = rgbToHex(hexColorRGBA);
     
         // move the mouse to the location in debug mode only
@@ -110,7 +111,6 @@ const poll = async (noxVmInfo) => {
   if(!noxVmInfo.adb) return;
 
   const lastState = noxVmInfo.state;
-  const { left, top, width, height } = noxVmInfo;
 
   const state = +(await getState(noxVmInfo));
   const oldTransitions = WINDOW_TRANSITIONS[lastState];
@@ -198,7 +198,10 @@ const pollBoth = async (noxes) => {
   }
 
   // do it again
-  if(!SHOULD_RUN) return;
+  if(!SHOULD_RUN) {
+    Logger.log('Stopping...');
+    return;
+  }
   setTimeout(() => pollBoth(noxes), OPTIONS.POLL_RATE);
 };
 
@@ -210,8 +213,8 @@ const repositionNoxWindow = (loc, i) => {
     width: loc.Right - loc.Left,
     height: loc.Bottom - loc.Top,
 
-    headerHeight: NOX_HEADER_HEIGHT,
-    sidebarWidth: NOX_SIDEBAR_WIDTH,
+    headerHeight: OPTIONS.NOX_HEADER_HEIGHT,
+    sidebarWidth: OPTIONS.NOX_SIDEBAR_WIDTH,
 
     vmHeight: OPTIONS.NOX_RES_HEIGHT,
     vmWidth: OPTIONS.NOX_RES_WIDTH,
@@ -234,7 +237,7 @@ const getNoxPositions = () => {
     noxPlayerPositions = winpos(OPTIONS.NOX_WINDOW_NAME, true);
   } catch(e) {
     Logger.error(e);
-    onFail();
+    onFail(e.message);
     return;
   }
 
@@ -282,7 +285,10 @@ const resizeWindows = () => {
   winsize([OPTIONS.NOX_WINDOW_NAME, WIN_SIZE_W, WIN_SIZE_H], true);
 };
 
-const run = async ({ onFail, options } = {}) => {
+const run = async ({ onFail, onStatus, options } = {}) => {
+
+  if(!onFail) onFail = globalOnFail;
+  if(!onStatus) onStatus = globalOnStatus;
 
   if(options) {
     setOptions(options);
@@ -292,7 +298,7 @@ const run = async ({ onFail, options } = {}) => {
   if(error) {
     Logger.log('[Startup Error]', error);
     Logger.log('Exiting...');
-    onFail();
+    onFail(error);
     return;
   }
 
@@ -311,7 +317,7 @@ const run = async ({ onFail, options } = {}) => {
   try {
     adb = getADBDevices();
   } catch(e) {
-    onFail();
+    onFail(e.message);
     return;
   }
 
@@ -328,16 +334,26 @@ const run = async ({ onFail, options } = {}) => {
     try {
       await calibrateNoxPositions(noxInstances, adb);
     } catch(e) {
-      onFail();
+      onFail(e.message);
       return;
     }
+
+    onStatus({ type: 'success', value: `Running ${adb.length} instances of Nox...` });
 
     noxInstances.forEach((loc) => {
       if(loc.adb) return;
       Logger.error(`Found a Nox when calibrating with no ADB set. We can't keep doing this, captain. We're going to remove that Nox.`);
+      onStatus({ type: 'danger', value: 'Did not find the correct number of Nox instances that ADB reports.' });
     });
 
     noxInstances = noxInstances.filter(x => x.adb);
+
+    // early check if someone cancels while starting
+    if(!SHOULD_RUN) {
+      onStatus({ type: '', value: `` });
+      Logger.log('Early exit - see ya!');
+      return;
+    }
 
     pollBoth(noxInstances);
 
@@ -389,11 +405,16 @@ const stop = () => {
 };
 
 const replkeycall = (key) => {
-  replkeyhelper(key, noxInstances);
+  replkeyhelper({ name: key }, noxInstances);
+};
+
+const updateOptions = (options) => {
+  setOptions(options);
 };
 
 module.exports = {
   run,
   stop,
-  replkeycall
+  replkeycall,
+  updateOptions
 };

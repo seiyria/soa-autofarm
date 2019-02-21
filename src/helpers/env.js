@@ -64,7 +64,7 @@ const buildOptions = (argv) => {
 
 let OPTIONS = buildOptions(argv);
 
-const setOptions = (opts) => OPTIONS = buildOptions(opts);
+const setOptions = (opts) => Object.assign(OPTIONS, buildOptions(opts));
 
 const isEnvValid = (OPTIONS) => {
 

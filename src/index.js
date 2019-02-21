@@ -1,6 +1,9 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 
-import { stop, run, replkeycall } from './cli';
+import { stop, run, replkeycall, updateOptions } from './cli';
+
+import Config from 'electron-config';
+const config = new Config();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if(require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -12,19 +15,30 @@ if(require('electron-squirrel-startup')) { // eslint-disable-line global-require
 let mainWindow;
 
 const createWindow = () => {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 800,
-    minWidth: 800,
-    height: 600,
-    minHeight: 600,
+
+  const opts = { 
+    show: false,
+    minWidth: 640,
+    minHeight: 480,
     webPreferences: {
       nodeIntegration: true
     }
-  });
+  };
+
+  Object.assign(opts, config.get('winBounds'));
+
+  if(!opts.width) opts.width = 640;
+  if(!opts.height) opts.height = 480;
+
+  // Create the browser window.
+  mainWindow = new BrowserWindow(opts);
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/page.html`);
+
+  mainWindow.on('close', () => {
+    config.set('winBounds', mainWindow.getBounds());
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -33,6 +47,9 @@ const createWindow = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  mainWindow.once('ready-to-show', mainWindow.show);
+  mainWindow.setMenu(null);
 };
 
 // This method will be called when Electron has finished
@@ -59,15 +76,28 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-ipcMain.on('run', (options) => {
+
+// run the autoer
+ipcMain.on('run', (window, options) => {
   mainWindow.webContents.send('running');
-  run({ onFail: () => mainWindow.webContents.send('stopped', true), options });
+  run({ 
+    onStatus: (status) => mainWindow.webContents.send('status', status),
+    onFail: (err) => mainWindow.webContents.send('stopped', err || true), 
+    options
+  });
 });
 
-ipcMain.on('replkey', (key) => {
+// live-update the options
+ipcMain.on('options', (window, options) => {
+  updateOptions(options);
+});
+
+// "replkey" functions (normallty typed into term, but that is not avail here)
+ipcMain.on('replkey', (window, key) => {
   replkeycall(key);
 });
 
+// stop running the autoer
 ipcMain.on('stop', () => {
   stop();
   mainWindow.webContents.send('stopped');

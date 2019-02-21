@@ -9,6 +9,8 @@ const { OPTIONS } = require('./env');
 const formattedDate = () => new Date().toLocaleString();
 
 const _doLog = (msg) => {
+  if(!OPTIONS.DEBUG) return;
+  
   logMessages.push(msg);
   fs.writeFile(process.cwd() + '/' + logFile, logMessages.map(x => x.join(' ')).join('\r\n'), () => {});
 };

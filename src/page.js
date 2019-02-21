@@ -4,6 +4,56 @@ import fs from 'fs';
 
 import Vue from 'vue/dist/vue.js';
 
+const DEFAULT_OPTIONS = {
+  'app-kill-threshold': 600,
+  'auto-tap-attack': false,
+  'auto-refresh-stam': false,
+  'farm-everything': false,
+  'farm-single': false,
+  'farm-story': false,
+  'is-jp': false,
+  'host-event': 0,
+  'host-mission': 0,
+  'host-quit-delay': 30000,
+  'host-stam-percent': 0,
+  'host-start-delay': 5000,
+  'host-story': false,
+  'mouse-hover-block': false,
+  'nox-allow-move': false,
+  'party-quit-delay': 30000,
+  'poll-rate': 750,
+  'restart-delay': 10800000,
+  'retry-fail-attempts': 10,
+  'rush-delay': 1000,
+  'rush-retry-delay': 5000,
+  'rush-tries': 1,
+  'safety-radius': 0,
+  'safety-threshold': 0,
+  'skip-achievements': false,
+  'skip-gifts': false,
+  'specific-event': 0,
+  'specific-mission': 0,
+  'single-event': 0,
+  'single-mission': 0,
+  'stats': true,
+  'swipe-duration': 100,
+
+  'app-homescreen-x': 525,
+  'app-homescreen-y': 160,
+  'debug': false,
+  'debug-pointer': '',
+  'ignore-click': false,
+  'nox-adb-path': 'C:\\Program Files\\Nox\\bin\\nox_adb.exe',
+  'nox-calibrate': true,
+  'nox-header-height': 30,
+  'nox-res-width': 720,
+  'nox-res-height': 1080,
+  'nox-sidebar-width': 40,
+  'nox-window-name': 'NoxPlayer',
+  'verbose': false,
+  'repl': false
+};
+
 const vue = new Vue({
   el: '#app',
 
@@ -12,53 +62,10 @@ const vue = new Vue({
     isRunning: false,
     isStopping: false,
 
-    cliEnv: {
-      'app-kill-threshold': 600,
-      'auto-tap-attack': false,
-      'auto-refresh-stam': false,
-      'farm-everything': false,
-      'farm-single': false,
-      'farm-story': false,
-      'is-jp': false,
-      'host-event': 0,
-      'host-mission': 0,
-      'host-quit-delay': 30000,
-      'host-stam-percent': 0,
-      'host-start-delay': 5000,
-      'host-story': false,
-      'mouse-hover-block': false,
-      'nox-allow-move': false,
-      'party-quit-delay': 30000,
-      'poll-rate': 750,
-      'restart-delay': 10800000,
-      'retry-fail-attempts': 10,
-      'rush-delay': 1000,
-      'rush-retry-delay': 5000,
-      'rush-trues': 1,
-      'safety-radius': 0,
-      'safety-threshold': 0,
-      'skip-achievements': false,
-      'skip-gifts': false,
-      'specific-event': 0,
-      'specific-mission': 0,
-      'stats': true,
-      'swipe-duration': 100,
+    statusMessage: '',
+    statusType: '',
 
-      'app-homescreen-x': 525,
-      'app-homescreen-y': 160,
-      'debug': false,
-      'debug-pointer': '',
-      'ignore-click': false,
-      'nox-adb-path': 'C:\\Program Files\\Nox\\bin\\nox_adb.exe',
-      'nox-calibrate': true,
-      'nox-header-height': 30,
-      'nox-res-width': 720,
-      'nox-res-height': 1080,
-      'nox-sidebar-width': 40,
-      'nox-window-name': 'NoxPlayer',
-      'verbose': false,
-      'repl': false
-    },
+    cliEnv: Object.assign({}, DEFAULT_OPTIONS),
 
     groups: [
       {
@@ -127,7 +134,7 @@ const vue = new Vue({
         ]
       },
 
-      { name: 'Miscellaenous Settings',
+      { name: 'Miscellaneous Settings',
     
         fields: [
           { name: 'Is JP?', val: 'is-jp', type: 'checkbox' },
@@ -183,6 +190,7 @@ const vue = new Vue({
 
   methods: {
     run() {
+      this.resetStatus();
       this.isStarting = true;
       ipcRenderer.send('run', this.cliEnv);
     },
@@ -210,6 +218,9 @@ const vue = new Vue({
       }
 
     },
+    resetConfig() {
+      this.cliEnv = Object.assign({}, DEFAULT_OPTIONS);
+    },
 
     updateEnvValue(fieldData) {
       if(fieldData.setTo) {
@@ -222,10 +233,23 @@ const vue = new Vue({
     },
     update() {
       localStorage.cliOpts = JSON.stringify(this.cliEnv);
+
+      if(this.isRunning) {
+        ipcRenderer.send('options', this.cliEnv);
+      }
     },
 
     callreplkey(key) {
       ipcRenderer.send('replkey', key);
+    },
+
+    resetStatus() {
+      this.statusType = '';
+      this.statusMessage = '';
+    },
+    setStatus(status) {
+      this.statusType = status.type;
+      this.statusMessage = status.value;
     }
   },
 
@@ -239,13 +263,21 @@ const vue = new Vue({
       vue.isStarting = false;
     });
     
-    ipcRenderer.on('stopped', (ev, hasError) => {
+    ipcRenderer.on('stopped', (_, hasError) => {
       vue.isRunning = false;
       vue.isStopping = false;
 
       if(hasError) {
-        alert('Stopped due to an error. Check the log file for more details.');
+        const err = hasError === true ? 'Check the log file for more details.' : hasError;
+
+        this.setStatus({ type: 'danger', value: err });
+      } else {
+        this.resetStatus();
       }
+    });
+
+    ipcRenderer.on('status', (_, status) => {
+      this.setStatus(status);
     });
   }
 });

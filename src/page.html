@@ -11,7 +11,7 @@
       <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark mb-3">
         <a class="navbar-brand" href="#">Autonesiac</a>
 
-        <div class="form-inline my-2">
+        <div class="ml-auto form-inline my-2">
           <button class="btn btn-outline-success my-0" v-if="!isRunning && !isStarting" v-on:click="run()">
             Run
           </button>
@@ -32,24 +32,22 @@
   
       <div class="container">
 
+        <div class="alert" v-if="statusMessage" v-bind:class="['alert-' + statusType]">
+          {{ statusMessage }}
+        </div>
+
         <fieldset class="mb-3" v-if="isRunning">
           <legend>Actions</legend>
 
           <div class="row">
-            <div class="col">
-              <button class="btn btn-info" @click="callreplkey('c')">Toggle Clicking</button>
+            <div class="col text-center">
+              <button class="btn btn-info" v-on:click="callreplkey('c')">Toggle Clicking</button>
             </div>
-            <div class="col">
-              <button class="btn btn-info" @click="callreplkey('u')">Dump Screen/State</button>
+            <div class="col text-center">
+              <button class="btn btn-info" v-on:click="callreplkey('u')">Dump Screen/State</button>
             </div>
-            <div class="col">
-              <button class="btn btn-info" @click="callreplkey('n')">Dump State</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-info" @click="callreplkey('d')">Quick Debug</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-info" @click="callreplkey('v')">Quick Verbose</button>
+            <div class="col text-center">
+              <button class="btn btn-info" v-on:click="callreplkey('n')">Dump Options</button>
             </div>
           </div>
         </fieldset>
@@ -60,26 +58,26 @@
           <div class="row">
             <div class="col-6" v-for="field in group.fields">
 
-              <div v-if="field.type === 'checkbox'">
-                <input :id="field.val" :disabled="isRunning" type="checkbox" @change="updateEnvValue(field)" v-model="cliEnv[field.val]" />
+              <div v-if="field.type === 'checkbox'" class="p-1">
+                <input :id="field.val"  type="checkbox" @change="updateEnvValue(field)" v-model="cliEnv[field.val]" />
                 <label :for="field.val">{{ field.name }}</label>
               </div>
 
-              <div v-if="field.type === 'number'">
+              <div v-if="field.type === 'number'" class="p-1">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" :id="field.val">{{ field.name }}</span>
                   </div>
-                  <input :id="field.val" :disabled="isRunning" :min="field.min" :max="field.max" type="number" class="form-control" placeholder="#" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
+                  <input :id="field.val" :min="field.min" :max="field.max" type="number" class="form-control" placeholder="#" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
                 </div>
               </div>
 
-              <div v-if="field.type === 'text'">
+              <div v-if="field.type === 'text'" class="p-1">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" :id="field.val">{{ field.name }}</span>
                   </div>
-                  <input :id="field.val" :disabled="isRunning" type="text" class="form-control" :placeholder="field.name" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
+                  <input :id="field.val" type="text" class="form-control" :placeholder="field.name" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
                 </div>
               </div>
 
@@ -91,11 +89,14 @@
           <legend>Config Management</legend>
 
           <div class="row">
-            <div class="col">
-              <button class="btn btn-primary" @click="saveConfig()">Save Config</button>
+            <div class="col text-center">
+              <button class="btn btn-primary" v-on:click="saveConfig()">Save Config</button>
             </div>
-            <div class="col">
-              <button class="btn btn-primary" @click="loadConfig()">Load Config</button>
+            <div class="col text-center">
+              <button class="btn btn-primary" v-on:click="loadConfig()">Load Config</button>
+            </div>
+            <div class="col text-center">
+              <button class="btn btn-danger" v-on:click="resetConfig()">Reset Config</button>
             </div>
           </div>
         </fieldset>
