@@ -1,4 +1,3 @@
-const edge = require('electron-edge-js');
 const path = require('path');
 
 // hardcoded width/height - do not change - values are calibrated based on these sizes
@@ -8,9 +7,9 @@ const WIN_SIZE_H = 1020;
 const basepath = process.pkg ? process.cwd() : __dirname + '/ext';
 
 // native deps
-const winpos = edge.func(path.join(basepath, 'winpos.cs'));
-const rectshot = edge.func(path.join(basepath, 'rectshot.cs'));
-const winsize = edge.func(path.join(basepath, 'winsize.cs'));
+let winpos;
+let rectshot;
+let winsize;
 
 // other deps / imports
 const Jimp = require('jimp');
@@ -285,10 +284,25 @@ const resizeWindows = () => {
   winsize([OPTIONS.NOX_WINDOW_NAME, WIN_SIZE_W, WIN_SIZE_H], true);
 };
 
-const run = async ({ onFail, onStatus, options } = {}) => {
+const initEdgeFunctions = (edge) => {
+  winpos = edge.func(path.join(basepath, 'winpos.cs'));
+  rectshot = edge.func(path.join(basepath, 'rectshot.cs'));
+  winsize = edge.func(path.join(basepath, 'winsize.cs'));
+};
+
+const run = async ({ onFail, onStatus, options, edge } = {}) => {
 
   if(!onFail) onFail = globalOnFail;
   if(!onStatus) onStatus = globalOnStatus;
+
+  if(!edge) {
+    Logger.log('[Startup Error]', 'No Edge available!');
+    Logger.log('Exiting...');
+    onFail('No edge available!');
+    return;
+  }
+
+  initEdgeFunctions(edge);
 
   if(options) {
     setOptions(options);

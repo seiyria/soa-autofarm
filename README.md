@@ -10,10 +10,14 @@ Specifically regarding the characters that work best with this: defenders and at
 
 ## Current Args / Usage
 
-Right now, there is no executable. So, you would run:
+You can use the GUI binary to run the app that way. This will work for most. If, for some reason, you want the CLI version - you can do that too! Usage is described below.
+
+If you want to use the CLI, `npm i edge-js` (it cannot be present when electron is, or it will try to rebuild it).
+
+Then, you would run:
 
 ```sh
-node index.js --farm-everything=0 --auto-tap-attack=1
+node src/cli-index.js --farm-everything=0 --auto-tap-attack=1
 ```
 
 Or you pass in whatever you want. The arguments are listed below.

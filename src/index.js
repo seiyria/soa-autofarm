@@ -83,6 +83,7 @@ ipcMain.on('run', (window, options) => {
   run({ 
     onStatus: (status) => mainWindow.webContents.send('status', status),
     onFail: (err) => mainWindow.webContents.send('stopped', err || true), 
+    edge: require('electron-edge-js'),
     options
   });
 });

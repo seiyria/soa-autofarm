@@ -43,8 +43,6 @@ const clickScreen = (noxVmInfo, screenX, screenY) => {
   const x = Math.floor(screenX * (vmWidth / width));
   const y = headerHeight + Math.floor(screenY * (vmHeight / height));
 
-  console.log(x, screenX, y, screenY)
-
   Logger.verbose(`Clicking screen at ${x} ${y}`);
   clickScreenADB(noxVmInfo.adb, x, y);
 };

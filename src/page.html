@@ -60,13 +60,13 @@
 
               <div v-if="field.type === 'checkbox'" class="p-1">
                 <input :id="field.val"  type="checkbox" @change="updateEnvValue(field)" v-model="cliEnv[field.val]" />
-                <label :for="field.val">{{ field.name }}</label>
+                <label :for="field.val" :title="field.desc">{{ field.name }}</label>
               </div>
 
               <div v-if="field.type === 'number'" class="p-1">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" :id="field.val">{{ field.name }}</span>
+                    <span class="input-group-text" :id="field.val" :title="field.desc">{{ field.name }}</span>
                   </div>
                   <input :id="field.val" :min="field.min" :max="field.max" type="number" class="form-control" placeholder="#" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
                 </div>
@@ -75,7 +75,7 @@
               <div v-if="field.type === 'text'" class="p-1">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" :id="field.val">{{ field.name }}</span>
+                    <span class="input-group-text" :id="field.val" :title="field.desc">{{ field.name }}</span>
                   </div>
                   <input :id="field.val" type="text" class="form-control" :placeholder="field.name" @change="updateEnvValue(field)" v-model="cliEnv[field.val]">
                 </div>
