@@ -10,7 +10,7 @@ Specifically regarding the characters that work best with this: defenders and at
 
 ## Current Args / Usage
 
-You can use the GUI binary to run the app that way. This will work for most. If, for some reason, you want the CLI version - you can do that too! Usage is described below.
+You can use the GUI binary to run the app that way. This will work for most. If, for some reason, you want the CLI version - you can do that too! Usage is described below. The GUI can be run to develop against with `npm start`.
 
 If you want to use the CLI, `npm i edge-js` (it cannot be present when electron is, or it will try to rebuild it).
 
