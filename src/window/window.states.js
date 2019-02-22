@@ -89,6 +89,7 @@ const WINDOW_STATES = {
   REWARD2: 151,                           // the second reward screen
   REWARD3: 152,                           // the third reward screen
   REWARD_RANKUP: 153,                     // the reward rank-up popup
+  REWARD_FOLLOW: 154,                     // the reward "you have followed" screen
 
   STORY_SCREEN: 160,                      // the mission popup for story missions,
 

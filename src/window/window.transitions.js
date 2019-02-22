@@ -629,6 +629,12 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.REWARD_FOLLOW]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD_FOLLOW, WINDOW_STATES.REWARD1);
+    }
+  },
+
   // STORY MISSIONS
   [WINDOW_STATES.STORY_SCREEN]: {
     onRepeat: (noxVmInfo) => {

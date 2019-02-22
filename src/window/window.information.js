@@ -84,6 +84,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 535 }, ignoreKillswitch: true },
   [WINDOW_STATES.REWARD3]:                    { hex: '1C5CA7', pos: { x: 265, y: 265 }, ignoreKillswitch: true },
   [WINDOW_STATES.REWARD_RANKUP]:              { hex: '8394AB', pos: { x: 160, y: 505 }, ignoreKillswitch: true },
+  [WINDOW_STATES.REWARD_FOLLOW]:              { hex: '647A97', pos: { x: 240, y: 445 }, ignoreKillswitch: true },
 
   [WINDOW_STATES.STORY_SCREEN]:               { hex: '006AA6', pos: { x: 265, y: 785 } },
   [WINDOW_STATES.RECOVER_STAMINA]:            { hex: '123158', pos: { x: 235, y: 455 } },
