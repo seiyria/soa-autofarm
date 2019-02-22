@@ -286,6 +286,11 @@ const vue = new Vue({
       }
     },
 
+    toggleClick() {
+      this.cliEnv['ignore-click'] = !this.cliEnv['ignore-click'];
+      this.update();
+    },
+
     callreplkey(key) {
       ipcRenderer.send('replkey', key);
     },

@@ -68,6 +68,7 @@ const replkeyhelper = (key, noxState) => {
     noxState.forEach(async (noxVmInfo, i) => {
       const cloneState = Object.assign({}, noxVmInfo);
       delete cloneState.curImageState;
+      delete cloneState.leaveTimeout;
 
       fs.writeFile(process.cwd() + `/${ts}-state-${i}.json`, JSON.stringify({ options: OPTIONS, vm: cloneState }, null, 4), () => {});
       fs.writeFile(process.cwd() + `/${ts}-screen-${i}.png`, await noxVmInfo.curImageState.getBufferAsync(Jimp.MIME_PNG), () => {});

@@ -364,7 +364,7 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.shouldStillLeave = true;
 
       // back out if they try to sit in the same lobby for 3 hours
-      setTimeout(() => {
+      noxVmInfo.leaveTimeout = setTimeout(() => {
         if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY || !noxVmInfo.shouldStillLeave) return;
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
       }, OPTIONS.PARTY_QUIT_DELAY);
@@ -372,6 +372,7 @@ const WINDOW_TRANSITIONS = {
 
     onLeave: (noxVmInfo) => {
       noxVmInfo.shouldStillLeave = false;
+      clearTimeout(noxVmInfo.leaveTimeout);
     }
   },
 
