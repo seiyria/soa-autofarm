@@ -66,6 +66,8 @@ const vue = new Vue({
     statusMessage: '',
     statusType: '',
 
+    state: [],
+
     cliEnv: Object.assign({}, DEFAULT_OPTIONS),
 
     groups: [
@@ -302,6 +304,10 @@ const vue = new Vue({
     setStatus(status) {
       this.statusType = status.type;
       this.statusMessage = status.value;
+    },
+
+    setState(state) {
+      this.state = state;
     }
   },
 
@@ -330,6 +336,10 @@ const vue = new Vue({
 
     ipcRenderer.on('status', (_, status) => {
       this.setStatus(status);
+    });
+
+    ipcRenderer.on('state', (_, states) => {
+      this.setState(states);
     });
   }
 });

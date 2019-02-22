@@ -50,6 +50,24 @@
               <button class="btn btn-info" v-on:click="callreplkey('n')">Dump Options</button>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col" v-for="(status, i) in state">
+              <div class="card m-3">
+                <div class="card-body">
+                  <h5 class="card-title">Nox {{ i + 1 }} State</h5>
+
+                  <p class="card-text">
+                    {{ status.stateName }} 
+                    <span v-bind:class="[
+                      status.stateRepeats > cliEnv['app-kill-threshold'] - 20 ? 'text-danger' : '',
+                      status.stateRepeats > cliEnv['app-kill-threshold'] - 100 ? 'text-warning' : '',
+                    ]">({{ status.stateRepeats }})</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </fieldset>
 
         <fieldset class="mb-3 pb-3" v-for="group in groups">

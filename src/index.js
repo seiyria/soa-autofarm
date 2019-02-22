@@ -33,6 +33,8 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow(opts);
 
+  // mainWindow.toggleDevTools();
+
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/page.html`);
 
@@ -83,6 +85,7 @@ ipcMain.on('run', (window, options) => {
   run({ 
     onStatus: (status) => mainWindow.webContents.send('status', status),
     onFail: (err) => mainWindow.webContents.send('stopped', err || true), 
+    onState: (states) => mainWindow.webContents.send('state', states || []),
     edge: require('electron-edge-js'),
     options
   });

@@ -37,11 +37,14 @@ let noxInstances = [];
 let SHOULD_RUN = false;
 
 // if the app fails, what should happen?
-let globalOnFail = () => process.exit(0);
+const globalOnFail = () => process.exit(0);
 
 // when a status change happens, what happens?
 // jokes on you, this is for UI only.
-let globalOnStatus = () => {};
+const globalOnStatus = () => {};
+
+// it a joke, because it UI only.
+const globalOnState = () => {};
 
 // get the current state based on the nox instance Left/Top
 const getState = async (noxVmInfo) => {
@@ -179,7 +182,7 @@ const poll = async (noxVmInfo) => {
   }
 };
 
-const pollBoth = async (noxes) => {
+const pollBoth = async (noxes, onState) => {
 
   const waits = [];
 
@@ -188,6 +191,8 @@ const pollBoth = async (noxes) => {
   });
 
   await Promise.all(waits);
+
+  onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.stateRepeats })));
 
   if(Date.now() > restartTime) {
     Logger.log('Flagged Nox instance(s) for restart.');
@@ -201,7 +206,8 @@ const pollBoth = async (noxes) => {
     Logger.log('Stopping...');
     return;
   }
-  setTimeout(() => pollBoth(noxes), OPTIONS.POLL_RATE);
+
+  setTimeout(() => pollBoth(noxes, onState), OPTIONS.POLL_RATE);
 };
 
 const repositionNoxWindow = (loc, i) => {
@@ -290,10 +296,11 @@ const initEdgeFunctions = (edge) => {
   winsize = edge.func(path.join(basepath, 'winsize.cs'));
 };
 
-const run = async ({ onFail, onStatus, options, edge } = {}) => {
+const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
 
   if(!onFail) onFail = globalOnFail;
   if(!onStatus) onStatus = globalOnStatus;
+  if(!onState) onState = globalOnState;
 
   if(!edge) {
     Logger.log('[Startup Error]', 'No Edge available!');
@@ -373,7 +380,7 @@ const run = async ({ onFail, onStatus, options, edge } = {}) => {
       return;
     }
 
-    pollBoth(noxInstances);
+    pollBoth(noxInstances, onState);
 
   // run the nox instances in order, same order as adb
   } else {
@@ -383,7 +390,7 @@ const run = async ({ onFail, onStatus, options, edge } = {}) => {
       noxInstances[i].adb = adb[i];
     });
 
-    pollBoth(noxInstances);
+    pollBoth(noxInstances, onState);
   }
 
   if(OPTIONS.NOX_ALLOW_MOVE) {
