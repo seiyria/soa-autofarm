@@ -121,6 +121,7 @@ const poll = async (noxVmInfo) => {
   noxVmInfo.state = state;
   noxVmInfo.stateName = windowName(noxVmInfo.state);
   noxVmInfo.stateRepeats = noxVmInfo.stateRepeats || 0;
+  noxVmInfo.absoluteStateRepeats = noxVmInfo.absoluteStateRepeats || 0;
 
   // check if we were flagged to restart. we do that if we're... not in combat, basically.
   if(noxVmInfo.shouldRestart && noxVmInfo.state !== WINDOW_STATES.UNKNOWN && !WINDOW_INFORMATION[state].ignoreKillswitch) {
@@ -145,6 +146,7 @@ const poll = async (noxVmInfo) => {
   // we only change state if it's a new state
   if(state !== lastState) {
     noxVmInfo.stateRepeats = 0;
+    noxVmInfo.absoluteStateRepeats = 0;
 
     if(state !== WINDOW_STATES.UNKNOWN) {
       Logger.log(`[Nox ${noxVmInfo.index}]`, 'New State', noxVmInfo.stateName);
@@ -165,12 +167,15 @@ const poll = async (noxVmInfo) => {
     
 
   } else if(state === lastState) {
+    noxVmInfo.absoluteStateRepeats++;
+
     if(!WINDOW_INFORMATION[state].ignoreKillswitch && !OPTIONS.NO_CLICK) {
       noxVmInfo.stateRepeats++;
     }
     
     if(noxVmInfo.stateRepeats > OPTIONS.APP_KILL_COUNT) {
       noxVmInfo.stateRepeats = 0;
+      noxVmInfo.absoluteStateRepeats = 0;
       killApp(noxVmInfo, 'Killing app due to large state repeat count (possibly frozen).');
     } 
 
@@ -192,7 +197,7 @@ const pollBoth = async (noxes, onState) => {
 
   await Promise.all(waits);
 
-  onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.stateRepeats })));
+  onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.absoluteStateRepeats })));
 
   if(Date.now() > restartTime) {
     Logger.log('Flagged Nox instance(s) for restart.');
