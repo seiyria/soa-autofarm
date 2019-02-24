@@ -52,7 +52,8 @@ const DEFAULT_OPTIONS = {
   'nox-sidebar-width': 40,
   'nox-window-name': 'NoxPlayer',
   'verbose': false,
-  'repl': false
+  'repl': false,
+  'log-colors': false
 };
 
 const vue = new Vue({
@@ -230,6 +231,8 @@ const vue = new Vue({
             desc: 'If you want to spit out log files, this is pretty cool.' },
           { name: 'Verbose?', val: 'verbose', type: 'checkbox',
             desc: 'If you want really noisy log files, this is super cool.' },
+          { name: 'Log Colors?', val: 'log-colors', type: 'checkbox',
+            desc: 'If you want to log potential screen colors for adding new screens, this is super cool.' },
           { name: 'Debug Pointer(s)', val: 'debug-pointer', type: 'text',
             desc: 'This doesn\'t even work at the moment, but I\'ll fix it one of these times.' }
         ]

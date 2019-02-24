@@ -78,7 +78,8 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.COMBAT_START_RUSH_4]:        { hex: '4FEEF9', pos: { x: 215, y: 930 }, ignoreKillswitch: true },
   [WINDOW_STATES.COMBAT_DISCONNECT]:          { hex: '0F325F', pos: { x: 310, y: 445 }, ignoreKillswitch: true },
   [WINDOW_STATES.COMBAT_DISCONNECT_2]:        { hex: '637997', pos: { x: 310, y: 545 }, ignoreKillswitch: true },
-  [WINDOW_STATES.COMBAT]:                     { hex: '61D5FF', pos: { x: 500, y: 515 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT]:                     { hex: '3572AF', pos: { x: 180, y: 45 }, ignoreKillswitch: true },
+  [WINDOW_STATES.COMBAT_MANUAL]:              { hex: '2082BE', pos: { x: 180, y: 45 }, ignoreKillswitch: true },
 
   [WINDOW_STATES.REWARD1]:                    { hex: '1C598A', pos: { x: 405, y: 450 }, ignoreKillswitch: true },
   [WINDOW_STATES.REWARD2]:                    { hex: '204668', pos: { x: 60, y: 535 }, ignoreKillswitch: true },

@@ -64,6 +64,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--debug` - print all the debug messages. Warning, there are a lot of these. Default: `false`.
 * `--debug-pointer` - move the mouse to where a particular state will be checking a pixel (`--debug-pointer=COMBAT_START_RUSH_1`). Can debug multiple (`--debug-pointer=COMBAT_START_RUSH_1,COMBAT_START_RUSH_2`). Default: `''`.
 * `--ignore-click` - do not click the screen, but do normal state observation. Default: `false`.
+* `--log-colors` - log potential screen colors only. Useful for getting hex colors but not clogging up the log with `debug` or `verbose`. Default: `false`.
 * `--nox-adb-path` - the path to `nox_adb.exe`. Default: `'C:\\Program Files\\Nox\\bin\\nox_adb.exe'`
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--nox-calibrate` - calibrate Nox when the program starts, so the app knows which window belongs to which adb device. Only useful if you have more than one Nox running. Default: `true`.

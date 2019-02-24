@@ -84,6 +84,7 @@ const WINDOW_STATES = {
   COMBAT_DISCONNECT_2: 145,               // another disconnect popup.
 
   COMBAT: 146,                            // the "plain" combat state (checked last because other states are more important)
+  COMBAT_MANUAL: 147,                     // manual combat state - used to transition to auto
 
   REWARD1: 150,                           // the first reward screen
   REWARD2: 151,                           // the second reward screen

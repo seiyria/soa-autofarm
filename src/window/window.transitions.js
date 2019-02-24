@@ -492,6 +492,12 @@ const WINDOW_TRANSITIONS = {
   },
 
   // COMBAT
+  [WINDOW_STATES.COMBAT_MANUAL]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.COMBAT_MANUAL, WINDOW_STATES.COMBAT);
+    }
+  },
+
   [WINDOW_STATES.COMBAT]: {
     onEnter: (noxVmInfo) => {
       noxVmInfo.failedRetryAttempts = 0;

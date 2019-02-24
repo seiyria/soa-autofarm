@@ -94,7 +94,9 @@ const getState = async (noxVmInfo) => {
         // should only happen when adding a new screen
         } else {
           Logger.verbose(`[Nox ${noxVmInfo.index}]`, 'POTENTIAL SCREEN', windowName(screenId), screenX, screenY, hexColor);
-    
+          if(OPTIONS.LOG_POTENTIAL_COLORS) {
+            Logger.log(`[Nox ${noxVmInfo.index}]`, 'Screen Log', windowName(screenId), screenX, screenY, hexColor);
+          }
         }
 
       }

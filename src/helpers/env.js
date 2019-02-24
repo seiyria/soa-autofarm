@@ -41,6 +41,7 @@ const buildOptions = (argv) => {
     AUTO_REFRESH_STAM: isUndefined(argv['auto-refresh-stam']) ? false         : !!argv['auto-refresh-stam'],
     POST_COMBAT_WAIT: isUndefined(argv['post-combat-wait'])   ? 1             : +argv['post-combat-wait'],
     STATS: isUndefined(argv['stats'])                         ? true          : !!argv['stats'],
+    LOG_POTENTIAL_COLORS: isUndefined(argv['log-colors'])     ? false         : !!argv['log-colors'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : !!argv['debug'],
