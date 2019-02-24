@@ -79,7 +79,8 @@ const vue = new Vue({
           { name: 'Farm Random Events?', val: 'farm-everything', type: 'checkbox',
             desc: 'When checked, will hit the "Join All" button on the event page to farm anything available.',
             setTo: [
-              { name: 'farm-story', val: false }
+              { name: 'farm-story', val: false },
+              { name: 'farm-single', val: false }
             ] },
           { name: 'Farm Story?', val: 'farm-story', type: 'checkbox',
             desc: 'When checked, will hit the "Join All" button on the missions (story) page to farm any story mission in your current map.',
@@ -87,9 +88,20 @@ const vue = new Vue({
               { name: 'farm-everything', val: false }
             ] },
           { name: 'Farm In Single Player?', val: 'farm-single', type: 'checkbox',
-            desc: 'When checked, will farm in single player mode instead of multiplayer.'
+            desc: 'When checked, will farm in single player mode instead of multiplayer.',
+            setTo: [
+              { name: 'farm-everything', val: false }
+            ]
           }
-        ]
+        ],
+
+        explainer(cliEnv) {
+          if(cliEnv['farm-everything']) return 'Farming every event and mission possible, randomly, using Join All.';
+          if(cliEnv['farm-story']) return 'Farming exclusively story missions.';
+          if(cliEnv['farm-single']) return 'Farming in single player mode.';
+
+          return 'Not farming anything from this category. You might be doing specific missions or events.';
+        }
       },
 
       {
@@ -97,9 +109,15 @@ const vue = new Vue({
 
         fields: [
           { name: 'Event', val: 'host-event', type: 'number', min: 0,
-            desc: 'The desired event number to host. 0 = disable. 1 = top event. Will not scroll down.' },
+            desc: 'The desired event number to host. 0 = disable. 1 = top event. Will not scroll down.',
+            setTo: [
+              { name: 'host-story', val: false }
+            ] },
           { name: 'Mission', val: 'host-mission', type: 'number', min: 0,
-            desc: 'The desired mission number to host. 0 = disable. 1 = top event. Will not scroll down.' },
+            desc: 'The desired mission number to host. 0 = disable. 1 = top event. Will not scroll down.',
+            setTo: [
+              { name: 'host-story', val: false }
+            ]  },
           { name: 'Start Delay', val: 'host-start-delay', type: 'number', min: 1000,
             desc: 'The delay between the first person joining your room, and you hitting the start button.' },
           { name: 'Quit Delay', val: 'host-quit-delay', type: 'number', min: 5000,
@@ -107,8 +125,25 @@ const vue = new Vue({
           { name: 'Stamina %', val: 'host-stam-percent', type: 'number', min: 0, max: 95,
             desc: 'The stamina % you want to host. This program doesn\'t do your math homework - shoot for 50-70% in general. 0 = disable.' },
           { name: 'Host Story?', val: 'host-story', type: 'checkbox',
-            desc: 'When checked, will host the current story mission.' }
-        ]
+            desc: 'When checked, will host the current story mission.',
+            setTo: [
+              { name: 'host-event', val: 0 },
+              { name: 'host-mission', val: 0 }
+            ] }
+        ],
+
+        explainer(cliEnv) {
+          if(!+cliEnv['host-stam-percent']) return 'Unable to host. Stamina % must be > 0 to enable hosting.';
+          if(cliEnv['host-story']) return 'Hosting story mode explicitly. Will not host anything else.';
+
+          const hostEv = +cliEnv['host-event'];
+          const hostMi = +cliEnv['host-mission'];
+
+          if(hostEv && hostMi) return `Hosting specifically event ${hostEv} and mission ${hostMi}. Will not host if you are hosting specific event. This is for "farm everything" mode. To make it work while farming a specific event, set Host Event to 0.`;
+          if(!hostEv && hostMi) return `Hosting specifically mission ${hostMi}, which will work even if you are farming a specific event. This is for "farm specific" mode. To make it work for "farm everything" mode, set the Host Event to a number.`;
+
+          return 'Not hosting anything, despite having Stamina % set.';
+        }
       },
 
       {
@@ -119,7 +154,17 @@ const vue = new Vue({
             desc: 'The desired event number to farm. 0 = disable. 1 = top event. Will not scroll down.' },
           { name: 'Mission', val: 'specific-mission', type: 'number', min: 0,
             desc: 'The desired mission number to farm. 0 = disable. 1 = top event. Will not scroll down.' }
-        ]
+        ],
+
+        explainer(cliEnv) {
+          const specificEv = +cliEnv['specific-event'];
+          const specificMi = +cliEnv['specific-mission'];
+
+          if(specificEv && specificMi) return `Farming specifically event ${specificEv} and mission ${specificMi}.`;
+          if(specificEv && !specificMi) return `Farming specifically event ${specificEv}, using Join All to find a mission.`;
+
+          return 'Not farming a specific event or mission.';
+        }
       },
 
       {
@@ -130,7 +175,16 @@ const vue = new Vue({
             desc: 'The desired event number to SOLO farm. Only active when Single Player Farming. 0 = disable. 1 = top event. Will not scroll down.' },
           { name: 'Mission', val: 'single-mission', type: 'number', min: 0,
             desc: 'The desired event number to SOLO farm. Only active when Single Player Farming. 0 = disable. 1 = top event. Will not scroll down.' }
-        ]
+        ],
+
+        explainer(cliEnv) {
+          const specificEv = +cliEnv['single-event'];
+          const specificMi = +cliEnv['single-mission'];
+
+          if(specificEv && specificMi) return `Solo-farming specifically event ${specificEv} and mission ${specificMi}.`;
+
+          return 'Not solo-farming a specific event or mission.';
+        }
       },
 
       {
@@ -275,7 +329,7 @@ const vue = new Vue({
     },
 
     updateEnvValue(fieldData) {
-      if(fieldData.setTo) {
+      if(this.cliEnv[fieldData.val] && fieldData.setTo) {
         fieldData.setTo.forEach(({ name, val }) => {
           this.cliEnv[name] = val;
         });

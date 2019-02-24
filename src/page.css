@@ -20,3 +20,7 @@ fieldset {
   min-width: 150px;
   max-width: 150px;
 }
+
+.explainer {
+  border-top: 1px dotted #000;
+}

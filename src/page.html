@@ -101,6 +101,14 @@
 
             </div>
           </div>
+
+          <div class="row mt-1" v-if="group.explainer">
+            <div class="col">
+              <div class="explainer text-center">
+                  {{ group.explainer(cliEnv) }}
+              </div>
+            </div>
+          </div>
         </fieldset>
 
         <fieldset class="mb-3">
