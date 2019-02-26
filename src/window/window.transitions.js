@@ -229,6 +229,12 @@ const WINDOW_TRANSITIONS = {
           tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
           return;
         }
+
+        // click the center of the screen if we're farming this specific event
+        if(OPTIONS.SPECIFIC_EVENT) {
+          clickScreen(noxVmInfo, 275, 510);
+          return;
+        }
         
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.EVENT_JOIN_ALL);
       }
