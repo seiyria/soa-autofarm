@@ -231,7 +231,7 @@ const WINDOW_TRANSITIONS = {
         }
 
         // click the center of the screen if we're farming this specific event
-        if(OPTIONS.SPECIFIC_EVENT) {
+        if(OPTIONS.SPECIFIC_EVENT && OPTIONS.SPECIFIC_MISSION) {
           clickScreen(noxVmInfo, 275, 510);
           return;
         }
