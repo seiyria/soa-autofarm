@@ -15,7 +15,26 @@ const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } 
 
 const WINDOW_TRANSITIONS = {
 
-  [WINDOW_STATES.UNKNOWN]: { },
+  [WINDOW_STATES.UNKNOWN]: { 
+    onRepeat: (noxVmInfo) => {
+      if(!OPTIONS.UNKNOWN_CLICK) return;
+
+      // click location attempts, in order
+      const allClicks = Array(10).fill(null).map(i => ({ x: 380, y: 400 + (i * 30) }));
+
+      // space it out to every 5 polls
+      const clickSpacer = 5;
+
+      // the current click index in allClicks. we only care if it is evenly divisible.
+      const curClick = ((noxVmInfo.absoluteStateRepeats % (allClicks.length * clickSpacer)) / clickSpacer) - 1;
+
+      // check if we have a click object at this point
+      const clickRef = allClicks[curClick];
+      if(clickRef) {
+        clickScreen(noxVmInfo, clickRef.x, clickRef.y);
+      }
+    }
+  },
 
   // priority states
   [WINDOW_STATES.HAS_GIFT]: {

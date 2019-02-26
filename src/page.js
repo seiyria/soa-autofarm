@@ -38,6 +38,7 @@ const DEFAULT_OPTIONS = {
   'single-mission': 0,
   'stats': true,
   'swipe-duration': 100,
+  'unknown-click': false,
 
   'app-homescreen-x': 525,
   'app-homescreen-y': 160,
@@ -226,6 +227,8 @@ const vue = new Vue({
             desc: 'Whether or not you want it to get gifts for you. This is spotty and difficult to support for some reason, so it is recommended to be off.' },
           { name: 'Mouse Block Clicks?', val: 'mouse-hover-block', type: 'checkbox',
             desc: 'Does not work at this time.' },
+          { name: 'Click On Unknown?', val: 'unknown-click', type: 'checkbox',
+            desc: 'Click in areas likely to dismiss the "UNKNOWN" state. Clicking is sparse, but saves you from getting to an app reset.' },
           { name: 'Auto Refresh Stam?', val: 'auto-refresh-stam', type: 'checkbox',
             desc: 'Whether or not to automatically refresh stamina when you run out and are hosting / Single Player Farming.' },
           { name: 'Swipe Duration', val: 'swipe-duration', type: 'number', min: 0,
