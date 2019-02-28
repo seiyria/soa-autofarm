@@ -20,7 +20,7 @@ const WINDOW_TRANSITIONS = {
       if(!OPTIONS.UNKNOWN_CLICK) return;
 
       // click location attempts, in order
-      const allClicks = Array(10).fill(null).map(i => ({ x: 380, y: 400 + (i * 30) }));
+      const allClicks = Array(10).fill(null).map((x, i) => ({ x: 380, y: 400 + (i * 30) }));
 
       // space it out to every 5 polls
       const clickSpacer = 5;
