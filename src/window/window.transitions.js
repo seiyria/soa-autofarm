@@ -5,14 +5,6 @@ const { WINDOW_STATES } = require('./window.states');
 
 const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } = require('../helpers/window');
 
-// variables used by the screen transitions
-
-// used to check if we've been in the same party room for a period of time - we can quit/disband after a period of time
-// shouldStillLeave = false;
-
-// used to check if we've been retrying too many times - we should probably go back to the event screen if so
-// let failedRetryAttempts = 0;
-
 const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.UNKNOWN]: { 
@@ -381,6 +373,29 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.MISSION_START_STAMPS]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_STAMPS, WINDOW_STATES.MISSION_START_PARTY);
+    }
+  },
+
+  [WINDOW_STATES.MISSION_START_PARTY_M3]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.shouldStillLeave = true;
+
+      // back out if they try to sit in the same lobby for 3 hours
+      noxVmInfo.leaveTimeout = setTimeout(() => {
+        if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY || !noxVmInfo.shouldStillLeave) return;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
+      }, OPTIONS.PARTY_QUIT_DELAY);
+    },
+
+    onRepeat: (noxVmInfo) => {
+      if(!OPTIONS.ALLOW_M3) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_M3, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
+      }
+    },
+
+    onLeave: (noxVmInfo) => {
+      noxVmInfo.shouldStillLeave = false;
+      clearTimeout(noxVmInfo.leaveTimeout);
     }
   },
 

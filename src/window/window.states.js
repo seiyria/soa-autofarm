@@ -71,10 +71,11 @@ const WINDOW_STATES = {
   MISSION_HOST_START_NO: 110,             // if you can't start the mission, this state is visible
   MISSION_HOST_DISBAND: 111,              // disbanding the mission popup
   
-  MISSION_START_PARTY: 112,               // the "plain" host leader party screen (recruit state is checked first because it is prioritized)
+  MISSION_START_PARTY_M3: 112,            // the "m3" party interface
+  MISSION_START_PARTY: 113,               // the "plain" host leader party screen (recruit state is checked first because it is prioritized)
 
-  MISSION_SINGLE_CHARCHOICE: 113,         // the "character on loan" screen in single player
-  MISSION_SINGLE_READYMODAL: 114,         // the "start mission" popup
+  MISSION_SINGLE_CHARCHOICE: 114,         // the "character on loan" screen in single player
+  MISSION_SINGLE_READYMODAL: 115,         // the "start mission" popup
 
   COMBAT_START_RUSH_1: 140,               // combat - the first person is rushing
   COMBAT_START_RUSH_2: 141,               // combat - the second person is rushing

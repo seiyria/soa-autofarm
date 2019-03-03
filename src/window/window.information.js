@@ -68,6 +68,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_HOST_START_NO]:      { hex: '325077', pos: { x: 45, y: 55 } },
   [WINDOW_STATES.MISSION_HOST_DISBAND]:       { hex: '0F325E', pos: { x: 295, y: 455 } },
   
+  [WINDOW_STATES.MISSION_START_PARTY_M3]:     { hex: 'B3124D', pos: { x: 445, y: 170 } },
   [WINDOW_STATES.MISSION_START_PARTY]:        { hex: '066CB0', pos: { x: 25, y: 595 } },
   [WINDOW_STATES.MISSION_SINGLE_CHARCHOICE]:  { hex: '325077', pos: { x: 255, y: 115 } }, 
   [WINDOW_STATES.MISSION_SINGLE_READYMODAL]:  { hex: '132C4C', pos: { x: 210, y: 455 } },

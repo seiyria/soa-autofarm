@@ -24,6 +24,7 @@ Or you pass in whatever you want. The arguments are listed below.
 
 ### Useful Args
 
+* `--allow-m3` - allow M3 joins. Default: `false`.
 * `--app-kill-threshold` - the number of repeats of the unknown state will kill the app. Default: `600`.
 * `--auto-tap-attack` - whether or not to auto tap attack to force melee attacks. Default: `false`.
 * `--auto-refresh-stam` - whether or not to automatically refresh stamina from tickets (will not use gems). Default: `false`.
