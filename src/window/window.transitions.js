@@ -74,6 +74,7 @@ const WINDOW_TRANSITIONS = {
   // other states
   [WINDOW_STATES.BRIDGE]: {
     onEnter: (noxVmInfo) => {
+      noxVmInfo.hasStamped = false;
       noxVmInfo.shouldHost = false;
       noxVmInfo.shouldStillLeave = false;
       noxVmInfo.failedRetryAttempts = 0;
@@ -371,8 +372,26 @@ const WINDOW_TRANSITIONS = {
   },
 
   [WINDOW_STATES.MISSION_START_STAMPS]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.hasStamped = false;
+    },
+
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_STAMPS, WINDOW_STATES.MISSION_START_PARTY);
+      if(OPTIONS.STAMP_JOIN) {
+        clickScreen(noxVmInfo, 110 * OPTIONS.STAMP_JOIN, 720);
+
+        setTimeout(() => {
+          tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_STAMPS, WINDOW_STATES.MISSION_START_PARTY);
+        }, OPTIONS.POLL_RATE);
+      }
+
+      if(!OPTIONS.STAMP_JOIN || (OPTIONS.STAMP_JOIN && noxVmInfo.absoluteStateRepeats > 3)) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_STAMPS, WINDOW_STATES.MISSION_START_PARTY);
+      }
+    },
+
+    onLeave: (noxVmInfo) => {
+      noxVmInfo.hasStamped = true;
     }
   },
 
@@ -390,6 +409,12 @@ const WINDOW_TRANSITIONS = {
     onRepeat: (noxVmInfo) => {
       if(!OPTIONS.ALLOW_M3) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_M3, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
+        return;
+      }
+
+      if(OPTIONS.STAMP_JOIN && !noxVmInfo.hasStamped) {
+        if((noxVmInfo.stateRepeats % 2) === 0) return;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_M3, WINDOW_STATES.MISSION_START_STAMPS);
       }
     },
 
@@ -408,6 +433,13 @@ const WINDOW_TRANSITIONS = {
         if(noxVmInfo.state !== WINDOW_STATES.MISSION_START_PARTY || !noxVmInfo.shouldStillLeave) return;
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY, WINDOW_STATES.MISSION_START_PARTY_LEAVE);
       }, OPTIONS.PARTY_QUIT_DELAY);
+    },
+
+    onRepeat: (noxVmInfo) => {
+      if(OPTIONS.STAMP_JOIN && !noxVmInfo.hasStamped) {
+        if((noxVmInfo.stateRepeats % 2) === 0) return;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_M3, WINDOW_STATES.MISSION_START_STAMPS);
+      }
     },
 
     onLeave: (noxVmInfo) => {
@@ -542,6 +574,7 @@ const WINDOW_TRANSITIONS = {
     onEnter: (noxVmInfo) => {
       noxVmInfo.failedRetryAttempts = 0;
       noxVmInfo.shouldHost = false;
+      noxVmInfo.hasStamped = false;
     },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);

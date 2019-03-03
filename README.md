@@ -55,6 +55,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
 * `--specific-mission` - farm a specific event mission by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
+* `--stamp-join` - The stamp you post when you join a room. Set to 1, 2, 3, 4 to stamp on join. Default: `0` (disabled).
 * `--stats` - track stats for how many times each state was visited while this runs. Default: `true`.
 * `--swipe-duration` - the speed of the default click downpress. Default: `100`ms.
 * `--unknown-click` - whether or not to click the screen when the state is `UNKNOWN` in locations that may make it not `UNKNOWN`. Default: `false`.

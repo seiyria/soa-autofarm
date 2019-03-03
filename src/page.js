@@ -198,7 +198,11 @@ const vue = new Vue({
           { name: 'Quit Delay', val: 'party-quit-delay', type: 'number', min: 5000,
             desc: 'The delay between joining a party room and quitting (in case the host does not start in a reasonable timeframe).' },
           { name: 'Post Combat Ticks', val: 'post-combat-wait', type: 'number', min: 0,
-            desc: 'The number of ticks to wait at the follow/block screen, in case you want to follow someone back. Higher = more delay.' }
+            desc: 'The number of ticks to wait at the follow/block screen, in case you want to follow someone back. Higher = more delay.' },
+          { name: 'Allow M3?', val: 'allow-m3', type: 'checkbox',
+            desc: 'Want to enable this for M3 related content? If disabled, you will leave lobbies that say "Unable to Revive".' },
+          { name: 'Stamp: Join', val: 'stamp-join', type: 'number', min: 0, max: 4,
+            desc: 'The stamp to post when you join a room. Only supports 1, 2, 3, 4. 0 = disable.' },
         ]
       },
 
@@ -220,8 +224,6 @@ const vue = new Vue({
         fields: [
           { name: 'Is JP?', val: 'is-jp', type: 'checkbox',
             desc: 'Playing on JP?' },
-          { name: 'Allow M3?', val: 'allow-m3', type: 'checkbox',
-            desc: 'Want to enable this for M3 related content? If disabled, you will leave lobbies that say "Unable to Revive".' },
           { name: 'Don\'t Click?', val: 'ignore-click', type: 'checkbox',
             desc: 'Whether or not the app should click for you. Useful to pause your farming for whatever reason. Also available as a quick action.' },
           { name: 'Skip Achievements?', val: 'skip-achievements', type: 'checkbox',

@@ -44,6 +44,7 @@ const buildOptions = (argv) => {
     LOG_POTENTIAL_COLORS: isUndefined(argv['log-colors'])     ? false         : !!argv['log-colors'],
     UNKNOWN_CLICK: isUndefined(argv['unknown-click'])         ? false         : !!argv['unknown-click'],
     ALLOW_M3: isUndefined(argv['allow-m3'])                   ? false         : !!argv['allow-m3'],
+    STAMP_JOIN: isUndefined(argv['stamp-join'])               ? 0             : +argv['stamp-join'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : !!argv['debug'],
