@@ -722,6 +722,7 @@ const WINDOW_TRANSITIONS = {
 
         // if we can host, we click the button
         if(shouldHost && OPTIONS.HOST_STORY) {
+          noxVmInfo.shouldHost = true;
           clickScreen(noxVmInfo, 275, 510);
 
         // otherwise, we just join all
