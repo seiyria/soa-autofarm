@@ -178,6 +178,9 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.shouldHost = false;
     },
     onRepeat: (noxVmInfo) => {
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.stateRepeats % 2) === 0) return;
+
       if(OPTIONS.FARM_SINGLE) {
         const event = OPTIONS.SINGLE_EVENT;
         clickScreen(noxVmInfo, 285, 375 + (105 * (event - 1)));
