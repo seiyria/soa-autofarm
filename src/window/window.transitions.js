@@ -542,6 +542,12 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.MISSION_HOST_MODAL_REQ0_ALT]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_MODAL_REQ0, WINDOW_STATES.COMBAT);
+    }
+  },
+
   [WINDOW_STATES.MISSION_HOST_DISBAND]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_HOST_DISBAND, WINDOW_STATES.MISSION_START_DISBAND);
@@ -777,6 +783,18 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.RECOVER_STAMINA_DONE]: {
     onRepeat: (noxVmInfo) => {
       tryTransitionState(noxVmInfo, WINDOW_STATES.RECOVER_STAMINA_DONE, WINDOW_STATES.MISSION_START);
+    }
+  },
+
+  [WINDOW_STATES.MOT_SCREEN]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.MOT_SCREEN, WINDOW_STATES.BRIDGE);
+    }
+  },
+
+  [WINDOW_STATES.ITEM_SCREEN]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.ITEM_SCREEN, WINDOW_STATES.BRIDGE);
     }
   },
 };

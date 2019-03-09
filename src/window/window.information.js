@@ -63,6 +63,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.MISSION_HOST_RECRUIT_MODAL]: { hex: '133562', pos: { x: 380, y: 615 } },
   [WINDOW_STATES.MISSION_HOST_MODAL_REQ2]:    { hex: '24446E', pos: { x: 325, y: 480 } },
   [WINDOW_STATES.MISSION_HOST_MODAL_REQ0]:    { hex: 'A7B1BD', pos: { x: 345, y: 455 } },
+  [WINDOW_STATES.MISSION_HOST_MODAL_REQ0_ALT]:{ hex: '', pos: { x: 345, y: 455 } },
   [WINDOW_STATES.MISSION_START_STAMPS]:       { hex: '29A0AE', pos: { x: 45, y: 735 } },
   [WINDOW_STATES.MISSION_HOST_START_YES]:     { hex: '297AC5', pos: { x: 255, y: 740 } },
   [WINDOW_STATES.MISSION_HOST_START_NO]:      { hex: '325077', pos: { x: 45, y: 55 } },
@@ -92,7 +93,11 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.RECOVER_STAMINA]:            { hex: '123158', pos: { x: 235, y: 455 } },
   [WINDOW_STATES.RECOVER_STAMINA_ITEM]:       { hex: '153C86', pos: { x: 50, y: 445 } },
   [WINDOW_STATES.RECOVER_STAMINA_CONFIRM]:    { hex: '466184', pos: { x: 110, y: 480 } },
-  [WINDOW_STATES.RECOVER_STAMINA_DONE]:       { hex: '112F57', pos: { x: 445, y: 410 } }
+  [WINDOW_STATES.RECOVER_STAMINA_DONE]:       { hex: '112F57', pos: { x: 445, y: 410 } },
+
+  [WINDOW_STATES.MOT_SCREEN]:                 { hex: '7E90A8', pos: { x: 260, y: 125 } },
+
+  [WINDOW_STATES.ITEM_SCREEN]:                { hex: '0F3665', pos: { x: 45, y: 125 } }
 };
 
 module.exports = {

@@ -66,16 +66,17 @@ const WINDOW_STATES = {
   MISSION_HOST_RECRUIT_MODAL: 105,        // the "begin recruiting?" modal
   MISSION_HOST_MODAL_REQ2: 106,           // the popup you get when you have 1 or 2 missing party members and go to start
   MISSION_HOST_MODAL_REQ0: 107,           // the popup you get when you have a full party
-  MISSION_START_STAMPS: 108,              // the stamp menu popup on the mission screen
-  MISSION_HOST_START_YES: 109,            // if you can start the mission, this state is visible
-  MISSION_HOST_START_NO: 110,             // if you can't start the mission, this state is visible
-  MISSION_HOST_DISBAND: 111,              // disbanding the mission popup
+  MISSION_HOST_MODAL_REQ0_ALT: 108,       // the alt popup that I have no idea why it exists
+  MISSION_START_STAMPS: 109,              // the stamp menu popup on the mission screen
+  MISSION_HOST_START_YES: 110,            // if you can start the mission, this state is visible
+  MISSION_HOST_START_NO: 111,             // if you can't start the mission, this state is visible
+  MISSION_HOST_DISBAND: 112,              // disbanding the mission popup
   
-  MISSION_START_PARTY_M3: 112,            // the "m3" party interface
-  MISSION_START_PARTY: 113,               // the "plain" host leader party screen (recruit state is checked first because it is prioritized)
+  MISSION_START_PARTY_M3: 113,            // the "m3" party interface
+  MISSION_START_PARTY: 114,               // the "plain" host leader party screen (recruit state is checked first because it is prioritized)
 
-  MISSION_SINGLE_CHARCHOICE: 114,         // the "character on loan" screen in single player
-  MISSION_SINGLE_READYMODAL: 115,         // the "start mission" popup
+  MISSION_SINGLE_CHARCHOICE: 115,         // the "character on loan" screen in single player
+  MISSION_SINGLE_READYMODAL: 116,         // the "start mission" popup
 
   COMBAT_START_RUSH_1: 140,               // combat - the first person is rushing
   COMBAT_START_RUSH_2: 141,               // combat - the second person is rushing
@@ -98,8 +99,11 @@ const WINDOW_STATES = {
   RECOVER_STAMINA: 161,                   // the "recover stamina?" popup
   RECOVER_STAMINA_ITEM: 162,              // the "select the item you want to use to recover stamina" popup
   RECOVER_STAMINA_CONFIRM: 163,           // the confirmation dialog confirming you want to recover stamina
-  RECOVER_STAMINA_DONE: 164               // the confirmation dialog after confirming you recovered stamina
+  RECOVER_STAMINA_DONE: 164,              // the confirmation dialog after confirming you recovered stamina
 
+  MOT_SCREEN: 170,                        // the MOT main menu screen
+  
+  ITEM_SCREEN: 180,                       // the item list screen
 };
 
 const WINDOW_NAMES = invert(WINDOW_STATES);

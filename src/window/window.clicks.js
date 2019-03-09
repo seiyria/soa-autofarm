@@ -235,6 +235,16 @@ const WINDOW_CLICKS = {
   [WINDOW_STATES.RECOVER_STAMINA_DONE]: {
     [WINDOW_STATES.MISSION_START]: { x: 300, y: 600 }
   },
+  
+  // MOT -> *
+  [WINDOW_STATES.MOT_SCREEN]: {
+    [WINDOW_STATES.BRIDGE]: { x: 50, y: 930 }
+  },
+
+  // ITEM -> *
+  [WINDOW_STATES.ITEM_SCREEN]: {
+    [WINDOW_STATES.BRIDGE]: { x: 50, y: 930 }
+  },
 };
 
 module.exports = {
