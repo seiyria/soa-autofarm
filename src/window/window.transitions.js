@@ -14,7 +14,11 @@ const WINDOW_TRANSITIONS = {
       // click location attempts, in order
       const allClicks = Array(10).fill(null).map((x, i) => ({ x: 380, y: 400 + (i * 30) }));
 
-      // space it out to every 5 polls
+      // wait 15 polls before attempting to do anything
+      const baseSpacer = 15;
+      if(noxVmInfo.absoluteStateRepeats < baseSpacer) return;
+
+      // space it out to every 5 polls after the first 15 delay
       const clickSpacer = 5;
 
       // the current click index in allClicks. we only care if it is evenly divisible.
@@ -80,6 +84,9 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.failedRetryAttempts = 0;
     },
     onRepeat: (noxVmInfo) => {
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
+
       if(OPTIONS.FARM_MISSIONS) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE, WINDOW_STATES.STORY_SCREEN);
       } else {
@@ -96,6 +103,9 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.BRIDGE_UPDATE_NEWS]: {
     onRepeat: (noxVmInfo) => {
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.stateRepeats % 2) === 0) return;
+
       tryTransitionState(noxVmInfo, WINDOW_STATES.BRIDGE_UPDATE_NEWS, WINDOW_STATES.BRIDGE);
     }
   },
@@ -179,7 +189,7 @@ const WINDOW_TRANSITIONS = {
     },
     onRepeat: (noxVmInfo) => {
       // swallow every other click to not double click on accident
-      if((noxVmInfo.stateRepeats % 2) === 0) return;
+      if((noxVmInfo.absoluteStateRepeats % 4) === 0) return;
 
       if(OPTIONS.FARM_SINGLE) {
         const event = OPTIONS.SINGLE_EVENT;
@@ -239,7 +249,7 @@ const WINDOW_TRANSITIONS = {
         if(OPTIONS.FARM_EVERYTHING) {
 
           // swallow every other click to not double click on accident
-          if((noxVmInfo.stateRepeats % 2) === 0) return;
+          if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
 
           tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MAP, WINDOW_STATES.BRIDGE);
           return;
@@ -293,7 +303,7 @@ const WINDOW_TRANSITIONS = {
         if(OPTIONS.FARM_EVERYTHING) {
 
           // swallow every other click to not double click on accident
-          if((noxVmInfo.stateRepeats % 2) === 0) return;
+          if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
           
           tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_MISSION, WINDOW_STATES.EVENT_SCREEN);
           return;
@@ -314,7 +324,7 @@ const WINDOW_TRANSITIONS = {
     onRepeat: (noxVmInfo) => {
 
       // swallow every other click to not get stuck here forever accidentally
-      if((noxVmInfo.stateRepeats % 2) === 0) return;
+      if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
       tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN_STORY, WINDOW_STATES.EVENT_SCREEN_MAP);
     }
   },
@@ -349,7 +359,7 @@ const WINDOW_TRANSITIONS = {
     onRepeat: (noxVmInfo) => {
       
       // swallow every other click to not double click on accident
-      if((noxVmInfo.stateRepeats % 2) === 0) return;
+      if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP_MATCH, WINDOW_STATES.MISSION_START_QUEUE);
     }
   },
@@ -440,7 +450,7 @@ const WINDOW_TRANSITIONS = {
 
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.STAMP_JOIN && !noxVmInfo.hasStamped) {
-        if((noxVmInfo.stateRepeats % 2) === 0) return;
+        if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_PARTY_M3, WINDOW_STATES.MISSION_START_STAMPS);
       }
     },
@@ -700,6 +710,9 @@ const WINDOW_TRANSITIONS = {
 
   [WINDOW_STATES.REWARD2]: {
     onRepeat: (noxVmInfo) => {
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
+
       tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD2, WINDOW_STATES.REWARD3);
     }
   },
@@ -707,6 +720,10 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.REWARD3]: {
     onRepeat: (noxVmInfo) => {
       if(noxVmInfo.absoluteStateRepeats < OPTIONS.POST_COMBAT_WAIT) return;
+      
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
+
       tryTransitionState(noxVmInfo, WINDOW_STATES.REWARD3, WINDOW_STATES.EVENT_SCREEN);
     }
   },
