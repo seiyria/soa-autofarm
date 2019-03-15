@@ -193,7 +193,7 @@ const WINDOW_TRANSITIONS = {
 
       if(OPTIONS.FARM_SINGLE) {
         const event = OPTIONS.SINGLE_EVENT;
-        clickScreen(noxVmInfo, 285, 375 + (105 * (event - 1)));
+        clickScreen(noxVmInfo, 285, 375 + (100 * (event - 1)));
 
       } else if(OPTIONS.FARM_MISSIONS) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.EVENT_SCREEN, WINDOW_STATES.BRIDGE);
@@ -210,7 +210,7 @@ const WINDOW_TRANSITIONS = {
         // or, if we're hosting, click into that particular event
         if(OPTIONS.SPECIFIC_EVENT || (noxVmInfo.shouldHost && OPTIONS.HOST_EVENT)) {
           const event = OPTIONS.SPECIFIC_EVENT || OPTIONS.HOST_EVENT;
-          clickScreen(noxVmInfo, 285, 375 + (105 * (event - 1)));
+          clickScreen(noxVmInfo, 285, 375 + (100 * (event - 1)));
 
         // or, if none specified, click the join all button
         } else {

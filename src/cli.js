@@ -351,6 +351,11 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
 
   onStatus({ type: 'success', value: `Warming up...` });
 
+  if(adb.length === 0 || noxPlayerPositions.length === 0) {
+    onStatus({ type: 'warning', value: `Did not find any running instances of Nox.` });
+    return;
+  }
+
   if(adb.length !== noxPlayerPositions.length) {
     Logger.error(`Found ${adb.length} devices via ADB but could only find ${noxPlayerPositions.length} instances in Windows. Something is wrong.`);
 
