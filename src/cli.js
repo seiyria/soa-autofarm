@@ -391,6 +391,8 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
 
   // run the nox instances in order, same order as adb
   } else {
+    onStatus({ type: 'success', value: `Running ${adb.length} instances of Nox...` });
+
     noxPlayerPositions.forEach((loc, i) => {
       repositionNoxWindow(loc, i);
   
