@@ -186,6 +186,7 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.EVENT_SCREEN]: {
     onEnter: (noxVmInfo) => {
       noxVmInfo.shouldHost = false;
+      noxVmInfo.backingOff = false;
     },
     onRepeat: (noxVmInfo) => {
       // swallow every other click to not double click on accident
@@ -273,6 +274,9 @@ const WINDOW_TRANSITIONS = {
   },
 
   [WINDOW_STATES.EVENT_SCREEN_MISSION]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.backingOff = false;
+    },
     onRepeat: (noxVmInfo) => {
 
       // we check again, in case you're not in FARM_EVERYTHING mode
@@ -336,6 +340,11 @@ const WINDOW_TRANSITIONS = {
       // swallow every other click to not double click on accident
       if((noxVmInfo.stateRepeats % 2) === 0) return;
 
+      if(noxVmInfo.backingOff) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.EVENT_SCREEN_MISSION);
+        return;
+      }
+
       // farm single player missions instead of multi
       if(OPTIONS.FARM_SINGLE) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_SINGLE_CHARCHOICE);
@@ -344,11 +353,23 @@ const WINDOW_TRANSITIONS = {
       } else {
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_START_MP);
       }
+    },
+
+    onLeave: (noxVmInfo) => {
+      noxVmInfo.backingOff = false;
     }
   },
 
   [WINDOW_STATES.MISSION_START_MP]: {
     onRepeat: (noxVmInfo) => {
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.stateRepeats % 2) === 0) return;
+
+      if(noxVmInfo.backingOff) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP, WINDOW_STATES.MISSION_START);
+        return;
+      }
+
       if(noxVmInfo.shouldHost) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP, WINDOW_STATES.MISSION_START_MP_HOST);
         return;
@@ -359,10 +380,15 @@ const WINDOW_TRANSITIONS = {
   },
 
   [WINDOW_STATES.MISSION_START_MP_MATCH]: {
-    onRepeat: (noxVmInfo) => {
-      
+    onRepeat: (noxVmInfo) => {      
       // swallow every other click to not double click on accident
       if((noxVmInfo.absoluteStateRepeats % 2) === 0) return;
+
+      if(noxVmInfo.backingOff) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP_MATCH, WINDOW_STATES.MISSION_START_MP);
+        return;
+      }
+
       tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_MP_MATCH, WINDOW_STATES.MISSION_START_QUEUE);
     }
   },
@@ -377,13 +403,20 @@ const WINDOW_TRANSITIONS = {
     onEnter: (noxVmInfo) => {
       noxVmInfo.failedRetryAttempts = noxVmInfo.failedRetryAttempts || 0;
       noxVmInfo.failedRetryAttempts++;
-
-      if(noxVmInfo.failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
-        killApp(noxVmInfo, 'Killing app due to exceeding --retry-fail-attempts threshold.');
-      }
     },
     onRepeat: (noxVmInfo) => {
-      tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_QUEUE_RETRY, WINDOW_STATES.MISSION_START_QUEUE);
+      if(noxVmInfo.failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
+        noxVmInfo.backingOff = true;
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_QUEUE_RETRY, WINDOW_STATES.MISSION_START_MP_MATCH);
+        // killApp(noxVmInfo, 'Killing app due to exceeding --retry-fail-attempts threshold.');
+      } else {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START_QUEUE_RETRY, WINDOW_STATES.MISSION_START_QUEUE);
+      }
+    },
+    onLeave: (noxVmInfo) => {
+      if(noxVmInfo.failedRetryAttempts >= OPTIONS.RETRY_FAIL_ATT) {
+        noxVmInfo.failedRetryAttempts = 0;
+      }
     }
   },
 
