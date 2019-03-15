@@ -333,6 +333,9 @@ const WINDOW_TRANSITIONS = {
   [WINDOW_STATES.MISSION_START]: {
     onRepeat: (noxVmInfo) => {
 
+      // swallow every other click to not double click on accident
+      if((noxVmInfo.stateRepeats % 2) === 0) return;
+
       // farm single player missions instead of multi
       if(OPTIONS.FARM_SINGLE) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.MISSION_SINGLE_CHARCHOICE);
