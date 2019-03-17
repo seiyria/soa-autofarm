@@ -328,6 +328,8 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
     setOptions(options);
   }
 
+  const path = `./window/window.information.${OPTIONS.IS_JP ? 'jp' : 'gl'}`;
+  delete require.cache[require.resolve(path)];
   WINDOW_INFORMATION = require(`./window/window.information.${OPTIONS.IS_JP ? 'jp' : 'gl'}`).WINDOW_INFORMATION;
 
   const error = isEnvValid(OPTIONS);
