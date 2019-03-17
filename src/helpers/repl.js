@@ -27,6 +27,12 @@ const replkeyhelper = (key, noxState) => {
     Logger.log(noxState);
   }
 
+  // f, flag restart
+  if(key.name === 'f') {
+    Logger.log(`[REPL "f"]`, 'Nox Flagged For Restart');
+    noxState.forEach(noxVmInfo => noxVmInfo.shouldRestart = true);
+  }
+
   // debug logging
   if(key.name === 'd') {
     OPTIONS.DEBUG = !OPTIONS.DEBUG;

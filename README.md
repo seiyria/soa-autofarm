@@ -72,9 +72,11 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--nox-allow-move` - whether or not the app should observe all Nox locations (ie, if you move them). Default: `false`.
 * `--nox-calibrate` - calibrate Nox when the program starts, so the app knows which window belongs to which adb device. Only useful if you have more than one Nox running. Default: `true`.
 * `--nox-header-height` - the height of the Nox header bar. Default: `30`px.
+* `--nox-path` - the path to `Nox.exe`. Default: `'C:\\Program Files\\Nox\\bin\\Nox.exe'`.
 * `--nox-res-width` - the resolution width of the Nox VM. Default: `720`.
 * `--nox-res-height` - the resolution height of the Nox VM. Default: `1280`.
 * `--nox-sidebar-width` - the width of the Nox sidebar. Default: `40`px.
+* `--nox-vm-names` - a comma-delimited list of each Nox VM to start. If set, killing app will also restart the VMs (it will do so by doing `Nox.exe -clone:VM_NAME -quit` and `Nox.exe -clone:VM_NAME`). Typical format is `Nox_X` where X is a number (ex: `Nox_1`). Default: `''`.
 * `--nox-window-name` - the name of the Nox window. Default: `'NoxPlayer'`.
 * `--verbose` - if used with `--debug`, print even more messages. This is definitely for debugging only. Default: `false`.
 * `--repl` - allow for certain keys to be pressed while the application is running. See the REPL section for more details. Default: `true`.

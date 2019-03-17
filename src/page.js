@@ -253,8 +253,12 @@ const vue = new Vue({
         fields: [
           { name: 'ADB Path', val: 'nox-adb-path', type: 'text',
             desc: 'The path to your nox_adb.exe file.' },
+          { name: 'Nox Path', val: 'nox-path', type: 'text',
+            desc: 'The path to your Nox.exe file.' },
           { name: 'Window Name', val: 'nox-window-name', type: 'text',
             desc: 'The name of your window. It doesn\'t have to be exact, it just has to contain this value.' },
+          { name: 'VM Name(s)', val: 'nox-vm-names', type: 'text',
+            desc: 'A comma-separated list of your VMs. Should be ordered in the display order of your VMs on your screen. Typically formatted like Nox_X. If set, instead of killing app and returning to homescreen, will kill the VM and restart it. REQUIRES A RESTART TO WORK CORRECTLY.' },
           { name: 'Allow Move?', val: 'nox-allow-move', type: 'checkbox',
             desc: 'Check this if you plan to move the Nox windows around while playing. Not really recommended, but things happen.' },
           { name: 'Calibrate?', val: 'nox-calibrate', type: 'checkbox',

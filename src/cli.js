@@ -21,14 +21,11 @@ const { OPTIONS, isEnvValid, setOptions } = require('./helpers/env');
 const { WINDOW_STATES } = require('./window/window.states');
 const { WINDOW_TRANSITIONS } = require('./window/window.transitions');
 const { WINDOW_INFORMATION } = require('./window/window.information');
-const { windowName, getADBDevices, adbSettingToggle, clickScreenADB, killApp } = require('./helpers/window');
+const { windowName, getADBDevices, adbSettingToggle, clickScreenADB, killApp, restartVM } = require('./helpers/window');
 const { rgbToHex, areColorsWithinTolerance } = require('./helpers/color');
 const { replkeyhelper } = require('./helpers/repl');
 
 const Logger = require('./helpers/logger');
-
-// the next time we should do a restart
-let restartTime = 0;
 
 // track all of the current nox instance data
 let noxInstances = [];
@@ -106,13 +103,18 @@ const getState = async (noxVmInfo) => {
   return foundScreen;
 };
 
-const updateRestartTime = () => {
-  restartTime = Date.now() + OPTIONS.RESTART_DELAY;
+const updateRestartTime = (noxVmInfo) => {
+  noxVmInfo.restartTime = Date.now() + OPTIONS.RESTART_DELAY;
 };
 
 // poll the nox instance
 const poll = async (noxVmInfo) => { 
   if(!noxVmInfo.adb) return;
+
+  if(noxVmInfo.needsVMRestart) {
+    noxVmInfo.needsVMRestart = false;
+    restartVM(noxVmInfo);
+  }
 
   const lastState = noxVmInfo.state;
 
@@ -190,7 +192,6 @@ const poll = async (noxVmInfo) => {
 };
 
 const pollBoth = async (noxes, onState) => {
-
   const waits = [];
 
   noxes.forEach(nox => {
@@ -201,12 +202,13 @@ const pollBoth = async (noxes, onState) => {
 
   onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.absoluteStateRepeats })));
 
-  if(Date.now() > restartTime) {
+  noxes.forEach(nox => {
+    if(Date.now() < nox.restartTime) return;
     Logger.log('Flagged Nox instance(s) for restart.');
-    noxes.forEach(nox => nox.shouldRestart = true);
+    nox.shouldRestart = true;
 
-    updateRestartTime();
-  }
+    updateRestartTime(nox);
+  });
 
   // do it again
   if(!SHOULD_RUN) {
@@ -237,6 +239,7 @@ const repositionNoxWindow = (loc, i) => {
     // adb
     // shouldRestart
     // stats
+    // restartTime
   };
 
   noxInstances[i] = Object.assign({}, noxInstances[i] || {}, obj);
@@ -332,7 +335,6 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
 
   SHOULD_RUN = true;
 
-  updateRestartTime();
   resizeWindows();
 
   const noxPlayerPositions = getNoxPositions();
@@ -362,6 +364,14 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
     onStatus({ type: 'warning', value: `Running ${adb.length} instances of Nox (but could only find ${noxPlayerPositions.length})...` });
   }
 
+  const VM_NAMES = OPTIONS.NOX_VM_NAMES.split(',');
+  noxPlayerPositions.forEach((noxVmInfo, i) => {
+    updateRestartTime(noxVmInfo);
+    noxVmInfo.noxInternalVMName = (VM_NAMES[i] || '').trim();
+  });
+
+  noxInstances = noxPlayerPositions;
+  
   // do different things if we calibrate than if we don't
   if(OPTIONS.NOX_CALIBRATE && noxPlayerPositions.length > 1) {
     noxPlayerPositions.forEach((loc, i) => {

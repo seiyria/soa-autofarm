@@ -62,7 +62,9 @@ const buildOptions = (argv) => {
     NOX_RES_HEIGHT: isUndefined(argv['nox-res-height'])       ? 1280          : +argv['nox-res-height'],
     NOX_ALLOW_MOVE: isUndefined(argv['nox-allow-move'])       ? false         : !!argv['nox-allow-move'],
     NOX_CALIBRATE: isUndefined(argv['nox-calibrate'])         ? true          : !!argv['nox-calibrate'],
+    NOX_VM_NAMES: isUndefined(argv['nox-vm-names'])           ? ''            : argv['nox-vm-names'],
 
+    NOX_PATH: isUndefined(argv['nox-path'])                   ? 'C:\\Program Files\\Nox\\bin\\Nox.exe' : argv['nox-path'],
     NOX_ADB_PATH: isUndefined(argv['nox-adb-path'])           ? 'C:\\Program Files\\Nox\\bin\\nox_adb.exe' : argv['nox-adb-path']
   };
 };

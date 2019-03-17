@@ -44,10 +44,13 @@
               <button class="btn btn-info" v-on:click="toggleClick()">{{ cliEnv['ignore-click'] ? '☐' : '☑' }} Clicking</button>
             </div>
             <div class="col text-center">
-              <button class="btn btn-info" v-on:click="callreplkey('u')">Dump Screen/State</button>
+              <button class="btn btn-info" v-on:click="callreplkey('u')">Dump Screens</button>
             </div>
             <div class="col text-center">
               <button class="btn btn-info" v-on:click="callreplkey('n')">Dump Options</button>
+            </div>
+            <div class="col text-center">
+              <button class="btn btn-info" v-on:click="callreplkey('f')">Flag Restart</button>
             </div>
           </div>
 

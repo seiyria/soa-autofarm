@@ -57,9 +57,21 @@ const tryTransitionState = (noxVmInfo, curState, nextState) => {
   clickScreen(noxVmInfo, x, y);
 }
 
+const restartVM = (noxVmInfo) => {
+  exec(`"${OPTIONS.NOX_PATH}" -clone:${noxVmInfo.noxInternalVMName}`);
+};
+
 const killApp = (noxVmInfo, reason) => {
   Logger.log(`[Nox ${noxVmInfo.index}]`, reason || 'Killed for unknown reason.');
-  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`, execOpts);
+  if(noxVmInfo.noxInternalVMName) {
+    exec(`"${OPTIONS.NOX_PATH}" -clone:${noxVmInfo.noxInternalVMName} -quit`);
+
+    setTimeout(() => {
+      noxVmInfo.needsVMRestart = true;
+    }, 5000);
+  } else {
+    exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`, execOpts);
+  }
 };
 
 const getADBDevices = () => {
@@ -95,6 +107,7 @@ module.exports = {
   clickScreen,
   tryTransitionState,
   killApp,
+  restartVM,
   getADBDevices,
   adbSettingToggle,
   isAtLeastPercentStaminaFull
