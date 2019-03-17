@@ -92,6 +92,7 @@ const getState = async (noxVmInfo) => {
     
         // should only happen when adding a new screen
         } else {
+
           Logger.verbose(`[Nox ${noxVmInfo.index}]`, 'POTENTIAL SCREEN', windowName(screenId), screenX, screenY, hexColor);
           if(OPTIONS.LOG_POTENTIAL_COLORS) {
             Logger.log(`[Nox ${noxVmInfo.index}]`, 'Screen Log', windowName(screenId), screenX, screenY, hexColor);
@@ -170,8 +171,7 @@ const poll = async (noxVmInfo) => {
         noxVmInfo.stats[noxVmInfo.stateName] = noxVmInfo.stats[noxVmInfo.stateName] || 0;
         noxVmInfo.stats[noxVmInfo.stateName]++;
       }
-    }
-    
+    }    
 
   } else if(state === lastState) {
     noxVmInfo.absoluteStateRepeats++;
@@ -328,7 +328,7 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
     setOptions(options);
   }
 
-  WINDOW_INFORMATION = require(`./window/window.information.${OPTIONS.IS_JP ? 'jp' : 'gl'}`);
+  WINDOW_INFORMATION = require(`./window/window.information.${OPTIONS.IS_JP ? 'jp' : 'gl'}`).WINDOW_INFORMATION;
 
   const error = isEnvValid(OPTIONS);
   if(error) {

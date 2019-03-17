@@ -24,7 +24,7 @@ const WINDOW_INFORMATION = {
   [WINDOW_STATES.SESSION_EXPIRED]:            { hex: 'E8EBEF', pos: { x: 480, y: 455 } },
   [WINDOW_STATES.SUSPENDED_DATA]:             { hex: '91A1B6', pos: { x: 35, y: 450 } },
 
-  [WINDOW_STATES.BRIDGE]:                     { hex: '83C6FA', pos: { x: 210, y: 825 } },
+  [WINDOW_STATES.BRIDGE]:                     { hex: 'CAE7F4', pos: { x: 120, y: 825 } },
   [WINDOW_STATES.BRIDGE_UPDATE_NEWS]:         { hex: '125B72', pos: { x: 470, y: 915 } },
   [WINDOW_STATES.BRIDGE_DAILY_BOX]:           { hex: 'FFF9C3', pos: { x: 460, y: 150 } },
   [WINDOW_STATES.BRIDGE_SUPPORT_MEDALS]:      { hex: '10364A', pos: { x: 375, y: 350 } },
