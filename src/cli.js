@@ -20,7 +20,6 @@ const { OPTIONS, isEnvValid, setOptions } = require('./helpers/env');
 
 const { WINDOW_STATES } = require('./window/window.states');
 const { WINDOW_TRANSITIONS } = require('./window/window.transitions');
-const { WINDOW_INFORMATION } = require('./window/window.information');
 const { windowName, getADBDevices, adbSettingToggle, clickScreenADB, killApp, restartVM } = require('./helpers/window');
 const { rgbToHex, areColorsWithinTolerance } = require('./helpers/color');
 const { replkeyhelper } = require('./helpers/repl');
@@ -42,6 +41,9 @@ const globalOnStatus = () => {};
 
 // it a joke, because it UI only.
 const globalOnState = () => {};
+
+// shimmed at runtime with the correct ui placement
+let WINDOW_INFORMATION = {};
 
 // get the current state based on the nox instance Left/Top
 const getState = async (noxVmInfo) => {
@@ -324,6 +326,8 @@ const run = async ({ onFail, onStatus, onState, options, edge } = {}) => {
   if(options) {
     setOptions(options);
   }
+
+  WINDOW_INFORMATION = require(`./window/window.information.${OPTIONS.IS_JP ? 'jp' : 'gl'}`);
 
   const error = isEnvValid(OPTIONS);
   if(error) {

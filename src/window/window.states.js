@@ -18,6 +18,7 @@ const WINDOW_STATES = {
 
   ANDROID_HOMESCREEN: 20,                 // if you're on the android homescreen
   ANDROID_APP_CRASH: 21,                  // "unfortunately, STAR OCEAN has stopped"
+  ANDROID_APP_NOT_RESPOND: 22,            // "app not responding" modal
 
   TITLE_SCREEN: 41,                       // if you're at the title screen
   UPDATED_DATA_AVAILABLE: 42,             // if you're at the "updated data available" prompt
