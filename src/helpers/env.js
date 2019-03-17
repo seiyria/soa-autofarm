@@ -45,6 +45,7 @@ const buildOptions = (argv) => {
     UNKNOWN_CLICK: isUndefined(argv['unknown-click'])         ? false         : !!argv['unknown-click'],
     ALLOW_M3: isUndefined(argv['allow-m3'])                   ? false         : !!argv['allow-m3'],
     STAMP_JOIN: isUndefined(argv['stamp-join'])               ? 0             : +argv['stamp-join'],
+    SPAWNSYNC_DELAY: isUndefined(argv['spawnsync-delay'])     ? 100           : +argv['spawnsync-delay'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : !!argv['debug'],

@@ -6,14 +6,16 @@ const Jimp = require('jimp');
 const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 
-const execOpts = { timeout: 100 };
-
 const Logger = require('./logger');
 const { OPTIONS } = require('./env');
 
 const { WINDOW_NAMES, WINDOW_STATES } = require('../window/window.states');
 const { WINDOW_CLICKS } = require('../window/window.clicks');
 const { rgbToHex } = require('./color');
+
+const execOpts = () => {
+  return { timeout: OPTIONS.SPAWNSYNC_DELAY };
+};
 
 const windowName = (id) => WINDOW_NAMES[id] || `UNKNOWN (${id})`;
 
@@ -34,7 +36,7 @@ const transitionState = (curState, nextState) => {
 };
 
 const clickScreenADB = (adb, x, y) => {
-  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`, execOpts);
+  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell input touchscreen swipe ${x} ${y} ${x} ${y} ${OPTIONS.SWIPE_DURATION}`, execOpts());
 }
 
 const clickScreen = (noxVmInfo, screenX, screenY) => {
@@ -70,17 +72,17 @@ const killApp = (noxVmInfo, reason) => {
       noxVmInfo.needsVMRestart = true;
     }, 5000);
   } else {
-    exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`, execOpts);
+    exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${noxVmInfo.adb} shell am force-stop com.square_enix.android_googleplay.StarOcean${OPTIONS.IS_JP ? 'j' : 'n'}`, execOpts());
   }
 };
 
 const getADBDevices = () => {
-  const res = execSync(`"${OPTIONS.NOX_ADB_PATH}" devices`, execOpts).toString();
+  const res = execSync(`"${OPTIONS.NOX_ADB_PATH}" devices`, execOpts()).toString();
   return res.split('\r\n').slice(1).map(x => x.split('\t')[0]).slice(0, -2);
 };
 
 const adbSettingToggle = (adb, toggle) => {
-  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`, execOpts);
+  exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`, execOpts());
 }
 const isAtLeastPercentStaminaFull = (noxVmInfo) => {
   const percent = OPTIONS.HOST_STAM_PERCENT;

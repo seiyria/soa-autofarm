@@ -39,6 +39,7 @@ const DEFAULT_OPTIONS = {
   'single-mission': 0,
   'stats': true,
   'swipe-duration': 100,
+  'spawnsync-delay': 100,
   'unknown-click': false,
 
   'app-homescreen-x': 525,
@@ -244,7 +245,9 @@ const vue = new Vue({
           { name: 'Safety Threshold', val: 'safety-threshold', type: 'number', min: 0,
             desc: 'How flexible the pixel checker should be (in %). 0 = exact match. Can create false positives the higher you go.' },
           { name: 'Poll Rate', val: 'poll-rate', type: 'number', min: 250,
-            desc: 'How often to check the screen. Too low of a number will freeze the Nox VM, so be careful. One tick = the poll rate.' }
+            desc: 'How often to check the screen. Too low of a number will freeze the Nox VM, so be careful. One tick = the poll rate.' },
+          { name: 'SpawnSync Delay', val: 'spawnsync-delay', type: 'number', min: 100,
+            desc: 'Delay between running a command and killing the terminal. If you get spawnSync errors, increase this until you don\'t.' }
         ]
       },
 

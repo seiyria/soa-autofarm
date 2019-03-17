@@ -53,6 +53,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--single-mission` - farm a specific event mission (solo) by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
 * `--skip-achievements` - skip opening achievements as they're gotten. Default: `false`.
 * `--skip-gifts` - skip opening the gift box. Default: `false`.
+* `--spawnsync-delay` - the delay between running a command and killing the resulting terminal. Should be fine at 100, but bump it up if you get ETIMEDOUT or spawnSync errors. Default: `100`ms.
 * `--specific-event` - farm a specific event by its position in the list (1, 2, 3, 4 - scrolling down not yet possible). Default: `none`.
 * `--specific-mission` - farm a specific event mission by its position in the list (1, 2, 3, 4, 5, 6 - scrolling down not yet possible). Default: `none`.
 * `--stamp-join` - The stamp you post when you join a room. Set to 1, 2, 3, 4 to stamp on join. Default: `0` (disabled).
