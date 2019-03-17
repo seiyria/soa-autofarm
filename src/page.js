@@ -47,6 +47,7 @@ const DEFAULT_OPTIONS = {
   'debug-pointer': '',
   'ignore-click': false,
   'nox-adb-path': 'C:\\Program Files\\Nox\\bin\\nox_adb.exe',
+  'nox-path': 'C:\\Program Files\\Nox\\bin\\Nox.exe',
   'nox-calibrate': true,
   'nox-header-height': 30,
   'nox-res-width': 720,
