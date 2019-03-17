@@ -106,6 +106,7 @@ const getState = async (noxVmInfo) => {
 };
 
 const updateRestartTime = (noxVmInfo) => {
+  if(OPTIONS.RESTART_DELAY === -1) return;
   noxVmInfo.restartTime = Date.now() + OPTIONS.RESTART_DELAY;
 };
 
@@ -205,7 +206,7 @@ const pollBoth = async (noxes, onState) => {
   onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.absoluteStateRepeats })));
 
   noxes.forEach(nox => {
-    if(Date.now() < nox.restartTime) return;
+    if(Date.now() < nox.restartTime || OPTIONS.RESTART_DELAY === -1) return;
     Logger.log('Flagged Nox instance(s) for restart.');
     nox.shouldRestart = true;
 

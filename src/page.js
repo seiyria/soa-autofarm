@@ -281,8 +281,8 @@ const vue = new Vue({
         fields: [
           { name: 'Kill Threshold', val: 'app-kill-threshold', type: 'number', min: 0,
             desc: 'The number of ticks to trigger an app kill. This can help if the app freezes for some reason.' },
-          { name: 'Restart Delay', val: 'restart-delay', type: 'number', min: 0,
-            desc: 'The delay between opening and restarting the app. When a restart is triggered, the app will kill and reload to free memory. The default is some absurd number like 3 hours. You may not need this, but you should have it anyway.' },
+          { name: 'Restart Delay', val: 'restart-delay', type: 'number', min: -1,
+            desc: 'The delay between opening and restarting the app. When a restart is triggered, the app will kill and reload to free memory. The default is some absurd number like 3 hours. You may not need this, but you should have it anyway. -1 to disable.' },
           { name: 'Homescreen X', val: 'app-homescreen-x', type: 'number', min: 0,
             desc: 'The X position of the app on the homescreen. Eventually there will be a tool to get the x/y where you click, but this is not there yet.' },
           { name: 'Homescreen Y', val: 'app-homescreen-y', type: 'number', min: 0,
