@@ -68,6 +68,12 @@ const WINDOW_TRANSITIONS = {
     }
   },
 
+  [WINDOW_STATES.ANDROID_APP_NOT_RESPOND]: {
+    onRepeat: (noxVmInfo) => {
+      tryTransitionState(noxVmInfo, WINDOW_STATES.ANDROID_APP_NOT_RESPOND, WINDOW_STATES.ANDROID_HOMESCREEN);
+    }
+  },
+
   // suspended data
   [WINDOW_STATES.SUSPENDED_DATA]: {
     onRepeat: (noxVmInfo) => {

@@ -3,6 +3,11 @@ const { WINDOW_STATES } = require('./window.states');
 
 const WINDOW_CLICKS = {
 
+  // ANDROID -> *
+  [WINDOW_STATES.ANDROID_APP_NOT_RESPOND]: {
+    [WINDOW_STATES.ANDROID_HOMESCREEN]: { x: 470, y: 555 }
+  },
+
   // BRIDGE -> *
   [WINDOW_STATES.BRIDGE]: {
     [WINDOW_STATES.EVENT_SCREEN]: { x: 100, y: 830 },
