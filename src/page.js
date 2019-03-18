@@ -3,6 +3,9 @@ import { ipcRenderer, remote } from 'electron';
 import fs from 'fs';
 
 import Vue from 'vue/dist/vue.js';
+import VueFilterDateFormat from 'vue-filter-date-format';
+
+Vue.use(VueFilterDateFormat);
 
 const DEFAULT_OPTIONS = {
   'allow-m3': false,
@@ -380,7 +383,10 @@ const vue = new Vue({
     },
 
     setState(state) {
-      this.state = state;
+      this.state = state.map(s => {
+        s.stateWhen = new Date(s.stateWhen);
+        return s;
+      });
     }
   },
 

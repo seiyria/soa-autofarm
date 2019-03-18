@@ -48,7 +48,8 @@
     "lodash.invert": "^4.3.0",
     "lodash.sortby": "^4.7.0",
     "minimist": "^1.2.0",
-    "vue": "^2.6.6"
+    "vue": "^2.6.6",
+    "vue-filter-date-format": "^1.2.0"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",

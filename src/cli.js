@@ -155,6 +155,7 @@ const poll = async (noxVmInfo) => {
   if(state !== lastState) {
     noxVmInfo.stateRepeats = 0;
     noxVmInfo.absoluteStateRepeats = 0;
+    noxVmInfo.stateWhen = Date.now();
 
     if(state !== WINDOW_STATES.UNKNOWN) {
       Logger.log(`[Nox ${noxVmInfo.index}]`, 'New State', noxVmInfo.stateName);
@@ -203,7 +204,7 @@ const pollBoth = async (noxes, onState) => {
 
   await Promise.all(waits);
 
-  onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.absoluteStateRepeats })));
+  onState(noxes.map(nox => ({ stateName: nox.stateName, stateRepeats: nox.absoluteStateRepeats, stateWhen: nox.stateWhen })));
 
   noxes.forEach(nox => {
     if(Date.now() < nox.restartTime || OPTIONS.RESTART_DELAY === -1) return;

@@ -57,6 +57,7 @@
           <div class="row">
             <div class="col" v-for="(status, i) in state">
               <div class="card m-3">
+
                 <div class="card-body">
                   <h5 class="card-title">Nox {{ i + 1 }} State</h5>
 
@@ -67,6 +68,10 @@
                       status.stateRepeats > cliEnv['app-kill-threshold'] - 100 ? 'text-warning' : '',
                     ]">({{ status.stateRepeats }})</span>
                   </p>
+                </div>
+                
+                <div class="card-footer text-muted">
+                  Since {{ status.stateWhen | dateFormat('MM/DD HH:mm:ss') }}
                 </div>
               </div>
             </div>

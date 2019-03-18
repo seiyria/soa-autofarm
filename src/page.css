@@ -24,3 +24,7 @@ fieldset {
 .explainer {
   border-top: 1px dotted #000;
 }
+
+.card-text {
+  font-size: 0.9rem;
+}
