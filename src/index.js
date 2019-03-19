@@ -1,6 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-
-import { stop, run, replkeycall, updateOptions } from './cli';
+import * as clearModule from 'clear-module';
 
 import Config from 'electron-config';
 const config = new Config();
@@ -79,8 +78,22 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+let run = () => {};
+let updateOptions = () => {};
+let replkeycall = () => {};
+let stop = () => {};
+
 // run the autoer
 ipcMain.on('run', (window, options) => {
+
+  clearModule.match(/src/);
+
+  const mod = require('./cli');
+  run = mod.run;
+  updateOptions = mod.updateOptions;
+  replkeycall = mod.replkeycall;
+  stop = mod.stop;
+
   mainWindow.webContents.send('running');
   run({ 
     onStatus: (status) => mainWindow.webContents.send('status', status),
@@ -93,16 +106,22 @@ ipcMain.on('run', (window, options) => {
 
 // live-update the options
 ipcMain.on('options', (window, options) => {
+  if(!updateOptions) return;
+  
   updateOptions(options);
 });
 
 // "replkey" functions (normallty typed into term, but that is not avail here)
 ipcMain.on('replkey', (window, key) => {
+  if(!replkeycall) return;
+
   replkeycall(key);
 });
 
 // stop running the autoer
 ipcMain.on('stop', () => {
+  if(!stop) return;
+
   stop();
   mainWindow.webContents.send('stopped');
 });

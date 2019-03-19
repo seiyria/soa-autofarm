@@ -3,7 +3,7 @@ const Logger = require('../helpers/logger');
 
 const { WINDOW_STATES } = require('./window.states');
 
-const { tryTransitionState, clickScreen, killApp, isAtLeastPercentStaminaFull } = require('../helpers/window');
+const { tryTransitionState, clickScreen, isAtLeastPercentStaminaFull } = require('../helpers/window');
 
 const WINDOW_TRANSITIONS = {
 
@@ -12,7 +12,7 @@ const WINDOW_TRANSITIONS = {
       if(!OPTIONS.UNKNOWN_CLICK) return;
 
       // click location attempts, in order
-      const allClicks = Array(10).fill(null).map((x, i) => ({ x: 380, y: 400 + (i * 30) }));
+      const allClicks = Array(20).fill(null).map((x, i) => ({ x: 380, y: 400 + (i * 50) }));
 
       // wait 15 polls before attempting to do anything
       const baseSpacer = 15;
@@ -346,6 +346,13 @@ const WINDOW_TRANSITIONS = {
       // swallow every other click to not double click on accident
       if((noxVmInfo.stateRepeats % 2) === 0) return;
 
+      // if we're not hosting and don't have a specific mission, back off.
+      if(!noxVmInfo.shouldHost && (OPTIONS.SPECIFIC_EVENT && !OPTIONS.SPECIFIC_MISSION)) {
+        tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.EVENT_SCREEN_MISSION);
+        return;
+      }
+
+      // back off if we're backing off
       if(noxVmInfo.backingOff) {
         tryTransitionState(noxVmInfo, WINDOW_STATES.MISSION_START, WINDOW_STATES.EVENT_SCREEN_MISSION);
         return;

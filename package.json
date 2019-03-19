@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "clear-module": "^3.1.0",
     "electron-compile": "^6.4.4",
     "electron-config": "^2.0.0",
     "electron-edge-js": "^10.11.0",
