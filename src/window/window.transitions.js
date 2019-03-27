@@ -303,6 +303,10 @@ const WINDOW_TRANSITIONS = {
       // - we only host if a HOST_MISSION is available
       // - we are in single player mode
       const shouldHostSpecificMission = !!((noxVmInfo.shouldHost || (shouldHostCheckAgain && !OPTIONS.HOST_EVENT)) && OPTIONS.HOST_MISSION);
+      if(shouldHostSpecificMission) {
+        noxVmInfo.shouldHost = true;
+      }
+
       if(OPTIONS.SINGLE_MISSION || OPTIONS.SPECIFIC_MISSION || shouldHostSpecificMission) {
 
         const mission = OPTIONS.SINGLE_MISSION || OPTIONS.SPECIFIC_MISSION || OPTIONS.HOST_MISSION;
