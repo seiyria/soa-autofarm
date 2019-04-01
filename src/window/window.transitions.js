@@ -87,6 +87,7 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.hasStamped = false;
       noxVmInfo.shouldHost = false;
       noxVmInfo.shouldStillLeave = false;
+      noxVmInfo.backingOff = false;
       noxVmInfo.failedRetryAttempts = 0;
     },
     onRepeat: (noxVmInfo) => {
@@ -647,6 +648,7 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.failedRetryAttempts = 0;
       noxVmInfo.shouldHost = false;
       noxVmInfo.hasStamped = false;
+      noxVmInfo.backingOff = false;
     },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);
