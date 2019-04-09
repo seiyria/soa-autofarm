@@ -229,6 +229,9 @@ const WINDOW_TRANSITIONS = {
   },
   
   [WINDOW_STATES.EVENT_SCREEN_MAP]: {
+    onEnter: (noxVmInfo) => {
+      noxVmInfo.backingOff = false;
+    },
     onRepeat: (noxVmInfo) => {
       const shouldHostCheckAgain = isAtLeastPercentStaminaFull(noxVmInfo);
 
