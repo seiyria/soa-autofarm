@@ -45,6 +45,7 @@ Or you pass in whatever you want. The arguments are listed below.
 * `--restart-delay` - the delay to restart the app (should be done periodically). This clears up most of the lag you get while in game, but it's not perfect. It will not restart while in combat. Default: `10800000`ms (3 hours).
 * `--retry-fail-attempts` - how many attempts to "retry" finding a mission. If this gets stuck, you could be trying to farm a dead mission, and get stuck for a long time. Default: `10`.
 * `--rush-delay` - the delay before you attempt to rush. Recommended due to lag on the first rush. Default: `1000`ms.
+* `--rush-minmax` - whether or not to rush when everyone is able to rush, aka, be able to start the rush chain. Default: `true`.
 * `--rush-retry-delay` - the delay between each set of rush tries. Default: `5000`ms.
 * `--rush-tries` - the number of tries for auto-rush. Default: `1`.
 * `--safety-radius` - how many extra pixels to check (radially) besides the one specified. Higher numbers will significantly slow down processing, so it is not recommended to go higher than 2 or 3. This can also lead to some minor mis-detections of different states, especially at higher numbers. Default: `0`.

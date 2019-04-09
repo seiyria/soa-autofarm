@@ -220,7 +220,9 @@ const vue = new Vue({
           { name: 'Rush Attempts', val: 'rush-tries', type: 'number', min: 0,
             desc: 'The number of times you attempt to click the rush button. Recommended to be >3 due to lag sometimes making it not work correctly.' },
           { name: 'Rush Retry Delay', val: 'rush-retry-delay', type: 'number', min: 0,
-            desc: 'The delay between rush attempts. Recommended to be >5000ms due to lag between character rushes.' }
+            desc: 'The delay between rush attempts. Recommended to be >5000ms due to lag between character rushes.' },
+          { name: 'Rush When Possible?', val: 'rush-minmax', type: 'checkbox',
+            desc: 'If you want to rush when everyone is able to (either dead, or full rush) then turn this on. It might be a bit more procesor-intensive, though.' },
         ]
       },
 

@@ -46,6 +46,7 @@ const buildOptions = (argv) => {
     ALLOW_M3: isUndefined(argv['allow-m3'])                   ? false         : !!argv['allow-m3'],
     STAMP_JOIN: isUndefined(argv['stamp-join'])               ? 0             : +argv['stamp-join'],
     SPAWNSYNC_DELAY: isUndefined(argv['spawnsync-delay'])     ? 100           : +argv['spawnsync-delay'],
+    RUSH_WHEN_POSSIBLE: isUndefined(argv['rush-minmax'])      ? true          : !!argv['rush-minmax'],
 
     DEBUG_STATES: isUndefined(argv['debug-pointer'])          ? []            : argv['debug-pointer'].split(',').reduce((prev, cur) => { prev[cur] = true; return prev; }, {}),
     DEBUG: isUndefined(argv['debug'])                         ? false         : !!argv['debug'],
@@ -99,7 +100,8 @@ const isEnvValid = (OPTIONS) => {
   if(OPTIONS.RUSH_RETRIES < 1) return '--rush-retries should be at least 1. You don\'t want to be that guy.';
   if(OPTIONS.RUSH_DELAY < 1000) return '--rush-delay should be at least 1000 (1s). You will not successfully rush otherwise.';
 
-  if(OPTIONS.RESTART_DELAY < 3600000) return '--restart-delay should be at least 3600000 (1h) or you\'re not going to get anything done.';
+  if(OPTIONS.RESTART_DELAY < 3600000
+  && OPTIONS.RESTART_DELAY !== -1) return '--restart-delay should be at least 3600000 (1h) or you\'re not going to get anything done.';
 
   if(OPTIONS.FARM_SINGLE && !OPTIONS.SINGLE_EVENT) return '--farm-single specified but no --single-event.';
   if(OPTIONS.SINGLE_EVENT && OPTIONS.SPECIFIC_EVENT) return '--single-event and --specific-event specified. Choose one.';

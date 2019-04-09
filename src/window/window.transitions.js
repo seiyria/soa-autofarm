@@ -3,7 +3,7 @@ const Logger = require('../helpers/logger');
 
 const { WINDOW_STATES } = require('./window.states');
 
-const { tryTransitionState, clickScreen, isAtLeastPercentStaminaFull } = require('../helpers/window');
+const { tryTransitionState, clickScreen, isAtLeastPercentStaminaFull, getPixelColor } = require('../helpers/window');
 
 const WINDOW_TRANSITIONS = {
 
@@ -649,9 +649,76 @@ const WINDOW_TRANSITIONS = {
       noxVmInfo.shouldHost = false;
       noxVmInfo.hasStamped = false;
       noxVmInfo.backingOff = false;
+      noxVmInfo.isCombatAutoRushing = false;
     },
     onRepeat: (noxVmInfo) => {
       if(OPTIONS.AUTO_TAP_ATTACK) clickScreen(noxVmInfo, 275, 475);
+
+      console.log('-------------', noxVmInfo.index)
+      if(OPTIONS.RUSH_WHEN_POSSIBLE && !noxVmInfo.isCombatAutoRushing) {
+
+        const hpChecks = [
+          [125, 706],
+          [125, 787],
+          [125, 868],
+          [125, 949]
+        ];
+        
+        const rushChecks = [
+          [124, 677],
+          [124, 758],
+          [124, 839],
+          [124, 920]
+        ];
+
+        const hpColors = {
+          alive: 'FE8700',
+          dead: '082A45'
+        };
+
+        const rushColors = {
+          yes: '88F4FD',
+          no: '447B7F'
+        }
+
+        let shouldRush = true;
+
+        for(let i = 0; i < 4; i++) {
+          const hpCheck = hpChecks[i];
+          const rushCheck = rushChecks[i];
+
+          const hpColor = getPixelColor(noxVmInfo, hpCheck[0], hpCheck[1]);
+          const rushColor = getPixelColor(noxVmInfo, rushCheck[0], rushCheck[1]);
+
+          // false if rush = no and color != dead
+          if(rushColor === rushColors.no && hpColor !== hpColors.dead) {
+            shouldRush = false;
+            break;
+          }
+        }
+
+        if(shouldRush) {
+          noxVmInfo.isCombatAutoRushing = true;
+          const clicks = [
+            [130, 680],
+            [130, 760],
+            [130, 840],
+            [130, 920]
+          ];
+
+          clicks.forEach((check, i) => {
+            const checkTime = OPTIONS.RUSH_DELAY + (OPTIONS.POLL_RATE * i);
+            setTimeout(() => {
+              clickScreen(noxVmInfo, check[0], check[1]);
+
+              // reset the flag
+              if(i === 3) {
+                noxVmInfo.isCombatAutoRushing = false;
+              }
+            }, checkTime);
+          });
+        }
+      }
     }
   },
 

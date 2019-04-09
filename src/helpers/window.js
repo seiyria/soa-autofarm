@@ -84,6 +84,13 @@ const getADBDevices = () => {
 const adbSettingToggle = (adb, toggle) => {
   exec(`"${OPTIONS.NOX_ADB_PATH}" -s ${adb} shell settings put system pointer_location ${toggle}`, execOpts());
 }
+
+const getPixelColor = (noxVmInfo, x, y) => {
+  if(!noxVmInfo.curImageState) return '';
+
+  return rgbToHex(Jimp.intToRGBA(noxVmInfo.curImageState.getPixelColor(x, noxVmInfo.headerHeight + y)));
+};
+
 const isAtLeastPercentStaminaFull = (noxVmInfo) => {
   const percent = OPTIONS.HOST_STAM_PERCENT;
   if(percent <= 0) return false;
@@ -94,7 +101,7 @@ const isAtLeastPercentStaminaFull = (noxVmInfo) => {
 
   const CHECK_PIX = Math.floor(STAM_MIN_PIX + (STAM_MAX_PIX - STAM_MIN_PIX) * (percent / 100));
 
-  const hexAt = rgbToHex(Jimp.intToRGBA(noxVmInfo.curImageState.getPixelColor(CHECK_PIX, noxVmInfo.headerHeight + STAM_Y_PIX)));
+  const hexAt = getPixelColor(noxVmInfo, CHECK_PIX, STAM_Y_PIX);
 
   // starting with 0 means it's in the gray range, background color, aka stamina used
   // in this case, we should *not* host
@@ -112,5 +119,6 @@ module.exports = {
   restartVM,
   getADBDevices,
   adbSettingToggle,
-  isAtLeastPercentStaminaFull
+  isAtLeastPercentStaminaFull,
+  getPixelColor
 };
