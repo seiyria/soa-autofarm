@@ -14,7 +14,7 @@ const WINDOW_INFORMATION = {
   // rest of the states
   [WINDOW_STATES.UNKNOWN]:                    { hex: '000000', pos: { x: 100, y: 130 } },
 
-  [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '050509', pos: { x: 460, y: 20 }, ignoreKillswitch: true },
+  [WINDOW_STATES.ANDROID_HOMESCREEN]:         { hex: '030407', pos: { x: 460, y: 20 }, ignoreKillswitch: true },
   [WINDOW_STATES.ANDROID_APP_CRASH]:          { hex: '132535', pos: { x: 195, y: 420, ignoreKillswitch: true } },
   [WINDOW_STATES.ANDROID_APP_NOT_RESPOND]:    { hex: '4FB3AA', pos: { x: 470, y: 555, ignoreKillswitch: true } },
 
