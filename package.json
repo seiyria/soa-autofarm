@@ -48,7 +48,7 @@
     "jimp": "^0.6.0",
     "lodash.invert": "^4.3.0",
     "lodash.sortby": "^4.7.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.3",
     "vue": "^2.6.6",
     "vue-filter-date-format": "^1.2.0"
   },
